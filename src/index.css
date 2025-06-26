@@ -15,20 +15,13 @@ body{
   margin-bottom: 1rem;
 }
 
-<<<<<<< HEAD
-.notification-item:hover {
-  background-color: #e9f5ff;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-=======
 /* global.css */
 
 /* === Green Theme Backgrounds === */
 
 
 .card-green {
-  background-color: #e7faed!important;
+  background-color: #edf9f1!important;
   border: 1px solid #c6e8d6!important;
   border-radius: 8px!important;
   box-shadow: 0 2px 6px rgba(0, 128, 0, 0.08)!important;
@@ -59,6 +52,12 @@ body{
   background-color: #fff3cd;
   color: #856404;
   font-weight: 500;
+}
+
+.badge-danger-soft {
+  background-color: #f8d7da !important;
+  color: #842029 !important;
+  font-weight: 500 !important;
 }
 
 
@@ -145,4 +144,3 @@ body{
   background-color: #e9f8ee !important; /* optional: soft green bg for active tab */
   font-weight: 500 !important;
 }   
->>>>>>> 9d3a6a8df5c02d528d070895ed825242f815a6ee

@@ -4,80 +4,52 @@ const Requestfund = () => {
   const [activeTab, setActiveTab] = useState("new");
 
   const previousRequests = [
-    {
-      id: 1,
-      date: "2025-06-20",
-      amount: 5000,
-      purpose: "Marketing Campaign",
-      status: "approved",
-    },
-    {
-      id: 2,
-      date: "2025-06-22",
-      amount: 2500,
-      purpose: "Office Supplies",
-      status: "pending",
-    },
-    {
-      id: 3,
-      date: "2025-06-24",
-      amount: 8000,
-      purpose: "Team Building Event",
-      status: "rejected",
-    },
-    {
-      id: 4,
-      date: "2025-06-25",
-      amount: 3500,
-      purpose: "Software Licenses",
-      status: "pending",
-    },
+    { id: 1, date: "2025-06-20", amount: 5000, purpose: "Marketing Campaign", status: "approved" },
+    { id: 2, date: "2025-06-22", amount: 2500, purpose: "Office Supplies", status: "pending" },
+    { id: 3, date: "2025-06-24", amount: 8000, purpose: "Team Building Event", status: "rejected" },
+    { id: 4, date: "2025-06-25", amount: 3500, purpose: "Software Licenses", status: "pending" },
   ];
 
   return (
-    <div className="container-flud py-5">
+    <div className="container-fluid py-5">
       <div className="row justify-content-center">
-        <div className="col-lg-11">
-            <h2 className="mb-4 fw-bold">Request Funds</h2>
+        <div className="col-12 col-md-11">
+          <h2 className="page-heading">Request Funds</h2>
+            <p className=" page-subheading">
+    Submit a new fund request or review your previous submissions below.
+  </p>
+
           <div className="card shadow-sm">
-              
             <div className="card-body card-green">
-            
-
               {/* Tabs */}
-              <ul className="nav nav-tabs mb-4">
-  <li className="nav-item">
-    <button
-      className={`nav-link text-success ${activeTab === "new" ? "active" : ""}`}
-      onClick={() => setActiveTab("new")}
-    >
-      New Request
-    </button>
-  </li>
-  <li className="nav-item">
-    <button
-      className={`nav-link text-success ${activeTab === "previous" ? "active" : ""}`}
-      onClick={() => setActiveTab("previous")}
-    >
-      Previous Requests
-    </button>
-  </li>
-</ul>
-
+              <ul className="nav nav-tabs mb-4 flex-wrap">
+                <li className="nav-item">
+                  <button
+                    className={`nav-link text-success ${activeTab === "new" ? "active" : ""}`}
+                    onClick={() => setActiveTab("new")}
+                  >
+                    New Request
+                  </button>
+                </li>
+                <li className="nav-item">
+                  <button
+                    className={`nav-link text-success ${activeTab === "previous" ? "active" : ""}`}
+                    onClick={() => setActiveTab("previous")}
+                  >
+                    Previous Requests
+                  </button>
+                </li>
+              </ul>
 
               {/* Tab Content */}
               {activeTab === "new" ? (
                 <form className="row g-3 form-green">
                   {/* Amount */}
-                  <div className="col-12 ">
-                    <label className="form-label fw-medium ">Amount</label>
+                  <div className="col-12">
+                    <label className="form-label fw-medium">Amount</label>
                     <div className="input-group">
                       <span className="input-group-text">$</span>
-                      <input
-                        type="text"
-                        className="form-control input-green "
-                        placeholder="0.00"
-                      />
+                      <input type="text" className="form-control input-green" placeholder="0.00" />
                     </div>
                   </div>
 
@@ -92,7 +64,7 @@ const Requestfund = () => {
                   </div>
 
                   {/* Date */}
-                  <div className="col-md-6">
+                  <div className="col-12 col-md-6">
                     <label className="form-label fw-medium">Date Needed</label>
                     <input type="date" className="form-control input-green" />
                   </div>
@@ -103,25 +75,16 @@ const Requestfund = () => {
                     <div className="border border-2 border-secondary border-dashed p-4 rounded text-center">
                       <i className="fas fa-cloud-upload-alt text-secondary fs-2 mb-2 d-block"></i>
                       <label htmlFor="file-upload" className="form-label">
-                        <span className="text-primary fw-semibold cursor-pointer">
-                          Upload files
-                        </span>{" "}
-                        or drag and drop
+                        <span className="text-primary fw-semibold cursor-pointer">Upload files</span> or drag and drop
                       </label>
-                      <input
-                        type="file"
-                        id="file-upload"
-                        multiple
-                        className="form-control"
-                        style={{ display: "none" }}
-                      />
+                      <input type="file" id="file-upload" multiple className="form-control d-none" />
                       <p className="text-muted small">PDF, DOC up to 10MB</p>
                     </div>
                   </div>
 
                   {/* Submit Button */}
                   <div className="col-12 pt-3">
-                    <button type="submit" className="w-100 btn-green py-2">
+                    <button type="submit" className="btn btn-success w-100 py-2">
                       Submit Request
                     </button>
                   </div>

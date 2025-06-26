@@ -5,7 +5,7 @@ import { Modal, Button } from "react-bootstrap";
 
 const DashboardViewModal = ({ show, handleClose }) => {
   return (
-    <Modal show={show} onHide={handleClose} centered size="lg">
+    <Modal show={show} onHide={handleClose} centered size="lg" className="modal-green">
       <Modal.Header closeButton>
         <Modal.Title className="fw-bold">Fund Request Details</Modal.Title>
       </Modal.Header>

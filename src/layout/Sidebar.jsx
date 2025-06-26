@@ -30,6 +30,7 @@ const Sidebar = ({ collapsed , menuItemClick}) => {
             <div
               className="menu-link menu-i"
               onClick={() => {navigate("/kkk"); menuItemClick();} } >
+                
               <i className="fa-solid fa-cubes"></i>
               <span className="menu-text">Dashboard</span>
             </div>

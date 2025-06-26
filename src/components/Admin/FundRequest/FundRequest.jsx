@@ -113,7 +113,7 @@ const FundRequest = () => {
               <Row xs={1} md={2} lg={3} className="g-4">
                 {filteredRequests.map((request) => (
                   <Col key={request.id}>
-                    <Card className="h-100">
+                    <Card className="h-100 card-green">
                       <Card.Body>
                         <div className="d-flex justify-content-between align-items-start mb-3">
                           <div>

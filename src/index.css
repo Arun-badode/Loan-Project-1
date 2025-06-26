@@ -23,7 +23,7 @@ body{
 .card-green {
   background-color: #edf9f1!important;
   border: 1px solid #c6e8d6!important;
-  border-radius: 8px!important;
+  border-radius: 5px!important;
   box-shadow: 0 2px 6px rgba(0, 128, 0, 0.08)!important;
 }
 
@@ -204,3 +204,54 @@ body{
 .modal-green .btn-close {
   filter: invert(37%) sepia(20%) saturate(360%) hue-rotate(85deg) brightness(91%) contrast(90%) !important;
 }
+.card-green {
+  background-color: #f6fff9;
+  border-radius: 12px;
+}
+
+.table-green td,
+.table-green th {
+  background-color: #f6fff9;
+}
+
+.badge-success-soft {
+  background-color: #d1f7dc;
+  color: #198754;
+}
+
+.badge-warning-soft {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.view-all-btn {
+  text-decoration: none;
+  font-weight: 500;
+  color: #198754;
+}
+
+.view-all-btn:hover {
+  text-decoration: underline;
+}
+
+.table th {
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+}
+
+.table td {
+  font-size: 0.9rem;
+  padding: 10px;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1fdf6; /* light green hover */
+  transition: 0.2s ease-in-out;
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: #e9f7ef;
+  transition: 0.2s;
+}
+

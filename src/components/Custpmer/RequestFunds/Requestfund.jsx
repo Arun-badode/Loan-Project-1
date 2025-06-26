@@ -21,14 +21,15 @@ const Requestfund = () => {
         <div className="card shadow-sm border-0 overflow-hidden">
           <div className="card-body card-green">
             {/* Tabs */}
-            <ul className="nav nav-tabs mb-4 flex-wrap gap-2">
+            <ul className="nav nav-tabs mb-4 gap-2 flex-nowrap border-0">
               <li className="nav-item">
                 <button
                   className={`nav-link rounded-pill px-4 py-2 fw-semibold ${activeTab === "new"
-                    ? "bg-success text-white"
-                    : "text-success border border-success"
+                      ? "bg-success text-white"
+                      : "text-success border border-success"
                     }`}
                   onClick={() => setActiveTab("new")}
+                  style={{ whiteSpace: "nowrap" }}
                 >
                   New Request
                 </button>
@@ -36,15 +37,17 @@ const Requestfund = () => {
               <li className="nav-item">
                 <button
                   className={`nav-link rounded-pill px-4 py-2 fw-semibold ${activeTab === "previous"
-                    ? "bg-success text-white"
-                    : "text-success border border-success"
+                      ? "bg-success text-white"
+                      : "text-success border border-success"
                     }`}
                   onClick={() => setActiveTab("previous")}
+                  style={{ whiteSpace: "nowrap" }}
                 >
                   Previous Requests
                 </button>
               </li>
             </ul>
+
 
             {/* Tab Content */}
             {activeTab === "new" ? (

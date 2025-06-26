@@ -101,16 +101,42 @@ const Customerdashboard = () => {
               </div>
 
               {/* Circular Progress */}
-              <div className="d-flex justify-content-center mb-4">
-                <div
-                  className="d-flex align-items-center justify-content-center rounded-circle border border-5 border-success text-success fw-bold"
-                  style={{
-                    width: "150px",
-                    height: "150px",
-                    fontSize: "1.2rem",
-                  }}
-                >
-                  60% Used
+              <div className="d-flex flex-column align-items-center mb-4">
+                <div className="position-relative" style={{ width: "160px", height: "160px" }}>
+                  {/* Background circle */}
+                  <div className="position-absolute top-0 start-0 rounded-circle"
+                    style={{
+                      width: "160px",
+                      height: "160px",
+                      background: "conic-gradient(#e9ecef 0% 100%)",
+                    }}></div>
+
+                  {/* Progress circle */}
+                  <div className="position-absolute top-0 start-0 rounded-circle"
+                    style={{
+                      width: "160px",
+                      height: "160px",
+                      background: "conic-gradient(#28a745 0% 60%)",
+                      clipPath: "circle(80px at center)",
+                    }}></div>
+
+                  {/* Inner circle */}
+                  <div className="position-absolute top-50 start-50 translate-middle d-flex flex-column align-items-center justify-content-center rounded-circle bg-white"
+                    style={{
+                      width: "120px",
+                      height: "120px",
+                      transform: "translate(-50%, -50%)",
+                    }}>
+                    <span className="fw-bold fs-3 text-dark">60%</span>
+                    <span className="text-muted small">Used</span>
+                  </div>
+                </div>
+
+                <div className="mt-3 text-center">
+                  <span className="badge bg-success bg-opacity-10 text-white px-3 py-2 rounded-pill">
+                    <i className="fas fa-check-circle me-2"></i>
+                    Good progress
+                  </span>
                 </div>
               </div>
 

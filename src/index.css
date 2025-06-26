@@ -14,3 +14,127 @@ body{
   font-size: 1rem;
   margin-bottom: 1rem;
 }
+
+/* global.css */
+
+/* === Green Theme Backgrounds === */
+
+
+.card-green {
+  background-color: #e7faed!important;
+  border: 1px solid #c6e8d6!important;
+  border-radius: 8px!important;
+  box-shadow: 0 2px 6px rgba(0, 128, 0, 0.08)!important;
+}
+
+/* === Green-Themed Table Styles === */
+.table-green th {
+  background-color: #dff5e3 !important;
+  color: #1f4d36;
+}
+
+.table-green td {
+  background-color: #f6fcf9 !important;
+}
+
+.table-green tbody tr:hover {
+  background-color: #e9f8ee !important;
+}
+
+/* === Status Badges === */
+.badge-success-soft {
+  background-color: #d4f5e0;
+  color: #198754;
+  font-weight: 500;
+}
+
+.badge-warning-soft {
+  background-color: #fff3cd;
+  color: #856404;
+  font-weight: 500;
+}
+
+
+/* === Green Form Card === */
+.form-green {
+  background-color: #e7faed !important;
+  border: 1px solid #c6e8d6 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 6px rgba(0, 128, 0, 0.08) !important;
+  padding: 20px !important;
+}
+
+/* === Green Input Fields === */
+.input-green {
+  background-color: #f6fcf9 !important;
+  border: 1px solid #c6e8d6 !important;
+  color: #1f4d36 !important;
+  border-radius: 5px !important;
+  transition: border-color 0.3s !important;
+}
+
+.input-green:focus {
+  border-color: #4caf50 !important;
+  box-shadow: 0 0 0 0.15rem rgba(72, 239, 132, 0.25) !important;
+  background-color: #ffffff !important;
+}
+
+/* === Green Label === */
+.label-green {
+  color: #1f4d36 !important;
+  font-weight: 500 !important;
+}
+
+
+/* === Green Textarea === */
+.textarea-green {
+  background-color: #f6fcf9 !important;
+  border: 1px solid #c6e8d6 !important;
+  color: #1f4d36 !important;
+  border-radius: 5px !important;
+  padding: 10px !important;
+  resize: vertical !important;
+  transition: border-color 0.3s, box-shadow 0.3s !important;
+  font-size: 1rem !important;
+}
+
+.textarea-green:focus {
+  border-color: #4caf50 !important;
+  box-shadow: 0 0 0 0.15rem rgba(72, 239, 132, 0.25) !important;
+  background-color: #ffffff !important;
+  outline: none !important;
+}
+
+/* === Green Submit Button === */
+.btn-green {
+  background-color: #198754 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 4px !important;
+}
+
+.btn-green:hover {
+  background-color: #157347 !important;
+  color: #fff !important;
+}
+
+/* === Cancel/Secondary Button Soft === */
+.btn-green-soft {
+  background-color: #d4f5e0 !important;
+  color: #198754 !important;
+  border: 1px solid #c6e8d6 !important;
+  border-radius: 4px !important;
+}
+
+.btn-green-soft:hover {
+  background-color: #c2edd3 !important;
+  color: #157347 !important;
+}
+
+/* Override Bootstrap's default active tab color */
+.nav-tabs .nav-link.active {
+  color: #198754 !important;  /* Bootstrap success green */
+  border-color: #198754 #198754 #fff !important; /* optional: green bottom border */
+  background-color: #e9f8ee !important; /* optional: soft green bg for active tab */
+  font-weight: 500 !important;
+}   

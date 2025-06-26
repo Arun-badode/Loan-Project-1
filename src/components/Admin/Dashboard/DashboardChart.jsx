@@ -32,7 +32,7 @@ const barData = [
 const DashboardCharts = () => {
   return (
     <div className="bg-success-subtle py-4">
-      <Container-fluid>
+      <Container>
         <Row className="g-4">
           {/* Credit Summary */}
           <Col xs={12} md={6}>
@@ -104,7 +104,7 @@ const DashboardCharts = () => {
             </div>
           </Col>
         </Row>
-      </Container-fluid>
+      </Container>
     </div>
   );
 };

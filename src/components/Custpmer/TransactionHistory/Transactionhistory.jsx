@@ -63,7 +63,7 @@ const Transactionhistory = () => {
   };
 
   return (
-    <div className="container-flud mt-4 py-4 ">
+    <div className="container mt-4 py-4 ">
       <div className="">
         {/* Header */}
         <div className="bg-white shadow-sm border rounded p-4 mb-4">

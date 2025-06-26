@@ -51,79 +51,78 @@ const Transactionhistory = () => {
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case "Pending":
-        return "bg-warning-subtle text-warning";
       case "Approved":
-        return "bg-success-subtle text-success";
+        return "badge-success-soft";
+      case "Pending":
+        return "badge-warning-soft";
       case "Rejected":
-        return "bg-danger-subtle text-danger";
+        return "badge-danger-soft";
       default:
-        return "bg-secondary-subtle text-secondary";
+        return "badge-secondary";
     }
   };
 
   return (
-    <div className="container-flud mt-4 py-4 ">
-      <div className="">
-        {/* Header */}
-             <h2 className="page-heading">Transaction History</h2>
+    <div className="container-fluid mt-4 py-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-lg-11">
+          {/* Heading */}
+          <h2 className="page-heading">Transaction History</h2>
           <p className="page-subheading">All past draw down requests</p>
 
-        {/* Table */}
-        <div className="card-green shadow-sm rounded p-3">
-          <div className="table-responsive">
-            <table className="table align-middle table-hover table-green">
-              <thead className="table-light">
-                <tr>
-                  <th>Reference</th>
-                  <th>Date</th>
-                  <th>Description</th>
-                  <th>Account</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.length > 0 ? (
-                  transactions.map((txn) => (
-                    <tr key={txn.id}>
-                      <td>
-                        <span className="fw-semibold">{txn.reference}</span>
-                      </td>
-                      <td>
-                        <i className="fas fa-calendar-alt text-secondary me-2" />
-                        <span>{txn.date}</span>
-                      </td>
-                      <td>{txn.description}</td>
-                      <td>
-                        <i className="fas fa-credit-card text-secondary me-2" />
-                        <span>{txn.account}</span>
-                      </td>
-                      <td>
-                        <strong>{txn.amount}</strong>
-                      </td>
-                      <td>
-                        <span
-                          className={`badge rounded-pill px-3 py-2 d-inline-flex align-items-center ${getStatusBadge(
-                            txn.status
-                          )}`}
-                        >
-                          <i className="fas fa-circle me-2 fs-6"></i>
-                          {txn.status}
-                        </span>
+          {/* Card */}
+          <div className="card-green shadow-sm rounded p-3">
+            <div className="table-responsive">
+              <table className="table align-middle table-hover table-green">
+                <thead className="table-light">
+                  <tr>
+                    <th>Reference</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Account</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {transactions.length > 0 ? (
+                    transactions.map((txn) => (
+                      <tr key={txn.id}>
+                        <td className="fw-semibold">{txn.reference}</td>
+                        <td>
+                          <i className="fas fa-calendar-alt text-secondary me-2" />
+                          {txn.date}
+                        </td>
+                        <td className="text-wrap">{txn.description}</td>
+                        <td>
+                          <i className="fas fa-credit-card text-secondary me-2" />
+                          {txn.account}
+                        </td>
+                        <td>
+                          <strong>{txn.amount}</strong>
+                        </td>
+                        <td>
+                          <span
+                            className={`badge rounded-pill px-3 py-2 d-inline-flex align-items-center ${getStatusBadge(
+                              txn.status
+                            )}`}
+                          >
+                            {txn.status}
+                          </span>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="text-center py-5">
+                        <i className="fas fa-receipt text-secondary fs-1 mb-3 d-block" />
+                        <p className="text-muted">No transactions found</p>
                       </td>
                     </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan={6} className="text-center py-5">
-                      <i className="fas fa-receipt text-secondary fs-1 mb-3 d-block" />
-                      <p className="text-muted">No transactions found</p>
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

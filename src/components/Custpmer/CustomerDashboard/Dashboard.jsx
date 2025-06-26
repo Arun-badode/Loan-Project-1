@@ -23,7 +23,7 @@ const Customerdashboard = () => {
   ];
 
   return (
-    <div className="container py-5">
+    <div className="container-fluid py-5">
       {/* Greeting */}
       <div className="mb-4">
         <h1 className="page-heading">Hello Customer</h1>
@@ -32,8 +32,8 @@ const Customerdashboard = () => {
 
       {/* Top 3 Cards */}
       <div className="row g-4">
-        <div className="col-md-4 ">
-          <div className="card shadow-sm ">
+        <div className="col-12 col-sm-6 col-lg-4">
+          <div className="card shadow-sm h-100">
             <div className="card-body card-green">
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <small className="text-muted">Total Line of Credit</small>
@@ -47,8 +47,8 @@ const Customerdashboard = () => {
           </div>
         </div>
 
-        <div className="col-md-4">
-          <div className="card shadow-sm">
+        <div className="col-12 col-sm-6 col-lg-4">
+          <div className="card shadow-sm h-100">
             <div className="card-body card-green">
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <small className="text-muted">Amount Used</small>
@@ -62,8 +62,8 @@ const Customerdashboard = () => {
           </div>
         </div>
 
-        <div className="col-md-4">
-          <div className="card shadow-sm">
+        <div className="col-12 col-sm-12 col-lg-4">
+          <div className="card shadow-sm h-100">
             <div className="card-body card-green">
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <small className="text-muted">Available Balance</small>
@@ -81,27 +81,25 @@ const Customerdashboard = () => {
       {/* Credit Summary & Transactions */}
       <div className="row g-4 mt-4">
         {/* Credit Summary */}
-        <div className="col-md-6">
-          <div className="card shadow-sm">
+        <div className="col-12 col-md-6">
+          <div className="card shadow-sm h-100">
             <div className="card-body card-green">
               <div className="d-flex justify-content-between mb-3">
                 <h5 className="card-title fw-semibold">Credit Summary</h5>
               </div>
-              {/* Dummy Circular Progress Placeholder */}
+              {/* Placeholder for circular progress */}
               <div className="d-flex justify-content-center mb-4">
                 <div
                   className="rounded-circle border border-5 border-success"
                   style={{ width: "150px", height: "150px" }}
                 ></div>
               </div>
-
-              {/* Summary Details */}
               <ul className="list-group list-group-flush card-green">
                 <li className="list-group-item d-flex justify-content-between card-green">
                   <span className="text-muted small">Total Loan</span>
                   <strong>$150,000,000</strong>
                 </li>
-                <li className="list-group-item d-flex justify-content-between card-green" >
+                <li className="list-group-item d-flex justify-content-between card-green">
                   <span className="text-muted small">Pending Balance</span>
                   <strong>$90,000,000</strong>
                 </li>
@@ -111,8 +109,8 @@ const Customerdashboard = () => {
         </div>
 
         {/* Recent Transactions */}
-        <div className="col-md-6">
-          <div className="card shadow-sm">
+        <div className="col-12 col-md-6">
+          <div className="card shadow-sm h-100">
             <div className="card-body card-green">
               <div className="d-flex justify-content-between mb-3">
                 <h5 className="card-title fw-semibold">Recent Transactions</h5>
@@ -136,14 +134,16 @@ const Customerdashboard = () => {
                       <tr key={item.id}>
                         <td>{item.id}</td>
                         <td>{item.date}</td>
-                        <td className="text-end">${item.amount.toLocaleString()}</td>
+                        <td className="text-end">
+                          ${item.amount.toLocaleString()}
+                        </td>
                         <td>
                           <span
                             className={`badge rounded-pill ${
                               item.status === "Completed"
-                                ? "bg-success-subtle text-success"
+                                ? "badge-success-soft text-success"
                                 : item.status === "Processing"
-                                ? "bg-warning-subtle text-warning"
+                                ? "badge-warning-soft"
                                 : "bg-danger-subtle text-danger"
                             }`}
                           >

@@ -15,13 +15,6 @@ body{
   margin-bottom: 1rem;
 }
 
-<<<<<<< HEAD
-.notification-item:hover {
-  background-color: #e9f5ff;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-=======
 /* global.css */
 
 /* === Green Theme Backgrounds === */
@@ -145,4 +138,3 @@ body{
   background-color: #e9f8ee !important; /* optional: soft green bg for active tab */
   font-weight: 500 !important;
 }   
->>>>>>> 9d3a6a8df5c02d528d070895ed825242f815a6ee

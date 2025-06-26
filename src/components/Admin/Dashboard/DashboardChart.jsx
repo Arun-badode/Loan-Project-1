@@ -39,7 +39,6 @@ const DashboardCharts = () => {
             <div className="bg-white p-4 rounded shadow-sm h-100">
               <div className="d-flex justify-content-between align-items-center flex-wrap">
                 <h4 className="fw-bold mb-2 mb-md-0">Credit Summary</h4>
-                <i className="fas fa-pen text-muted"></i>
               </div>
 
               <div className="d-flex flex-column flex-md-row align-items-center mt-3">
@@ -87,7 +86,7 @@ const DashboardCharts = () => {
               <div className="d-flex justify-content-between align-items-center flex-wrap">
                 <h4 className="fw-bold mb-2 mb-md-0">Monthly Returns</h4>
                 <div className="text-muted">
-                  2024 <i className="fas fa-download ms-2"></i>
+                  2024
                 </div>
               </div>
 

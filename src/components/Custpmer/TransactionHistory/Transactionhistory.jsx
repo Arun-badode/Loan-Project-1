@@ -63,9 +63,9 @@ const Transactionhistory = () => {
   };
 
   return (
-    <div className="container-fluid mt-4 py-4">
-      <div className="row justify-content-center">
-        <div className="col-12 col-lg-11">
+    <div className="p-3 mt-3">
+      <div className="">
+        <div className="col-12 col-lg-12">
           {/* Heading */}
           <h2 className="page-heading">Transaction History</h2>
           <p className="page-subheading">All past draw down requests</p>
@@ -74,7 +74,7 @@ const Transactionhistory = () => {
           <div className="card-green shadow-sm rounded p-3">
             <div className="table-responsive">
               <table className="table align-middle table-hover table-green">
-                <thead className="table-light">
+                <thead className="table-light ">
                   <tr>
                     <th>Reference</th>
                     <th>Date</th>

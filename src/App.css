@@ -263,11 +263,11 @@ select.form-input {
 /* navbar start */
 .navbar {
   height: 95px;
-  border-bottom: 1px solid #949494;
   position: fixed;
   z-index: 5;
   background-color: #ccf8db;
   width: 100%;
+  /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
 }
 
 .nav-conte {

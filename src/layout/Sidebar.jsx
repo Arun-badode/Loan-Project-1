@@ -29,9 +29,8 @@ const Sidebar = ({ collapsed }) => {
           {role === "Admin" && (
             <>
               <li
-                className={`menu-item ${
-                  isActive("/dashboard") ? "active" : ""
-                }`}
+                className={`menu-item ${isActive("/dashboard") ? "active" : ""
+                  }`}
               >
                 <div
                   className="menu-link menu-i"
@@ -44,7 +43,7 @@ const Sidebar = ({ collapsed }) => {
                 </div>
               </li>
               <li
-                className={`menu-item ${isActive("/manage") ? "active" : ""}`}
+                className={`menu-item ${isActive("/managecustomer") ? "active" : ""}`}
               >
                 <div
                   className="menu-link menu-i"
@@ -57,7 +56,7 @@ const Sidebar = ({ collapsed }) => {
                 </div>
               </li>
               <li
-                className={`menu-item ${isActive("/requests") ? "active" : ""}`}
+                className={`menu-item ${isActive("/fundrequest") ? "active" : ""}`}
               >
                 <div
                   className="menu-link menu-i"
@@ -70,9 +69,8 @@ const Sidebar = ({ collapsed }) => {
                 </div>
               </li>
               <li
-                className={`menu-item ${
-                  isActive("/transactions") ? "active" : ""
-                }`}
+                className={`menu-item ${isActive("/transactionlog") ? "active" : ""
+                  }`}
               >
                 <div
                   className="menu-link menu-i"
@@ -85,9 +83,8 @@ const Sidebar = ({ collapsed }) => {
                 </div>
               </li>
               <li
-                className={`menu-item ${
-                  isActive("/notifications") ? "active" : ""
-                }`}
+                className={`menu-item ${isActive("/notification") ? "active" : ""
+                  }`}
               >
                 <div
                   className="menu-link menu-i"
@@ -100,7 +97,7 @@ const Sidebar = ({ collapsed }) => {
                 </div>
               </li>
               <li
-                className={`menu-item ${isActive("/support") ? "active" : ""}`}
+                className={`menu-item ${isActive("/message") ? "active" : ""}`}
               >
                 <div
                   className="menu-link menu-i"
@@ -115,15 +112,7 @@ const Sidebar = ({ collapsed }) => {
               <li
                 className={`menu-item ${isActive("/settings") ? "active" : ""}`}
               >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/settings");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Settings</span>
-                </div>
+
               </li>
             </>
           )}

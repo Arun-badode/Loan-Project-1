@@ -1,12 +1,13 @@
 .sidebar-container {
-  width: 245px;
+  width: 270px;
   height: 89vh;
   overflow-y: auto;
   transition: width 0.3s ease;
-  margin-top: 90px;
+  margin-top: 95px;
   z-index: 1;
   position: fixed;
   background-color: #ccf8db;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-container.collapsed {
@@ -36,6 +37,7 @@
   border-radius: 12px;
   font-size: 19px;
   font-weight: 700;
+  margin-top: 20px;
 }
 
 .menu-link {

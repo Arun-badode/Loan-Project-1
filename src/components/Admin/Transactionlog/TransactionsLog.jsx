@@ -49,15 +49,15 @@ const TransactionsLog = () => {
   };
 
   const getStatusBadge = (status) => {
-  switch (status) {
-    case 'Approved':
-      return <span className="badge-custom badge-success-soft py-1 px-1 rounded-pill">Approved</span>;
-    case 'Rejected':
-      return <span className="badge-custom badge-danger-soft py-1 px-1 rounded-pill">Rejected</span>;
-    default:
-      return <span className="badge-custom badge-warning-soft py-1 px-1 rounded-pill">{status}</span>;
-  }
-};
+    switch (status) {
+      case 'Approved':
+        return <span className="badge-custom badge-success-soft py-1 px-1 rounded-pill">Approved</span>;
+      case 'Rejected':
+        return <span className="badge-custom badge-danger-soft py-1 px-1 rounded-pill">Rejected</span>;
+      default:
+        return <span className="badge-custom badge-warning-soft py-1 px-1 rounded-pill">{status}</span>;
+    }
+  };
 
 
   return (
@@ -65,24 +65,24 @@ const TransactionsLog = () => {
       <h4 className="page-heading">Transactions Log</h4>
 
       {/* Compact Filters */}
-   <Row className="g-2 mb-3 align-items-center">
-  <Col>
-    <Form.Control size="sm" type="text" placeholder="Search transactions..." className="w-100 p-2 input-green" />
-  </Col>
-  <Col>
-    <Form.Control size="sm" type="date" className="w-100 p-2 input-green" />
-  </Col>
-  <Col>
-    <Form.Control size="sm" type="date" className="w-100 p-2 input-green" />
-  </Col>
-  <Col>
-    <Form.Select size="sm" className="w-100 p-2 input-green">
-      <option>All</option>
-      <option>Approved</option>
-      <option>Rejected</option>
-    </Form.Select>
-  </Col>
-</Row>
+      <Row className="g-2 mb-3 align-items-center">
+        <Col>
+          <Form.Control size="sm" type="text" placeholder="Search transactions..." className="w-100 p-2 input-green" />
+        </Col>
+        <Col>
+          <Form.Control size="sm" type="date" className="w-100 p-2 input-green" />
+        </Col>
+        <Col>
+          <Form.Control size="sm" type="date" className="w-100 p-2 input-green" />
+        </Col>
+        <Col>
+          <Form.Select size="sm" className="w-100 p-2 input-green">
+            <option>All</option>
+            <option>Approved</option>
+            <option>Rejected</option>
+          </Form.Select>
+        </Col>
+      </Row>
 
 
       {/* Transactions Table */}
@@ -106,10 +106,10 @@ const TransactionsLog = () => {
               <td>{txn.type}</td>
               <td>{getStatusBadge(txn.status)}</td>
               <td>
-              
-                  <button className="btn btn-sm btn-outline-success me-2"  onClick={() => handleView(txn)}>
-                        <i className="fas fa-eye me-1"></i> View
-                      </button>
+
+                <button className="btn btn-sm btn-link text-success me-2" onClick={() => handleView(txn)}>
+                  <i className="fas fa-eye me-1"></i>
+                </button>
               </td>
             </tr>
           ))}

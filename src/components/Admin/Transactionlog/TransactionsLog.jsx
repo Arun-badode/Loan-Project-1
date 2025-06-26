@@ -61,27 +61,28 @@ const TransactionsLog = () => {
 
   return (
     <div className="container my-4">
-      <h4 className="fw-bold mb-3">Transactions Log</h4>
+      <h4 className="page-heading">Transactions Log</h4>
 
       {/* Compact Filters */}
-      <Row className="g-2 mb-3 align-items-center">
-        <Col md="3">
-          <Form.Control size="sm" type="text" placeholder="Search transactions..." />
-        </Col>
-        <Col md="2">
-          <Form.Control size="sm" type="date" />
-        </Col>
-        <Col md="2">
-          <Form.Control size="sm" type="date" />
-        </Col>
-        <Col md="2">
-          <Form.Select size="sm">
-            <option>All</option>
-            <option>Approved</option>
-            <option>Rejected</option>
-          </Form.Select>
-        </Col>
-      </Row>
+   <Row className="g-2 mb-3 align-items-center">
+  <Col>
+    <Form.Control size="sm" type="text" placeholder="Search transactions..." className="w-100 p-2" />
+  </Col>
+  <Col>
+    <Form.Control size="sm" type="date" className="w-100 p-2" />
+  </Col>
+  <Col>
+    <Form.Control size="sm" type="date" className="w-100 p-2" />
+  </Col>
+  <Col>
+    <Form.Select size="sm" className="w-100 p-2">
+      <option>All</option>
+      <option>Approved</option>
+      <option>Rejected</option>
+    </Form.Select>
+  </Col>
+</Row>
+
 
       {/* Transactions Table */}
       <Table responsive hover bordered className="bg-white shadow-sm small">

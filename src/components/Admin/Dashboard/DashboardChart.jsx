@@ -19,7 +19,7 @@ const pieData = [
   { name: "Available", value: 40 },
 ];
 
-const pieColors = ["#ff0000", "#000000"];
+const pieColors = ["#22c55e", "#6c757d"];
 
 const barData = [
   { year: "Jan", amount: 50000 },
@@ -31,8 +31,8 @@ const barData = [
 
 const DashboardCharts = () => {
   return (
-    <div className="bg-success-subtle py-4">
-      <Container>
+    <div className="bg-success-subtle">
+      <div>
         <Row className="g-4">
           {/* Credit Summary */}
           <Col xs={12} md={6}>
@@ -70,7 +70,7 @@ const DashboardCharts = () => {
 
               <div className="d-flex flex-wrap gap-3 mt-4 justify-content-center justify-content-md-start">
                 <div className="d-flex align-items-center gap-2">
-                  <div style={{ width: 12, height: 12, backgroundColor: "#ff0000" }}></div>
+                  <div style={{ width: 12, height: 12, backgroundColor: "#22c55e" }}></div>
                   <small>Amount Loaned ($)</small>
                 </div>
                 <div className="d-flex align-items-center gap-2">
@@ -97,14 +97,14 @@ const DashboardCharts = () => {
                     <XAxis dataKey="year" />
                     <YAxis />
                     <Tooltip />
-                    <Bar dataKey="amount" fill="#ff0000" radius={[6, 6, 0, 0]} />
+                    <Bar dataKey="amount" fill="#22c55e" radius={[6, 6, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
             </div>
           </Col>
         </Row>
-      </Container>
+      </div>
     </div>
   );
 };

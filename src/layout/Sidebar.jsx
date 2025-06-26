@@ -28,136 +28,74 @@ const Sidebar = ({ collapsed }) => {
           {/* Dashboard Section */}
           {role === "Admin" && (
             <>
-              <li
-                className={`menu-item ${isActive("/dashboard") ? "active" : ""
-                  }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/dashboard");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Dashboard</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${isActive("/managecustomer") ? "active" : ""}`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/managecustomer");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Manage Customers</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${isActive("/fundrequest") ? "active" : ""}`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/fundrequest");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Fund Requests</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${isActive("/transactionlog") ? "active" : ""
-                  }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/transactionlog");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Transactions Log</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${isActive("/notification") ? "active" : ""
-                  }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/notification");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Notifications</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${isActive("/message") ? "active" : ""}`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/message");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Support / Messages</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${isActive("/settings") ? "active" : ""}`}
-              >
+              <li className={`menu-item ${isActive("/dashboard") ? "active" : ""}`}>
+  <div className="menu-link menu-i" onClick={() => navigate("/dashboard")}>
+    <i className="fas fa-tachometer-alt me-2 text-white"></i>
+    <span className="menu-text">Dashboard</span>
+  </div>
+</li>
 
-              </li>
+<li className={`menu-item ${isActive("/managecustomer") ? "active" : ""}`}>
+  <div className="menu-link menu-i" onClick={() => navigate("/managecustomer")}>
+    <i className="fas fa-users me-2 text-white"></i>
+    <span className="menu-text">Manage Customers</span>
+  </div>
+</li>
+
+<li className={`menu-item ${isActive("/fundrequest") ? "active" : ""}`}>
+  <div className="menu-link menu-i" onClick={() => navigate("/fundrequest")}>
+    <i className="fas fa-hand-holding-usd me-2 text-white"></i>
+    <span className="menu-text">Fund Requests</span>
+  </div>
+</li>
+
+<li className={`menu-item ${isActive("/transactionlog") ? "active" : ""}`}>
+  <div className="menu-link menu-i" onClick={() => navigate("/transactionlog")}>
+    <i className="fas fa-receipt me-2 text-white"></i>
+    <span className="menu-text">Transactions Log</span>
+  </div>
+</li>
+
+<li className={`menu-item ${isActive("/notification") ? "active" : ""}`}>
+  <div className="menu-link menu-i" onClick={() => navigate("/notification")}>
+    <i className="fas fa-bell me-2 text-white"></i>
+    <span className="menu-text">Notifications</span>
+  </div>
+</li>
+
+<li className={`menu-item ${isActive("/message") ? "active" : ""}`}>
+  <div className="menu-link menu-i" onClick={() => navigate("/message")}>
+    <i className="fas fa-comments me-2 text-white"></i>
+    <span className="menu-text">Support / Messages</span>
+  </div>
+</li>
+
             </>
           )}
 
           {role === "Customer" && (
             <>
-              <li
-                className={`menu-item ${isActive("/customer-dashboard") ? "active" : ""}`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/customer-dashboard");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Dashboard</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${isActive("/requestfund") ? "active" : ""}`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/requestfund");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Request Funds</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${isActive("/transactionhistory") ? "active" : ""}`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {
-                    navigate("/transactionhistory");
-                    menuItemClick();
-                  }}
-                >
-                  <span className="menu-text">Transaction History</span>
-                </div>
-              </li>
+              <li className={`menu-item ${isActive("/customer-dashboard") ? "active" : ""}`}>
+  <div className="menu-link menu-i" onClick={() => navigate("/customer-dashboard")}>
+    <i className="fas fa-home me-2 text-white"></i>
+    <span className="menu-text">Dashboard</span>
+  </div>
+</li>
+
+<li className={`menu-item ${isActive("/requestfund") ? "active" : ""}`}>
+  <div className="menu-link menu-i" onClick={() => navigate("/requestfund")}>
+    <i className="fas fa-wallet me-2 text-white"></i>
+    <span className="menu-text">Request Funds</span>
+  </div>
+</li>
+
+<li className={`menu-item ${isActive("/transactionhistory") ? "active" : ""}`}>
+  <div className="menu-link menu-i" onClick={() => navigate("/transactionhistory")}>
+    <i className="fas fa-history me-2 text-white"></i>
+    <span className="menu-text">Transaction History</span>
+  </div>
+</li>
+
             </>
           )}
         </ul>

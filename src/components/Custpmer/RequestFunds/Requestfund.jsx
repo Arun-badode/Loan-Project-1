@@ -38,41 +38,44 @@ const Requestfund = () => {
     <div className="container-flud py-5">
       <div className="row justify-content-center">
         <div className="col-lg-11">
+            <h2 className="mb-4 fw-bold">Request Funds</h2>
           <div className="card shadow-sm">
-            <div className="card-body">
-              <h2 className="mb-4 fw-bold">Request Funds</h2>
+              
+            <div className="card-body card-green">
+            
 
               {/* Tabs */}
               <ul className="nav nav-tabs mb-4">
-                <li className="nav-item">
-                  <button
-                    className={`nav-link ${activeTab === "new" ? "active" : ""}`}
-                    onClick={() => setActiveTab("new")}
-                  >
-                    New Request
-                  </button>
-                </li>
-                <li className="nav-item">
-                  <button
-                    className={`nav-link ${activeTab === "previous" ? "active" : ""}`}
-                    onClick={() => setActiveTab("previous")}
-                  >
-                    Previous Requests
-                  </button>
-                </li>
-              </ul>
+  <li className="nav-item">
+    <button
+      className={`nav-link text-success ${activeTab === "new" ? "active" : ""}`}
+      onClick={() => setActiveTab("new")}
+    >
+      New Request
+    </button>
+  </li>
+  <li className="nav-item">
+    <button
+      className={`nav-link text-success ${activeTab === "previous" ? "active" : ""}`}
+      onClick={() => setActiveTab("previous")}
+    >
+      Previous Requests
+    </button>
+  </li>
+</ul>
+
 
               {/* Tab Content */}
               {activeTab === "new" ? (
-                <form className="row g-3">
+                <form className="row g-3 form-green">
                   {/* Amount */}
-                  <div className="col-12">
-                    <label className="form-label fw-medium">Amount</label>
+                  <div className="col-12 ">
+                    <label className="form-label fw-medium ">Amount</label>
                     <div className="input-group">
                       <span className="input-group-text">$</span>
                       <input
                         type="text"
-                        className="form-control"
+                        className="form-control input-green "
                         placeholder="0.00"
                       />
                     </div>
@@ -82,7 +85,7 @@ const Requestfund = () => {
                   <div className="col-12">
                     <label className="form-label fw-medium">Purpose / Description</label>
                     <textarea
-                      className="form-control"
+                      className="form-control textarea-green"
                       rows="4"
                       placeholder="Please describe the purpose of this request..."
                     ></textarea>
@@ -91,7 +94,7 @@ const Requestfund = () => {
                   {/* Date */}
                   <div className="col-md-6">
                     <label className="form-label fw-medium">Date Needed</label>
-                    <input type="date" className="form-control" />
+                    <input type="date" className="form-control input-green" />
                   </div>
 
                   {/* File Upload */}
@@ -118,13 +121,13 @@ const Requestfund = () => {
 
                   {/* Submit Button */}
                   <div className="col-12 pt-3">
-                    <button type="submit" className="btn btn-primary w-100">
+                    <button type="submit" className="w-100 btn-green py-2">
                       Submit Request
                     </button>
                   </div>
                 </form>
               ) : (
-                <div className="table-responsive">
+                <div className="table-responsive table-green">
                   <table className="table table-hover align-middle">
                     <thead className="table-light">
                       <tr>

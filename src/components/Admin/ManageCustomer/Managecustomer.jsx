@@ -1,91 +1,100 @@
-import React from 'react';
-import { useState } from 'react';
-import { Button } from 'react-bootstrap';
-import AddCustomerModal from './AddCustomerModal';
-import CustomerDetailsModal from './CustomerDetailsModal';
-import EditCreditLineModal from './EditCreditLineModal';
-
+import React, { useState } from "react";
+import { Button } from "react-bootstrap";
+import AddCustomerModal from "./AddCustomerModal";
+import CustomerDetailsModal from "./CustomerDetailsModal";
+import EditCreditLineModal from "./EditCreditLineModal";
 
 const Managecustomer = () => {
-      const [showModal, setShowModal] = useState(false);
-         const [showCustomerDetailsModal, setShowCustomerDetailsModal] = useState(false);
-         const [showEditModal, setShowEditModal] = useState(false);
-  // Static customer data
+  const [showModal, setShowModal] = useState(false);
+  const [showCustomerDetailsModal, setShowCustomerDetailsModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
   const customers = [
     {
-      id: 'CUST-001',
-      name: 'John Smith',
-      phone: '+1 (555) 123-4567',
-      email: 'john.smith@example.com',
+      id: "CUST-001",
+      name: "John Smith",
+      phone: "+1 (555) 123-4567",
+      email: "john.smith@example.com",
       creditLine: 50000,
-      status: 'Active',
-      company: 'Smith Enterprises',
+      status: "Active",
+      company: "Smith Enterprises",
     },
     {
-      id: 'CUST-002',
-      name: 'Sarah Johnson',
-      phone: '+1 (555) 987-6543',
-      email: 'sarah.j@example.com',
+      id: "CUST-002",
+      name: "Sarah Johnson",
+      phone: "+1 (555) 987-6543",
+      email: "sarah.j@example.com",
       creditLine: 75000,
-      status: 'Active',
-      company: 'Johnson & Associates',
+      status: "Active",
+      company: "Johnson & Associates",
     },
     {
-      id: 'CUST-003',
-      name: 'Michael Chen',
-      phone: '+1 (555) 456-7890',
-      email: 'mchen@example.com',
+      id: "CUST-003",
+      name: "Michael Chen",
+      phone: "+1 (555) 456-7890",
+      email: "mchen@example.com",
       creditLine: 100000,
-      status: 'Pending Review',
-      company: 'Chen Technologies',
+      status: "Pending Review",
+      company: "Chen Technologies",
     },
     {
-      id: 'CUST-004',
-      name: 'Emily Wilson',
-      phone: '+1 (555) 234-5678',
-      email: 'e.wilson@example.com',
+      id: "CUST-004",
+      name: "Emily Wilson",
+      phone: "+1 (555) 234-5678",
+      email: "e.wilson@example.com",
       creditLine: 30000,
-      status: 'Inactive',
-      company: 'Wilson Retail Group',
+      status: "Inactive",
+      company: "Wilson Retail Group",
     },
     {
-      id: 'CUST-005',
-      name: 'David Rodriguez',
-      phone: '+1 (555) 876-5432',
-      email: 'drodriguez@example.com',
+      id: "CUST-005",
+      name: "David Rodriguez",
+      phone: "+1 (555) 876-5432",
+      email: "drodriguez@example.com",
       creditLine: 85000,
-      status: 'Active',
-      company: 'Rodriguez Imports',
+      status: "Active",
+      company: "Rodriguez Imports",
     },
   ];
 
   return (
     <div className="container mt-4">
-      <div className="card">
-        <div className="card-header bg-white">
-          <div className="d-flex justify-content-between align-items-center">
-            <h4 className="mb-0">Manage Customer</h4>
-            <div className="input-group" style={{width: '300px'}}>
-              <span className="input-group-text">
-                <i className="fas fa-search"></i>
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search customers..."
-              />
-            </div>
-             <Button variant="primary" onClick={() => setShowModal(true)}>
-        + Add New Customer
-      </Button>
+      {/* Page Heading */}
+     <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+  {/* Left Side: Heading & Subheading */}
+  <div className="text-start">
+    <h4 className="page-heading mb-1">Manage Customer</h4>
+    <p className="page-subheading mb-0">View and manage customer credit details</p>
+  </div>
 
-      <AddCustomerModal
-        show={showModal}
-        handleClose={() => setShowModal(false)}
+  {/* Right Side: Search & Button aligned in one row */}
+  <div className="d-flex flex-column flex-sm-row align-items-stretch gap-2">
+    {/* Search Field */}
+    <div className="input-group" style={{ maxWidth: "280px" }}>
+      <span className="input-group-text">
+        <i className="fas fa-search"></i>
+      </span>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Search customers..."
       />
-          </div>
-        </div>
-        
+    </div>
+
+    {/* Button */}
+    <Button
+      variant="primary"
+      className="w-100 w-sm-auto"
+      onClick={() => setShowModal(true)}
+    >
+      + Add New Customer
+    </Button>
+  </div>
+</div>
+
+
+      {/* Card Table */}
+      <div className="card shadow-sm">
         <div className="card-body">
           <div className="table-responsive">
             <table className="table table-hover align-middle">
@@ -112,38 +121,50 @@ const Managecustomer = () => {
                     <td>{customer.email}</td>
                     <td>${customer.creditLine.toLocaleString()}</td>
                     <td>
-                      <span className={`badge ${
-                        customer.status === 'Active' ? 'bg-success' :
-                        customer.status === 'Inactive' ? 'bg-danger' :
-                        'bg-warning text-dark'
-                      }`}>
+                      <span
+                        className={`badge ${customer.status === "Active"
+                            ? "bg-success"
+                            : customer.status === "Inactive"
+                              ? "bg-danger"
+                              : "bg-warning text-dark"
+                          }`}
+                      >
                         {customer.status}
                       </span>
                     </td>
                     <td className="text-end">
-                      <button className="btn btn-sm btn-outline-primary me-2" onClick={() => setShowCustomerDetailsModal(true)}>
+                      <button
+                        className="btn btn-sm btn-outline-primary me-2"
+                        onClick={() => setShowCustomerDetailsModal(true)}
+                      >
                         <i className="fas fa-eye me-1"></i> View
                       </button>
-       <CustomerDetailsModal
-  show={showCustomerDetailsModal}
-  handleClose={() => setShowCustomerDetailsModal(false)}
-  
-/>
-                      <button className="btn btn-sm btn-outline-success" onClick={() => setShowEditModal(true)}>
+                      <CustomerDetailsModal
+                        show={showCustomerDetailsModal}
+                        handleClose={() => setShowCustomerDetailsModal(false)}
+                      />
+                      <button
+                        className="btn btn-sm btn-outline-success"
+                        onClick={() => setShowEditModal(true)}
+                      >
                         <i className="fas fa-edit me-1"></i> Edit
                       </button>
-                      <EditCreditLineModal show={showEditModal} handleClose={() => setShowEditModal(false)} />
+                      <EditCreditLineModal
+                        show={showEditModal}
+                        handleClose={() => setShowEditModal(false)}
+                      />
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <div className="text-muted">
-              Showing <span className="fw-bold">1</span> to{' '}
-              <span className="fw-bold">5</span> of{' '}
+
+          {/* Footer Pagination Info */}
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
+            <div className="text-muted mb-2 mb-md-0">
+              Showing <span className="fw-bold">1</span> to{" "}
+              <span className="fw-bold">5</span> of{" "}
               <span className="fw-bold">5</span> customers
             </div>
             <div>
@@ -157,6 +178,9 @@ const Managecustomer = () => {
           </div>
         </div>
       </div>
+
+      {/* Add Modal */}
+      <AddCustomerModal show={showModal} handleClose={() => setShowModal(false)} />
     </div>
   );
 };

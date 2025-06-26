@@ -66,15 +66,13 @@ const Transactionhistory = () => {
     <div className="container-flud mt-4 py-4 ">
       <div className="">
         {/* Header */}
-        <div className="bg-white shadow-sm border rounded p-4 mb-4">
-          <h2 className="mb-1">Transaction History</h2>
-          <p className="text-muted mb-0">All past draw down requests</p>
-        </div>
+             <h2 className="page-heading">Transaction History</h2>
+          <p className="page-subheading">All past draw down requests</p>
 
         {/* Table */}
-        <div className="bg-white shadow-sm rounded p-3">
+        <div className="card-green shadow-sm rounded p-3">
           <div className="table-responsive">
-            <table className="table align-middle table-hover">
+            <table className="table align-middle table-hover table-green">
               <thead className="table-light">
                 <tr>
                   <th>Reference</th>

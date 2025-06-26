@@ -19,7 +19,7 @@ const notifications = {
       title: "Project Review Request",
       message: "Marketing team requested a review for the new campaign",
       time: "6 hours ago",
-      unread: false,
+      unread: true,
     },
   ],
   customerMessages: [
@@ -39,7 +39,7 @@ const notifications = {
       title: "Lisa Anderson",
       message: "The latest design changes look great!",
       time: "5 hours ago",
-      unread: false,
+      unread: true,
     },
   ],
 };
@@ -70,11 +70,11 @@ const NotificationItem = ({ title, message, time, unread }) => (
 // ✅ Main notifications component
 const NotificationsCard = () => {
   return (
-    <div className="p-4" style={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}>
-      <h3 className="fw-bold mb-4">Notifications</h3>
+    <div className="p-2 mt-4" style={{ minHeight: "100vh" }}>
+      <h3 className="page-heading">Notifications</h3>
 
-      <div className="mb-5">
-        <h6 className="text-muted mb-3">New Requests</h6>
+      <div className="mb-5 mt-3">
+        <h6 className=" mb-3">New Requests</h6>
         <div className="border rounded overflow-hidden">
           {notifications.newRequests.map((item, idx) => (
             <NotificationItem key={idx} {...item} />
@@ -83,7 +83,7 @@ const NotificationsCard = () => {
       </div>
 
       <div>
-        <h6 className="text-muted mb-3">Messages from Customers</h6>
+        <h6 className="mb-3">Messages from Customers</h6>
         <div className="border rounded overflow-hidden">
           {notifications.customerMessages.map((item, idx) => (
             <NotificationItem key={idx} {...item} />

@@ -37,7 +37,8 @@ const MessagesUI = () => {
   const [selectedMessage, setSelectedMessage] = useState(messages[0]);
 
   return (
-    <div className="container-fluid" style={{ backgroundColor: "#f8fafc", minHeight: "100vh", padding: "2rem" }}>
+    <div className="" style={{ minHeight: "100vh", padding: "2rem" }}>
+       <h3 className="page-heading mb-3">Message</h3>
       <div className="row bg-white shadow rounded-3 overflow-hidden" style={{ minHeight: "75vh" }}>
         {/* Message List */}
         <div className="col-md-4 border-end p-3" style={{ backgroundColor: "#f1f5f9" }}>

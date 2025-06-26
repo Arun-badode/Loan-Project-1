@@ -15,13 +15,13 @@ const EditCreditLineModal = ({ show, handleClose }) => {
     <Modal show={show} onHide={handleClose} size="lg" centered backdrop="static">
       <Modal.Header closeButton>
         <Modal.Title className="fw-semibold">Edit Credit Line - John Smith</Modal.Title>
-        <Button variant="link" className="ms-auto text-decoration-none text-primary" onClick={handleClose}>
+        <Button variant="link" className="ms-auto text-decoration-none text-Success" onClick={handleClose}>
           <i className="fas fa-arrow-left me-1"></i> Back
         </Button>
       </Modal.Header>
 
       <Modal.Body>
-        <div className="bg-light p-3 rounded text-primary fw-semibold mb-4">
+        <div className="bg-light p-3 rounded text-Success fw-semibold mb-4">
           Current Credit Line: <span className="text-dark">$50,000</span>
         </div>
 
@@ -56,7 +56,7 @@ const EditCreditLineModal = ({ show, handleClose }) => {
             <Button variant="secondary" onClick={handleClose} className="me-2">
               Cancel
             </Button>
-            <Button variant="primary" type="submit">
+            <Button variant="Success" type="submit">
               Update Credit Line
             </Button>
           </div>

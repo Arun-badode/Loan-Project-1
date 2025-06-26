@@ -102,7 +102,7 @@ const TransactionsLog = () => {
           {transactions.map((txn) => (
             <tr key={txn.id}>
               <td>{txn.datetime}</td>
-              <td className="text-primary">{txn.id}</td>
+              <td className="text-Success">{txn.id}</td>
               <td>{txn.amount}</td>
               <td>{txn.type}</td>
               <td>{getStatusBadge(txn.status)}</td>

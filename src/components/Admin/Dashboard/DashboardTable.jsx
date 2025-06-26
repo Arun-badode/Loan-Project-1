@@ -89,7 +89,7 @@ const DashboardTable = () => {
                 <td>{item.date}</td>
                 <td>{statusBadge(item.status)}</td>
                 <td>
-                  {/* <button className="btn btn-sm btn-link text-primary me-2" title="View">
+                  {/* <button className="btn btn-sm btn-link text-Success me-2" title="View">
                     <i className="fas fa-eye"></i>
                   </button> */}
 

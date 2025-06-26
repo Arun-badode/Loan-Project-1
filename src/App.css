@@ -83,12 +83,12 @@ main {
   margin-bottom: 20px;
 }
 
-.login-container .btn-primary {
+.login-container .btn-Success {
   background-color: #578e7e;
   border-color: #578e7e;
 }
 
-.login-container .btn-primary:hover {
+.login-container .btn-Success:hover {
   background-color: #578e7e;
   border-color: #578e7e;
 }
@@ -97,13 +97,13 @@ main {
   margin-top: 10px;
 }
 
-.btn-outline-primary {
+.btn-outline-Success {
   color: #578e7e;
   border-color: #578e7e;
   background-color: white;
 }
 
-.btn-outline-primary:hover {
+.btn-outline-Success:hover {
   background-color: #578e7e;
   color: white;
   border-color: #578e7e;

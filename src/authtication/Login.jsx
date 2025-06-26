@@ -67,7 +67,7 @@ const Login = () => {
 
   return (
     <>
-      <main>
+      <div>
         <div className="login-container" style={{ backgroundColor: "#ccf8db" }}>
           <img
             src="https://i.ibb.co/KxdfWFTv/3db2775f70a199b26bc47425ca16af18-1-removebg-preview.png"
@@ -239,7 +239,7 @@ const Login = () => {
             </form>
           )}
         </div>
-      </main>
+      </div>
     </>
   );
 };

@@ -83,7 +83,7 @@ const Requestfund = () => {
                   <div className="border border-2 border-secondary border-dashed p-4 rounded text-center bg-light-subtle">
                     <i className="fas fa-cloud-upload-alt text-secondary fs-2 mb-2 d-block"></i>
                     <label htmlFor="file-upload" className="form-label">
-                      <span className="text-primary fw-semibold cursor-pointer">Upload files</span> or drag and drop
+                      <span className="text-Success fw-semibold cursor-pointer">Upload files</span> or drag and drop
                     </label>
                     <input type="file" id="file-upload" multiple className="form-control d-none" />
                     <p className="text-muted small">PDF, DOC up to 10MB</p>

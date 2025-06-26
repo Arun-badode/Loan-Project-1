@@ -30,7 +30,7 @@ const CustomerDetailsModal = ({ show, handleClose }) => {
           <Col md={6}>
             <div className="p-3 bg-light rounded">
               <h6 className="fw-bold mb-3">Credit Information</h6>
-              <p className="mb-2"><strong>Credit Line</strong><br /><span className="text-primary">$50,000</span></p>
+              <p className="mb-2"><strong>Credit Line</strong><br /><span className="text-Success">$50,000</span></p>
               <p className="mb-2"><strong>Current Balance</strong><br />$12,500</p>
               <p className="mb-0"><strong>Status</strong><br /><span className="badge bg-success">Active</span></p>
             </div>

@@ -38,7 +38,7 @@ const DashboardCard = () => {
                   <h5 className="fw-bold">$150,000,000</h5>
                   <small className="text-success">+8% from last month</small>
                 </div>
-                <i className="fa-solid fa-circle-check text-primary fs-4"></i>
+                <i className="fa-solid fa-circle-check text-Success fs-4"></i>
               </div>
             </div>
           </Col>

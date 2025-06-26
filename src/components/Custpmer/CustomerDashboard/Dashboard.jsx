@@ -32,9 +32,9 @@ const Customerdashboard = () => {
 
       {/* Top 3 Cards */}
       <div className="row g-4">
-        <div className="col-md-4">
-          <div className="card shadow-sm">
-            <div className="card-body">
+        <div className="col-md-4 ">
+          <div className="card shadow-sm ">
+            <div className="card-body card-green">
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <small className="text-muted">Total Line of Credit</small>
                 <div className="rounded-circle bg-light p-2">
@@ -49,7 +49,7 @@ const Customerdashboard = () => {
 
         <div className="col-md-4">
           <div className="card shadow-sm">
-            <div className="card-body">
+            <div className="card-body card-green">
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <small className="text-muted">Amount Used</small>
                 <div className="rounded-circle bg-light p-2">
@@ -64,7 +64,7 @@ const Customerdashboard = () => {
 
         <div className="col-md-4">
           <div className="card shadow-sm">
-            <div className="card-body">
+            <div className="card-body card-green">
               <div className="d-flex justify-content-between align-items-center mb-2">
                 <small className="text-muted">Available Balance</small>
                 <div className="rounded-circle bg-light p-2">
@@ -83,7 +83,7 @@ const Customerdashboard = () => {
         {/* Credit Summary */}
         <div className="col-md-6">
           <div className="card shadow-sm">
-            <div className="card-body">
+            <div className="card-body card-green">
               <div className="d-flex justify-content-between mb-3">
                 <h5 className="card-title fw-semibold">Credit Summary</h5>
               </div>
@@ -96,12 +96,12 @@ const Customerdashboard = () => {
               </div>
 
               {/* Summary Details */}
-              <ul className="list-group list-group-flush">
-                <li className="list-group-item d-flex justify-content-between">
+              <ul className="list-group list-group-flush card-green">
+                <li className="list-group-item d-flex justify-content-between card-green">
                   <span className="text-muted small">Total Loan</span>
                   <strong>$150,000,000</strong>
                 </li>
-                <li className="list-group-item d-flex justify-content-between">
+                <li className="list-group-item d-flex justify-content-between card-green" >
                   <span className="text-muted small">Pending Balance</span>
                   <strong>$90,000,000</strong>
                 </li>
@@ -113,7 +113,7 @@ const Customerdashboard = () => {
         {/* Recent Transactions */}
         <div className="col-md-6">
           <div className="card shadow-sm">
-            <div className="card-body">
+            <div className="card-body card-green">
               <div className="d-flex justify-content-between mb-3">
                 <h5 className="card-title fw-semibold">Recent Transactions</h5>
                 <button className="btn btn-link text-success btn-sm">
@@ -122,7 +122,7 @@ const Customerdashboard = () => {
               </div>
 
               <div className="table-responsive">
-                <table className="table table-sm align-middle">
+                <table className="table table-sm align-middle table-green">
                   <thead className="table-light">
                     <tr>
                       <th>Transaction ID</th>

@@ -144,12 +144,12 @@ const Sidebar = ({ collapsed }) => {
                 </div>
               </li>
               <li
-                className={`menu-item ${isActive("/settings") ? "active" : ""}`}
+                className={`menu-item ${isActive("/requestfund") ? "active" : ""}`}
               >
                 <div
                   className="menu-link menu-i"
                   onClick={() => {
-                    navigate("/settings");
+                    navigate("/requestfund");
                     menuItemClick();
                   }}
                 >
@@ -157,12 +157,12 @@ const Sidebar = ({ collapsed }) => {
                 </div>
               </li>
               <li
-                className={`menu-item ${isActive("/settings") ? "active" : ""}`}
+                className={`menu-item ${isActive("/transactionhistory") ? "active" : ""}`}
               >
                 <div
                   className="menu-link menu-i"
                   onClick={() => {
-                    navigate("/settings");
+                    navigate("/transactionhistory");
                     menuItemClick();
                   }}
                 >

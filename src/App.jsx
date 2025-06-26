@@ -6,6 +6,8 @@ import Sidebar from "./layout/Sidebar";
 import { useState } from "react";
 import Login from "./authtication/Login";
 import Customerdashboard from "./components/Custpmer/CustomerDashboard/Dashboard";
+import Requestfund from "./components/Custpmer/RequestFunds/Requestfund";
+import Transactionhistory from "./components/Custpmer/TransactionHistory/Transactionhistory";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -51,6 +53,8 @@ function App() {
 
            {/* CustomerDashboard */}
           <Routes><Route path="/customer-dashboard" element={<Customerdashboard />} /></Routes>
+          <Routes><Route path="/requestfund" element={<Requestfund />} /></Routes>
+          <Routes><Route path="/transactionhistory" element={<Transactionhistory />} /></Routes>
            {/* End-CustomerDashboard */}
         </div>
       </div>

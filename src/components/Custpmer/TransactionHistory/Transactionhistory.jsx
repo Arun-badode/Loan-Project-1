@@ -70,9 +70,9 @@ const Transactionhistory = () => {
           <p className="page-subheading">All past draw down requests</p>
 
         {/* Table */}
-        <div className="bg-white shadow-sm rounded p-3">
+        <div className="card-green shadow-sm rounded p-3">
           <div className="table-responsive">
-            <table className="table align-middle table-hover">
+            <table className="table align-middle table-hover table-green">
               <thead className="table-light">
                 <tr>
                   <th>Reference</th>

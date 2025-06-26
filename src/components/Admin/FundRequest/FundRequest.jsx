@@ -76,7 +76,7 @@ const FundRequest = () => {
   };
 
   return (
-    <Container fluid className="py-4 bg-light min-vh-100">
+    <div className="py-4 min-vh-100">
       <Container>
         {/* Page Header */}
         <div className="mb-4">
@@ -240,7 +240,7 @@ const FundRequest = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+    </div>
   );
 };
 

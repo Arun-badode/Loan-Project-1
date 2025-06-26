@@ -1,7 +1,15 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ toggleSidebar }) => {
+  const navigate = useNavigate(); // ✅ useNavigate at top level
+
+  const handleLogout = () => {
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userEmail");
+    navigate("/"); // ✅ navigate to root
+  };
+
   return (
     <nav className="navbar navbar-light">
       <div className="container-fluid">
@@ -12,10 +20,14 @@ const Navbar = ({ toggleSidebar }) => {
               <a className="nav-brand fw-bold" href="#">
                 Hi, Jacob Hills
               </a>
-              
-              <p className="p-0 m-0 d-none d-md-block">Jocob Hills Group Of Company</p>
+              <p className="p-0 m-0 d-none d-md-block">
+                Jocob Hills Group Of Company
+              </p>
             </div>
-            <div className="nav-toggle-icon me-3 d-lg-none" onClick={toggleSidebar}>
+            <div
+              className="nav-toggle-icon me-3 d-lg-none"
+              onClick={toggleSidebar}
+            >
               <button className="btn p-0 border-0 bg-transparent">
                 <i className="fa fa-bars fs-4" aria-hidden="true"></i>
               </button>
@@ -27,9 +39,6 @@ const Navbar = ({ toggleSidebar }) => {
 
           {/* Right side - Icons and profile */}
           <div className="d-flex align-items-center">
-            {/* Toggle button - visible only on mobile */}
-            
-
             {/* Notification bell */}
             <a className="bell-icon me-3" href="#">
               <i className="fa-regular fa-bell fs-4"></i>
@@ -64,9 +73,9 @@ const Navbar = ({ toggleSidebar }) => {
                   <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/">
+                  <button className="dropdown-item" onClick={handleLogout}>
                     Logout
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>

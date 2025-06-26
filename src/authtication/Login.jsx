@@ -1,35 +1,94 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2"; // Add this at the top
 const Login = () => {
+  const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+  const roleCredentials = {
+    Admin: { email: "admin123", password: "admin@123" },
+    Customer: { email: "Customer123", password: "Customer@123" },
+  };
 
   const toggleForm = () => {
     setShowSignUp(!showSignUp);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!role) {
+      Swal.fire({
+        icon: "warning",
+        title: "Select Role",
+        text: "Please select a role before logging in.",
+      });
+      return;
+    }
+
+    const credentials = roleCredentials[role];
+
+    if (email === credentials.email && password === credentials.password) {
+      localStorage.setItem("userRole", role);
+      localStorage.setItem("userEmail", email);
+
+      Swal.fire({
+        icon: "success",
+        title: "Login Successful",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+
+      setTimeout(() => {
+        if (role === "Admin") {
+          navigate("/dashboard");
+        } else if (role === "Customer") {
+          navigate("/customer-dashboard");
+        }
+      }, 1000);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Login Failed",
+        text: "Invalid credentials. Please try again.",
+      });
+    }
+  };
+  const handleRoleSelect = (selectedRole) => {
+    setRole(selectedRole);
+    setEmail(roleCredentials[selectedRole].email);
+    setPassword(roleCredentials[selectedRole].password);
+  };
+
   return (
     <>
       <main>
-        <div className="login-container" style={{ backgroundColor: '#ccf8db' }}>
+        <div className="login-container" style={{ backgroundColor: "#ccf8db" }}>
           <img
             src="https://i.ibb.co/KxdfWFTv/3db2775f70a199b26bc47425ca16af18-1-removebg-preview.png"
             alt="Logo"
             className="mb-1"
-            style={{ height: "150px", objectFit: "contain" }}
+            style={{ height: "100px", objectFit: "contain" }}
           />
-          <h3 className="mb-4 fw-bold" style={{ color: "#4d4d4d" }}>
+          <h4 className="mb-4 fw-bold" style={{ color: "#4d4d4d" }}>
             Client sign-in
-          </h3>
+          </h4>
 
           {!showSignUp ? (
             // Login Form
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="mb-3">
                 <input
                   type="text"
                   className="form-control rounded-pill py-2 px-3"
                   placeholder="Username"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)} // ✅ Make editable
                   style={{
                     borderColor: "#4d4d4d",
                     color: "#4d4d4d",
@@ -44,6 +103,8 @@ const Login = () => {
                   type="password"
                   className="form-control rounded-pill py-2 px-3"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)} // ✅ Make editable
                   style={{
                     borderColor: "#4d4d4d",
                     color: "#4d4d4d",
@@ -57,152 +118,121 @@ const Login = () => {
                 </a>
               </div>
 
-               <Link to="/dashboard">
-        <button style={{background:"green"}} className="btn btn-danger rounded-pill w-100 py-2 fw-semibold">
-          Sign in
-        </button>
-        </Link>
-        <p className="mt-3" style={{ color: '#4d4d4d' }}>
-          Don’t have an account?{' '}
-          <Link  className="text-danger fw-semibold text-decoration-none"  onClick={toggleForm}>
-            Sign up
-          </Link>
-        </p>
-              {/* <div className="d-flex">
-                <Link style={{ color: "white" }} to="/dashboard">
-                  <button
-                    type="submit"
-                    className="px-4 py-2 ms-1 btn-primary shadow"
-                  >
-                    Login
-                  </button>
-                </Link>
-                <button
-                  type="button"
+              <button
+                style={{ background: "green" }}
+                type="submit"
+                className="btn btn-danger rounded-pill w-100 py-2 fw-semibold"
+              >
+                Sign in
+              </button>
+
+              <p className="mt-3" style={{ color: "#4d4d4d" }}>
+                Don’t have an account?{" "}
+                <Link
+                  className="text-danger fw-semibold text-decoration-none"
                   onClick={toggleForm}
-                  className="px-4 py-2 ms-4 btn-outline-primary"
                 >
-                  Sign Up
-                </button>
-              </div> */}
+                  Sign up
+                </Link>
+              </p>
+
+              <div className="d-flex flex-wrap justify-content-center mt-3 gap-2">
+                {Object.keys(roleCredentials).map((r) => (
+                  <button
+                    type="button"
+                    key={r}
+                    className={`btn btn-outline-secondary ${
+                      role === r ? "active" : ""
+                    }`}
+                    onClick={() => handleRoleSelect(r)}
+                  >
+                    {r}
+                  </button>
+                ))}
+              </div>
             </form>
           ) : (
             // Sign-Up Form
             <form className="signup-form">
-              
+              <input
+                type="text"
+                className="form-control rounded-pill py-2 px-3"
+                placeholder="Full Name"
+                style={{
+                  borderColor: "#4d4d4d",
+                  color: "#4d4d4d",
+                  fontWeight: "500",
+                }}
+              />
+              <input
+                type="email"
+                className="form-control rounded-pill py-2 px-3"
+                placeholder="Email Address"
+                style={{
+                  borderColor: "#4d4d4d",
+                  color: "#4d4d4d",
+                  fontWeight: "500",
+                }}
+              />
+              <input
+                type="tel"
+                className="form-control rounded-pill py-2 px-3"
+                placeholder="Phone Number"
+                style={{
+                  borderColor: "#4d4d4d",
+                  color: "#4d4d4d",
+                  fontWeight: "500",
+                }}
+              />
+              <input
+                type="password"
+                className="form-control rounded-pill py-2 px-3"
+                placeholder="Password"
+                style={{
+                  borderColor: "#4d4d4d",
+                  color: "#4d4d4d",
+                  fontWeight: "500",
+                }}
+              />
+              <input
+                type="password"
+                className="form-control rounded-pill py-2 px-3"
+                placeholder="Confirm Password"
+                style={{
+                  borderColor: "#4d4d4d",
+                  color: "#4d4d4d",
+                  fontWeight: "500",
+                }}
+              />
+
+              <div className="form-check text-start">
                 <input
-            type="text"
-            className="form-control rounded-pill py-2 px-3"
-            placeholder="Full Name"
-            style={{ borderColor: '#4d4d4d', color: '#4d4d4d', fontWeight: '500' }}
-          />
-          <input
-            type="email"
-            className="form-control rounded-pill py-2 px-3"
-            placeholder="Email Address"
-            style={{ borderColor: '#4d4d4d', color: '#4d4d4d', fontWeight: '500' }}
-          />
-           <input
-            type="tel"
-            className="form-control rounded-pill py-2 px-3"
-            placeholder="Phone Number"
-            style={{ borderColor: '#4d4d4d', color: '#4d4d4d', fontWeight: '500' }}
-          />
-          <input
-            type="password"
-            className="form-control rounded-pill py-2 px-3"
-            placeholder="Password"
-            style={{ borderColor: '#4d4d4d', color: '#4d4d4d', fontWeight: '500' }}
-          />
-          <input
-            type="password"
-            className="form-control rounded-pill py-2 px-3"
-            placeholder="Confirm Password"
-            style={{ borderColor: '#4d4d4d', color: '#4d4d4d', fontWeight: '500' }}
-          />
-             
-              {/* <div className="form-row">
-                <select className="form-input">
-                  <option value="" disabled selected>
-                    Gender *
-                  </option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
-                </select>
-                <input
-                  type="text"
-                  placeholder="City *"
-                  className="form-input "
+                  className="form-check-input"
+                  type="checkbox"
+                  id="terms"
                 />
-              </div> */}
-              {/* <div className="form-row ">
-                <input
-                  type="text"
-                  placeholder="State *"
-                  className="form-input "
-                />
-                <input
-                  type="text"
-                  placeholder="Country *"
-                  className="form-input"
-                />
+                <label className="form-check-label small" htmlFor="terms">
+                  I agree to the{" "}
+                  <span className="text-danger">terms and conditions</span>
+                </label>
               </div>
-              <div className="form-row">
-                <select className="form-input">
-                  <option value="" disabled selected>
-                    User Type *
-                  </option>
-                  <option value="admin">Admin</option>
-                  <option value="user">User</option>
-                </select>
-                <input
-                  type="password"
-                  placeholder="Password *"
-                  className="form-input"
-                />
-              </div> */}
-              {/* <div className="form-row ">
-                <input
-                  type="password"
-                  placeholder="Confirm Password *"
-                  className="form-input"
-                />
-              </div> */}
-               <div className="form-check text-start">
-            <input className="form-check-input" type="checkbox" id="terms" />
-            <label className="form-check-label small" htmlFor="terms">
-              I agree to the <span className="text-danger">terms and conditions</span>
-            </label>
-          </div>
 
-          <button style={{background:"green"}} className="btn btn-danger rounded-pill py-2 fw-semibold">
-            Sign Up
-          </button>
+              <button
+                style={{ background: "green" }}
+                className="btn btn-danger rounded-pill py-2 fw-semibold"
+              >
+                Sign Up
+              </button>
 
-           <p className="mt-2" style={{ color: '#4d4d4d' }}>
-          Already have an account?{' '}
-          <Link onClick={toggleForm} className="text-danger fw-semibold text-decoration-none">
-            Sign in
-          </Link>
-        </p>
-              {/* <div className="d-flex">
-                <button
-                  type="submit"
-                  className="px-4 py-2 ms-1 btn-primary shadow"
-                  style={{ border: "none" }}
-                >
-                  Sign Up
-                </button>
-                <button
-                  type="button"
+              <p className="mt-2" style={{ color: "#4d4d4d" }}>
+                Already have an account?{" "}
+                <Link
                   onClick={toggleForm}
-                  className="px-4 py-2 ms-4 "
-                  style={{ border: "2px solid #578e7e", color: "#578e7e" }}
+                  className="text-danger fw-semibold text-decoration-none"
                 >
-                  Login
-                </button>
-              </div> */}
+                  Sign in
+                </Link>
+              </p>
             </form>
           )}
         </div>

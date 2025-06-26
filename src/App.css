@@ -262,11 +262,11 @@ select.form-input {
 /* maindashbord end */
 /* navbar start */
 .navbar {
-  height: 85px;
+  height: 95px;
   border-bottom: 1px solid #949494;
   position: fixed;
   z-index: 5;
-  background-color: white;
+  background-color: #ccf8db;
   width: 100%;
 }
 
@@ -277,7 +277,7 @@ select.form-input {
 .nav-brand {
   color: #578E7E;
   line-height: 54.46px;
-  font-size: 45px;
+  font-size: 35px;
   font-weight: 700;
   font-family: inter;
 }
@@ -308,7 +308,7 @@ select.form-input {
 }
 
 .nav-bran {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   flex-wrap: nowrap;
 }

@@ -5,16 +5,12 @@ const Navbar = ({ toggleSidebar }) => {
     <>
       <nav className="navbar navbar-light">
         <div className="container-fluid nav-conte">
-          <div className="nav-content">
+          <div className="nav-content -">
             <div className="nav-bran">
-              <a className="nav-brand" href="#">
-               Loan
+              <a className="nav-brand d-flex" href="#">
+                Hi, Jacob Hills
               </a>
-              <div className="nav-taggle-icon" onClick={toggleSidebar}>
-                <a href="#">
-                  <i className="fa fa-bars" aria-hidden="true"></i>
-                </a>
-              </div>
+              <p className="p-0">Jocob Hills Group Of Company</p>
             </div>
             <div className="nav-main-icon">
               <a className="bell-icon" href="#">
@@ -25,7 +21,8 @@ const Navbar = ({ toggleSidebar }) => {
                   className="me-2 fw-bold p-1 rounded-4 profile d-flex align-items-center"
                   style={{ cursor: "pointer" }}
                   data-bs-toggle="dropdown"
-                  aria-expanded="false">
+                  aria-expanded="false"
+                >
                   <div className="profile-element">
                     <div className="avatar online">
                       <i className="fa-solid user-icon fa-circle-user"></i>

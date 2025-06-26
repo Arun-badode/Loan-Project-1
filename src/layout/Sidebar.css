@@ -1,12 +1,12 @@
 .sidebar-container {
   width: 320px;
-  background-color: white;
   height: 89vh;
   overflow-y: auto;
   transition: width 0.3s ease;
   margin-top: 85px;
   z-index: 1;
   position: fixed;
+  background-color: #ccf8db;
 }
 
 .sidebar-container.collapsed {
@@ -43,7 +43,7 @@
   align-items: center;
   padding: 10px;
   text-decoration: none;
-  color: #578E7E;
+  color: black;
   cursor: pointer;
   transition: background 0.3s ease;
 }

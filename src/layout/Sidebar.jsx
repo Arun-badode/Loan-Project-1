@@ -131,12 +131,12 @@ const Sidebar = ({ collapsed }) => {
           {role === "Customer" && (
             <>
               <li
-                className={`menu-item ${isActive("/settings") ? "active" : ""}`}
+                className={`menu-item ${isActive("/customer-dashboard") ? "active" : ""}`}
               >
                 <div
                   className="menu-link menu-i"
                   onClick={() => {
-                    navigate("/settings");
+                    navigate("/customer-dashboard");
                     menuItemClick();
                   }}
                 >

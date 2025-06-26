@@ -5,6 +5,7 @@ import Navbar from "./layout/Navbar";
 import Sidebar from "./layout/Sidebar";
 import { useState } from "react";
 import Login from "./authtication/Login";
+import Customerdashboard from "./components/Custpmer/CustomerDashboard/Dashboard";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -39,6 +40,18 @@ function App() {
           }`}
         >
           <Routes><Route path="/" element={<Login />} /></Routes>
+
+          {/* AdminDashboard */}
+
+          {/*End-AdminDashboard */}
+
+
+          {/* ------------------------------------------------------------------------------------------------------ */}
+
+
+           {/* CustomerDashboard */}
+          <Routes><Route path="/customer-dashboard" element={<Customerdashboard />} /></Routes>
+           {/* End-CustomerDashboard */}
         </div>
       </div>
     </>

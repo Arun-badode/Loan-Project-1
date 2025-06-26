@@ -58,7 +58,7 @@ const statusBadge = (status) => {
 const  DashboardTable = () => {
      const [showModal, setShowModal] = React.useState(false);
   return (
-    <div className="card border-0 shadow-sm rounded-4 p-3" style={{ backgroundColor: "#f1fdf6" }}>
+    <div className="card border-0 shadow-sm rounded-4 p-3">
       <div className="d-flex justify-content-between align-items-center px-2 pb-2">
         <h5 className="fw-semibold mb-0">Recent Fund Requests</h5>
         <a href="#view-all" className="text-danger text-decoration-none fw-semibold">

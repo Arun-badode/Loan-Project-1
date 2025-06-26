@@ -6,11 +6,11 @@ import DashboardTable from "./DashboardTable";
 const DashboardCard= () => {
   return (
     <div className="bg-success-subtle py-4 min-vh-100">
-      <Container>
+      <Container-fluid>
         {/* Heading */}
         <div className="mb-4">
-          <h4 className="fw-bold">Hello Admin</h4>
-          <p className="text-muted">Welcome to the Admin Dashboard</p>
+          <h4 className="page-heading">Hello Admin</h4>
+          <p className="page-subheading">Welcome to the Admin Dashboard</p>
         </div>
 
         {/* Stats Cards */}
@@ -57,7 +57,7 @@ const DashboardCard= () => {
             </div>
           </Col>
         </Row>
-      </Container>
+      </Container-fluid>
       <DashboardCharts/>
       <DashboardTable/>
 

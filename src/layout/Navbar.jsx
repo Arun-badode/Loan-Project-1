@@ -11,7 +11,7 @@ const Navbar = ({ toggleSidebar }) => {
   };
 
   return (
-    <nav className="navbar navbar-light">
+    <nav className="navbar navbar-light p-2">
       <div className="container-fluid">
         <div className="d-flex justify-content-between w-100 align-items-center">
           {/* Left side - Brand and company name */}

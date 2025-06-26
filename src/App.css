@@ -369,6 +369,15 @@ select.form-input {
   .right-side-content.collapsed {
     padding-left: 0px !important;
   }
+  .right-side-content {
+  width: 100%;
+  margin-top: 85px;
+  padding-left: 0px;
+  /* background-color: #f2f2f2; */
+  /* height: 668px; */
+  /* overflow: scroll; */
+  transition: padding-left 0.3s;
+}
 
 }
 
@@ -519,7 +528,15 @@ select.form-input {
   .contract-details-container {
     padding: 15px;
   }
-
+.right-side-content {
+  width: 100%;
+  margin-top: 85px;
+  padding-left:0px;
+  /* background-color: #f2f2f2; */
+  /* height: 668px; */
+  /* overflow: scroll; */
+  transition: padding-left 0.3s;
+}
   .header {
     flex-direction: column;
     align-items: flex-start;
@@ -557,7 +574,15 @@ select.form-input {
     font-size: 10px;
     padding: 6px 10px;
   }
-
+.right-side-content {
+  width: 100%;
+  margin-top: 85px;
+  padding-left: 0px;
+  /* background-color: #f2f2f2; */
+  /* height: 668px; */
+  /* overflow: scroll; */
+  transition: padding-left 0.3s;
+}
   .title {
     font-size: 18px;
   }
@@ -617,6 +642,15 @@ select.form-input {
   .fa-arrow-right{
     display: none ;
   }
+  .right-side-content {
+  width: 100%;
+  margin-top: 85px;
+  padding-left: 0px;
+  /* background-color: #f2f2f2; */
+  /* height: 668px; */
+  /* overflow: scroll; */
+  transition: padding-left 0.3s;
+}
 }
 .workflow-line {
   width: 4px;

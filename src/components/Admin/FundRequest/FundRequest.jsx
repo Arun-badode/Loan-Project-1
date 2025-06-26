@@ -55,8 +55,8 @@ const FundRequest = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'new': return 'bg-primary';
-      case 'in-progress': return 'bg-warning';
+      case 'new': return 'bg-success';
+      case 'in-progress': return 'bg-success';
       case 'completed': return 'bg-success';
       default: return 'bg-secondary';
     }
@@ -80,32 +80,77 @@ const FundRequest = () => {
       <Container>
         {/* Page Header */}
         <div className="mb-4">
-          <h1 className="page-heading">Fund Requests</h1>
-          <p className="page-subheading">Manage and process funding requests across the organization</p>
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <div>
+              <h1 className="page-heading">Fund Requests</h1>
+              <p className="page-subheading">Manage and process funding requests across the organization</p>
+            </div>
+            <Button variant="success" onClick={() => setIsModalOpen(true)} className="d-flex align-items-center">
+              <i className="fas fa-plus me-2"></i>
+              New Request
+            </Button>
+          </div>
+          <hr className="my-4" />
         </div>
 
         {/* Request Status Tabs */}
         <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
-          <Nav variant="tabs" className="mb-4">
-            <Nav.Item>
-              <Nav.Link eventKey="new">
+          <Nav
+            variant="pills"
+            className="mb-4 rounded-pill bg-white p-2 shadow-sm w-100"
+            style={{ maxWidth: 'fit-content' }}
+            activeKey={activeTab}
+            onSelect={(selectedKey) => setActiveTab(selectedKey)}
+          >
+            <Nav.Item className="me-2">
+              <Nav.Link
+                eventKey="new"
+                className={`rounded-pill px-4 py-2 fw-semibold ${activeTab === "new"
+                  ? "bg-success text-white"
+                  : "text-success border border-success"
+                  }`}
+              >
                 <i className="fas fa-file-alt me-2"></i>
                 New Requests
+                <span className="badge bg-success ms-2">
+                  {requests.filter((r) => r.status === "new").length}
+                </span>
               </Nav.Link>
             </Nav.Item>
-            <Nav.Item>
-              <Nav.Link eventKey="in-progress">
+
+            <Nav.Item className="me-2">
+              <Nav.Link
+                eventKey="in-progress"
+                className={`rounded-pill px-4 py-2 fw-semibold ${activeTab === "in-progress"
+                  ? "bg-success text-white"
+                  : "text-success border border-success"
+                  }`}
+              >
                 <i className="fas fa-spinner me-2"></i>
                 In Progress
+                <span className="badge bg-success ms-2">
+                  {requests.filter((r) => r.status === "in-progress").length}
+                </span>
               </Nav.Link>
             </Nav.Item>
+
             <Nav.Item>
-              <Nav.Link eventKey="completed">
+              <Nav.Link
+                eventKey="completed"
+                className={`rounded-pill px-4 py-2 fw-semibold ${activeTab === "completed"
+                  ? "bg-success text-white"
+                  : "text-success border border-success"
+                  }`}
+              >
                 <i className="fas fa-check-circle me-2"></i>
                 Completed
+                <span className="badge bg-success ms-2">
+                  {requests.filter((r) => r.status === "completed").length}
+                </span>
               </Nav.Link>
             </Nav.Item>
           </Nav>
+
 
           {/* Request List Container */}
           <Tab.Content>
@@ -113,48 +158,64 @@ const FundRequest = () => {
               <Row xs={1} md={2} lg={3} className="g-4">
                 {filteredRequests.map((request) => (
                   <Col key={request.id}>
-                    <Card className="h-100 card-green">
-                      <Card.Body>
+                    <Card className="h-100 border-0 shadow-sm">
+                      <Card.Body className="p-4">
                         <div className="d-flex justify-content-between align-items-start mb-3">
                           <div>
-                            <Card.Title>{request.id}</Card.Title>
+                            <Card.Title className="fw-bold text-dark">{request.id}</Card.Title>
                             <Card.Subtitle className="text-muted small">
                               Submitted on {formatDate(request.date)}
                             </Card.Subtitle>
                           </div>
-                          <span className={`badge ${getStatusColor(request.status)} text-capitalize`}>
+                          <span className={`badge ${getStatusColor(request.status)} text-capitalize rounded-pill px-3 py-2`}>
                             {request.status.replace('-', ' ')}
                           </span>
                         </div>
 
-                        <div className="mb-3">
-                          <div className="d-flex align-items-center mb-2">
-                            <i className="fas fa-user text-muted me-2"></i>
-                            <span className="fw-medium">{request.requester}</span>
+                        <div className="mb-4">
+                          <div className="d-flex align-items-center mb-3">
+                            <div className=" bg-opacity-10 rounded-circle p-2 me-3">
+                              <i className="fas fa-user text-success"></i>
+                            </div>
+                            <div>
+                              <p className="mb-0 small text-muted">Requester</p>
+                              <p className="mb-0 fw-semibold">{request.requester}</p>
+                            </div>
                           </div>
-                          <div className="d-flex align-items-center mb-2">
-                            <i className="fas fa-money-bill-wave text-muted me-2"></i>
-                            <span className="fw-medium">{formatCurrency(request.amount)}</span>
+                          <div className="d-flex align-items-center mb-3">
+                            <div className=" bg-opacity-10 rounded-circle p-2 me-3">
+                              <i className="fas fa-money-bill-wave text-success"></i>
+                            </div>
+                            <div>
+                              <p className="mb-0 small text-muted">Amount</p>
+                              <p className="mb-0 fw-semibold">{formatCurrency(request.amount)}</p>
+                            </div>
                           </div>
                           <div className="d-flex align-items-start">
-                            <i className="fas fa-align-left text-muted me-2 mt-1"></i>
-                            <span className="text-muted">{request.description}</span>
+                            <div className=" bg-opacity-10 rounded-circle p-2 me-3">
+                              <i className="fas fa-align-left text-success"></i>
+                            </div>
+                            <div>
+                              <p className="mb-0 small text-muted">Description</p>
+                              <p className="mb-0">{request.description}</p>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="d-grid gap-2">
+                        <div className="d-grid gap-3">
                           {request.status === 'new' && (
                             <div className="d-grid gap-2 d-md-flex">
-                              <Button variant="success" className="me-md-2">
+                              <Button variant="success" className="me-md-2 rounded-pill px-4">
                                 <i className="fas fa-check me-2"></i> Approve
                               </Button>
-                              <Button variant="danger">
+                              <Button variant="outline-danger" className="rounded-pill px-4">
                                 <i className="fas fa-times me-2"></i> Reject
                               </Button>
                             </div>
                           )}
-                          <Button 
-                            variant="outline-secondary"
+                          <Button
+                            variant="outline-success"
+                            className="rounded-pill px-4"
                             onClick={() => {
                               setSelectedRequest(request.id);
                               setStatusUpdate({ status: request.status, comments: '' });
@@ -170,14 +231,14 @@ const FundRequest = () => {
                 ))}
               </Row>
             ) : (
-              <Card className="text-center p-5">
+              <Card className="text-center p-5 border-0 shadow-sm">
                 <Card.Body>
                   <div className="mx-auto mb-4 text-muted">
-                    <i className="fas fa-folder-open fa-4x"></i>
+                    <i className="fas fa-folder-open fa-4x opacity-25"></i>
                   </div>
-                  <h3 className="h5 fw-bold">No fund requests available</h3>
-                  <p className="text-muted">There are no requests in this category at the moment.</p>
-                  <Button variant="primary" className="mt-3">
+                  <h3 className="h5 fw-bold mb-3">No fund requests available</h3>
+                  <p className="text-muted mb-4">There are no requests in this category at the moment.</p>
+                  <Button variant="success" className="rounded-pill px-4 py-2">
                     <i className="fas fa-plus me-2"></i>
                     Create New Request
                   </Button>
@@ -189,15 +250,15 @@ const FundRequest = () => {
       </Container>
 
       {/* Status Update Modal */}
-      <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Update Status</Modal.Title>
+      <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered className='modal-green'>
+        <Modal.Header closeButton className="border-0 pb-0 ">
+          <Modal.Title className="fw-bold">Update Request Status</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="pt-0">
           <Form>
             <Form.Group className="mb-4">
-              <Form.Label>New Status</Form.Label>
-              <div className="d-flex flex-column gap-2">
+              <Form.Label className="fw-semibold mb-3">New Status</Form.Label>
+              <div className="d-flex flex-column gap-3">
                 {['new', 'in-progress', 'completed'].map((status) => (
                   <Form.Check
                     key={status}
@@ -211,13 +272,14 @@ const FundRequest = () => {
                       ...statusUpdate,
                       status: e.target.value
                     })}
+                    className="rounded-pill p-3 border"
                   />
                 ))}
               </div>
             </Form.Group>
 
             <Form.Group>
-              <Form.Label>Comments</Form.Label>
+              <Form.Label className="fw-semibold">Comments</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}
@@ -227,15 +289,16 @@ const FundRequest = () => {
                   ...statusUpdate,
                   comments: e.target.value
                 })}
+                className="border-2"
               />
             </Form.Group>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
+        <Modal.Footer className="border-0">
+          <Button variant="outline-secondary" onClick={() => setIsModalOpen(false)} className="rounded-pill px-4">
             Cancel
           </Button>
-          <Button variant="primary" onClick={() => setIsModalOpen(false)}>
+          <Button variant="success" onClick={() => setIsModalOpen(false)} className="rounded-pill px-4">
             Save Changes
           </Button>
         </Modal.Footer>

@@ -117,10 +117,10 @@ const Requestfund = () => {
                         <td>
                           <span
                             className={`badge rounded-pill text-capitalize ${request.status === "approved"
-                              ? "bg-success-subtle text-success"
+                              ? "badge-success-soft "
                               : request.status === "pending"
-                                ? "bg-warning-subtle text-warning"
-                                : "bg-danger-subtle text-danger"
+                                ? "badge-warning-soft "
+                                : "badge-danger-soft "
                               }`}
                           >
                             {request.status}

@@ -95,61 +95,69 @@ const FundRequest = () => {
 
         {/* Request Status Tabs */}
         <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
-          <Nav
-            variant="pills"
-            className="mb-4 rounded-pill bg-white p-2 shadow-sm w-100"
-            style={{ maxWidth: 'fit-content' }}
-            activeKey={activeTab}
-            onSelect={(selectedKey) => setActiveTab(selectedKey)}
-          >
-            <Nav.Item className="me-2">
-              <Nav.Link
-                eventKey="new"
-                className={`rounded-pill px-4 py-2 fw-semibold ${activeTab === "new"
-                  ? "bg-success text-white"
-                  : "text-success border border-success"
-                  }`}
-              >
-                <i className="fas fa-file-alt me-2"></i>
-                New Requests
-                <span className="badge bg-success ms-2">
-                  {requests.filter((r) => r.status === "new").length}
-                </span>
-              </Nav.Link>
-            </Nav.Item>
+    <Nav
+  variant="pills"
+  className="d-flex flex-nowrap overflow-auto mb-4 bg-white p-2 shadow-sm rounded-pill"
+  style={{ whiteSpace: 'nowrap', gap: '0.5rem' }}
+  activeKey={activeTab}
+  onSelect={(selectedKey) => setActiveTab(selectedKey)}
+>
+  {/* New Requests */}
+  <Nav.Item>
+    <Nav.Link
+      eventKey="new"
+      className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
+        activeTab === "new"
+          ? "bg-success text-white"
+          : "text-success border border-success"
+      }`}
+    >
+      <i className="fas fa-file-alt me-2"></i>
+      New Requests
+      <span className="badge bg-white text-success ms-2">
+        {requests.filter((r) => r.status === "new").length}
+      </span>
+    </Nav.Link>
+  </Nav.Item>
 
-            <Nav.Item className="me-2">
-              <Nav.Link
-                eventKey="in-progress"
-                className={`rounded-pill px-4 py-2 fw-semibold ${activeTab === "in-progress"
-                  ? "bg-success text-white"
-                  : "text-success border border-success"
-                  }`}
-              >
-                <i className="fas fa-spinner me-2"></i>
-                In Progress
-                <span className="badge bg-success ms-2">
-                  {requests.filter((r) => r.status === "in-progress").length}
-                </span>
-              </Nav.Link>
-            </Nav.Item>
+  {/* In Progress */}
+  <Nav.Item>
+    <Nav.Link
+      eventKey="in-progress"
+      className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
+        activeTab === "in-progress"
+          ? "bg-success text-white"
+          : "text-success border border-success"
+      }`}
+    >
+      <i className="fas fa-spinner me-2"></i>
+      In Progress
+      <span className="badge bg-white text-success ms-2">
+        {requests.filter((r) => r.status === "in-progress").length}
+      </span>
+    </Nav.Link>
+  </Nav.Item>
 
-            <Nav.Item>
-              <Nav.Link
-                eventKey="completed"
-                className={`rounded-pill px-4 py-2 fw-semibold ${activeTab === "completed"
-                  ? "bg-success text-white"
-                  : "text-success border border-success"
-                  }`}
-              >
-                <i className="fas fa-check-circle me-2"></i>
-                Completed
-                <span className="badge bg-success ms-2">
-                  {requests.filter((r) => r.status === "completed").length}
-                </span>
-              </Nav.Link>
-            </Nav.Item>
-          </Nav>
+  {/* Completed */}
+  <Nav.Item>
+    <Nav.Link
+      eventKey="completed"
+      className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
+        activeTab === "completed"
+          ? "bg-success text-white"
+          : "text-success border border-success"
+      }`}
+    >
+      <i className="fas fa-check-circle me-2"></i>
+      Completed
+      <span className="badge bg-white text-success ms-2">
+        {requests.filter((r) => r.status === "completed").length}
+      </span>
+    </Nav.Link>
+  </Nav.Item>
+</Nav>
+
+
 
 
           {/* Request List Container */}

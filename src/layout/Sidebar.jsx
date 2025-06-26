@@ -166,7 +166,7 @@ const Sidebar = ({ collapsed }) => {
                     menuItemClick();
                   }}
                 >
-                  <span className="menu-text">Transaction History</span>
+                  <span className="menu-text">Transaction History</span>
                 </div>
               </li>
             </>

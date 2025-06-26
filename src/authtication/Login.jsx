@@ -119,9 +119,8 @@ const Login = () => {
               </div>
 
               <button
-                style={{ background: "green" }}
                 type="submit"
-                className="btn btn-danger rounded-pill w-100 py-2 fw-semibold"
+                className="btn btn-success rounded-pill w-100 py-2 fw-semibold"
               >
                 Sign in
               </button>
@@ -129,7 +128,7 @@ const Login = () => {
               <p className="mt-3" style={{ color: "#4d4d4d" }}>
                 Don’t have an account?{" "}
                 <Link
-                  className="text-danger fw-semibold text-decoration-none"
+                  className="text-success fw-semibold text-decoration-none"
                   onClick={toggleForm}
                 >
                   Sign up
@@ -141,15 +140,20 @@ const Login = () => {
                   <button
                     type="button"
                     key={r}
-                    className={`btn btn-outline-secondary ${
-                      role === r ? "active" : ""
-                    }`}
+                    className={`btn ${role === r ? "btn-success" : "btn-outline-success"
+                      } px-4 py-2 rounded-pill shadow-sm`}
+                    style={{
+                      minWidth: "120px",
+                      fontWeight: "500",
+                      transition: "all 0.3s ease-in-out",
+                    }}
                     onClick={() => handleRoleSelect(r)}
                   >
                     {r}
                   </button>
                 ))}
               </div>
+
             </form>
           ) : (
             // Sign-Up Form
@@ -213,13 +217,12 @@ const Login = () => {
                 />
                 <label className="form-check-label small" htmlFor="terms">
                   I agree to the{" "}
-                  <span className="text-danger">terms and conditions</span>
+                  <span className="text-success">terms and conditions</span>
                 </label>
               </div>
 
               <button
-                style={{ background: "green" }}
-                className="btn btn-danger rounded-pill py-2 fw-semibold"
+                className="btn btn-success rounded-pill py-2 fw-semibold"
               >
                 Sign Up
               </button>
@@ -228,7 +231,7 @@ const Login = () => {
                 Already have an account?{" "}
                 <Link
                   onClick={toggleForm}
-                  className="text-danger fw-semibold text-decoration-none"
+                  className="text-success fw-semibold text-decoration-none"
                 >
                   Sign in
                 </Link>

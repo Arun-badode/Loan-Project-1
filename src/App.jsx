@@ -12,6 +12,8 @@ import FundRequest from "./components/Admin/FundRequest/FundRequest";
 import TransactionsLog from "./components/Admin/Transactionlog/TransactionsLog";
 import NotificationsCard from "./components/Admin/Notification/NotificationCard";
 import MessagesUI from "./components/Admin/Message/MessagesUI";
+import Requestfund from "./components/Custpmer/RequestFunds/Requestfund";
+import Transactionhistory from "./components/Custpmer/TransactionHistory/Transactionhistory";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -64,6 +66,8 @@ function App() {
 
            {/* CustomerDashboard */}
           <Routes><Route path="/customer-dashboard" element={<Customerdashboard />} /></Routes>
+          <Routes><Route path="/requestfund" element={<Requestfund />} /></Routes>
+          <Routes><Route path="/transactionhistory" element={<Transactionhistory />} /></Routes>
            {/* End-CustomerDashboard */}
         </div>
       </div>

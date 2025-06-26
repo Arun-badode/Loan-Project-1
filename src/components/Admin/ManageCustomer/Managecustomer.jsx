@@ -34,7 +34,7 @@ const Managecustomer = () => {
       phone: "+1 (555) 456-7890",
       email: "mchen@example.com",
       creditLine: 100000,
-      status: "Pending Review",
+      status: "Active",
       company: "Chen Technologies",
     },
     {
@@ -76,15 +76,15 @@ const Managecustomer = () => {
       </span>
       <input
         type="text"
-        className="form-control"
+        className="form-control input-green"
         placeholder="Search customers..."
       />
     </div>
 
     {/* Button */}
     <Button
-      variant="primary"
-      className="w-100 w-sm-auto"
+      variant="success"
+      className="w-100 w-sm-auto btn-green"
       onClick={() => setShowModal(true)}
     >
       + Add New Customer
@@ -95,9 +95,9 @@ const Managecustomer = () => {
 
       {/* Card Table */}
       <div className="card shadow-sm">
-        <div className="card-body">
+        <div className="card-body card-green">
           <div className="table-responsive">
-            <table className="table table-hover align-middle">
+            <table className="table table-hover align-middle table-green">
               <thead className="table-light">
                 <tr>
                   <th>Customer Name</th>
@@ -121,16 +121,17 @@ const Managecustomer = () => {
                     <td>{customer.email}</td>
                     <td>${customer.creditLine.toLocaleString()}</td>
                     <td>
-                      <span
-                        className={`badge ${customer.status === "Active"
-                            ? "bg-success"
-                            : customer.status === "Inactive"
-                              ? "bg-danger"
-                              : "bg-warning text-dark"
-                          }`}
-                      >
-                        {customer.status}
-                      </span>
+                     <span className={
+  customer.status === "Active"
+    ? "badge-success-soft py-1 px-2 rounded-pill"
+    : customer.status === "Inactive"
+    ? "badge-danger-soft py-1 px-2 rounded-pill"
+    
+    : "badge-status-pending"
+}>
+  {customer.status}
+</span>
+
                     </td>
                     <td className="text-end">
                       <button

@@ -17,7 +17,7 @@ const DashboardCard = () => {
         <Row className="g-4">
           {/* Card 1 */}
           <Col xs={12} sm={6} lg={4}>
-            <div className="p-4 rounded shadow-sm bg-white h-100">
+            <div className="p-4 rounded shadow-sm card-green h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Total Customers</p>
@@ -31,7 +31,7 @@ const DashboardCard = () => {
 
           {/* Card 2 */}
           <Col xs={12} sm={6} lg={4}>
-            <div className="p-4 rounded shadow-sm bg-white h-100">
+            <div className="p-4 rounded shadow-sm card-green h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Total Credit Approved</p>
@@ -45,7 +45,7 @@ const DashboardCard = () => {
 
           {/* Card 3 */}
           <Col xs={12} sm={6} lg={4}>
-            <div className="p-4 rounded shadow-sm bg-white h-100">
+            <div className="p-4 rounded shadow-sm card-green h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Total Drawn Amount</p>

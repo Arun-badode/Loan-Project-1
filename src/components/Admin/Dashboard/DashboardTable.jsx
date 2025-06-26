@@ -43,30 +43,33 @@ const requests = [
 ];
 
 const statusBadge = (status) => {
+  const baseClasses = "px-2 py-1 rounded-pill fw-medium";
+
   switch (status) {
     case "Approved":
-      return <span className="badge bg-success">Approved</span>;
+      return <span className={`badge-success-soft ${baseClasses} badge-status-approved`}>Approved</span>;
     case "Pending":
-      return <span className="badge bg-warning text-dark">Pending</span>;
+      return <span className={`badge-warning-soft ${baseClasses} badge-status-pending`}>Pending</span>;
     case "Rejected":
-      return <span className="badge bg-danger">Rejected</span>;
+      return <span className={`badge-danger-soft ${baseClasses} badge-status-rejected`}>Rejected</span>;
     default:
-      return <span className="badge bg-secondary">Unknown</span>;
+      return <span className={`badge-warning-soft ${baseClasses} badge-status-unknown`}>Unknown</span>;
   }
 };
+
 
 const  DashboardTable = () => {
      const [showModal, setShowModal] = React.useState(false);
   return (
-    <div className="card border-0 shadow-sm rounded-4 p-3">
-      <div className="d-flex justify-content-between align-items-center px-2 pb-2">
+    <div className="card border-0 shadow-sm rounded-4 p-3 card-green">
+      <div className="d-flex justify-content-between align-items-center px-2 pb-2 ">
         <h5 className="fw-semibold mb-0">Recent Fund Requests</h5>
         <a href="#view-all" className="text-danger text-decoration-none fw-semibold">
           View All
         </a>
       </div>
       <div className="table-responsive">
-        <table className="table table-hover align-middle">
+        <table className="table table-hover align-middle table-green">
           <thead>
             <tr className="text-muted small">
               <th>Request ID</th>
@@ -80,7 +83,7 @@ const  DashboardTable = () => {
           <tbody>
             {requests.map((item, index) => (
               <tr key={index}>
-                <td className="fw-semibold">{item.id}</td>
+                <td className="">{item.id}</td>
                 <td>{item.customer}</td>
                 <td className="fw-bold">{item.amount}</td>
                 <td>{item.date}</td>
@@ -90,9 +93,13 @@ const  DashboardTable = () => {
                     <i className="fas fa-eye"></i>
                   </button> */}
 
-                   <Button  onClick={() => setShowModal(true)}>
-        <i className="fas fa-eye"></i>
-      </Button>
+           
+       <button
+                        className="btn btn-sm btn-outline-primary me-2"
+                       onClick={() => setShowModal(true)}
+                      >
+                        <i className="fas fa-eye me-1"></i> View
+                      </button>
 
       <DashboardViewModal
         show={showModal}

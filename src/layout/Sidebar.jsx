@@ -49,7 +49,7 @@ const Sidebar = ({ collapsed }) => {
                 <div
                   className="menu-link menu-i"
                   onClick={() => {
-                    navigate("/manage");
+                    navigate("/managecustomer");
                     menuItemClick();
                   }}
                 >
@@ -62,7 +62,7 @@ const Sidebar = ({ collapsed }) => {
                 <div
                   className="menu-link menu-i"
                   onClick={() => {
-                    navigate("/requests");
+                    navigate("/fundrequest");
                     menuItemClick();
                   }}
                 >
@@ -77,7 +77,7 @@ const Sidebar = ({ collapsed }) => {
                 <div
                   className="menu-link menu-i"
                   onClick={() => {
-                    navigate("/transactions");
+                    navigate("/transactionlog");
                     menuItemClick();
                   }}
                 >
@@ -92,7 +92,7 @@ const Sidebar = ({ collapsed }) => {
                 <div
                   className="menu-link menu-i"
                   onClick={() => {
-                    navigate("/notifications");
+                    navigate("/notification");
                     menuItemClick();
                   }}
                 >
@@ -105,7 +105,7 @@ const Sidebar = ({ collapsed }) => {
                 <div
                   className="menu-link menu-i"
                   onClick={() => {
-                    navigate("/support");
+                    navigate("/message");
                     menuItemClick();
                   }}
                 >

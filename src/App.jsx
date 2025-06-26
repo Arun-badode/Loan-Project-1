@@ -6,6 +6,12 @@ import Sidebar from "./layout/Sidebar";
 import { useState } from "react";
 import Login from "./authtication/Login";
 import Customerdashboard from "./components/Custpmer/CustomerDashboard/Dashboard";
+import DashboardCard from "./components/Admin/Dashboard/DashboardCard";
+import Managecustomer from "./components/Admin/ManageCustomer/Managecustomer";
+import FundRequest from "./components/Admin/FundRequest/FundRequest";
+import TransactionsLog from "./components/Admin/Transactionlog/TransactionsLog";
+import NotificationsCard from "./components/Admin/Notification/NotificationCard";
+import MessagesUI from "./components/Admin/Message/MessagesUI";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -42,7 +48,14 @@ function App() {
           <Routes><Route path="/" element={<Login />} /></Routes>
 
           {/* AdminDashboard */}
-
+<Routes>
+  <Route path="/dashboard" element={<DashboardCard />} />
+  <Route path="/managecustomer" element={<Managecustomer />} />
+  <Route path="/fundrequest" element={<FundRequest/>} />
+  <Route path="/transactionlog" element={<TransactionsLog/>} />
+  <Route path="/notification" element={<NotificationsCard/>} />
+  <Route path="/message" element={<MessagesUI/>} />
+  </Routes>
           {/*End-AdminDashboard */}
 
 

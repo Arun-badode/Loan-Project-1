@@ -38,7 +38,7 @@ function App() {
           <Sidebar
             collapsed={isSidebarCollapsed}
             menuItemClick={menusidebarcollaps}
-          />
+          />  
         )}
         {/* sidebar end */}
         {/* right side  */}

@@ -49,15 +49,16 @@ const TransactionsLog = () => {
   };
 
   const getStatusBadge = (status) => {
-    switch (status) {
-      case 'Approved':
-        return <Badge bg="success">Approved</Badge>;
-      case 'Rejected':
-        return <Badge bg="danger">Rejected</Badge>;
-      default:
-        return <Badge bg="secondary">{status}</Badge>;
-    }
-  };
+  switch (status) {
+    case 'Approved':
+      return <span className="badge-custom badge-success-soft py-1 px-1 rounded-pill">Approved</span>;
+    case 'Rejected':
+      return <span className="badge-custom badge-danger-soft py-1 px-1 rounded-pill">Rejected</span>;
+    default:
+      return <span className="badge-custom badge-warning-soft py-1 px-1 rounded-pill">{status}</span>;
+  }
+};
+
 
   return (
     <div className="container my-4">
@@ -66,16 +67,16 @@ const TransactionsLog = () => {
       {/* Compact Filters */}
    <Row className="g-2 mb-3 align-items-center">
   <Col>
-    <Form.Control size="sm" type="text" placeholder="Search transactions..." className="w-100 p-2" />
+    <Form.Control size="sm" type="text" placeholder="Search transactions..." className="w-100 p-2 input-green" />
   </Col>
   <Col>
-    <Form.Control size="sm" type="date" className="w-100 p-2" />
+    <Form.Control size="sm" type="date" className="w-100 p-2 input-green" />
   </Col>
   <Col>
-    <Form.Control size="sm" type="date" className="w-100 p-2" />
+    <Form.Control size="sm" type="date" className="w-100 p-2 input-green" />
   </Col>
   <Col>
-    <Form.Select size="sm" className="w-100 p-2">
+    <Form.Select size="sm" className="w-100 p-2 input-green">
       <option>All</option>
       <option>Approved</option>
       <option>Rejected</option>
@@ -85,7 +86,7 @@ const TransactionsLog = () => {
 
 
       {/* Transactions Table */}
-      <Table responsive hover bordered className="bg-white shadow-sm small">
+      <Table responsive hover bordered className=" shadow-sm small table-green ">
         <thead className="table-light">
           <tr>
             <th>Date/Time</th>
@@ -106,7 +107,7 @@ const TransactionsLog = () => {
               <td>{getStatusBadge(txn.status)}</td>
               <td>
               
-                  <button className="btn btn-sm btn-outline-primary me-2"  onClick={() => handleView(txn)}>
+                  <button className="btn btn-sm btn-outline-success me-2"  onClick={() => handleView(txn)}>
                         <i className="fas fa-eye me-1"></i> View
                       </button>
               </td>
@@ -116,7 +117,7 @@ const TransactionsLog = () => {
       </Table>
 
       {/* Transaction Details Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered className='modal-green'>
         <Modal.Header closeButton>
           <Modal.Title>Transaction Details</Modal.Title>
         </Modal.Header>

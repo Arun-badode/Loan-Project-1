@@ -37,16 +37,16 @@ const MessagesUI = () => {
   const [selectedMessage, setSelectedMessage] = useState(messages[0]);
 
   return (
-    <div className="" style={{ minHeight: "100vh", padding: "2rem" }}>
+    <div className="" style={{ minHeight: "100vh", padding: "2rem" }} >
        <h3 className="page-heading mb-3">Message</h3>
       <div className="row bg-white shadow rounded-3 overflow-hidden" style={{ minHeight: "75vh" }}>
         {/* Message List */}
-        <div className="col-md-4 border-end p-3" style={{ backgroundColor: "#f1f5f9" }}>
+        <div className="col-md-4 border-end p-3 card-green " >
           <h6 className="fw-bold mb-3">Messages</h6>
           {messages.map((msg) => (
             <div
               key={msg.id}
-              className={`p-2 rounded mb-1 ${selectedMessage.id === msg.id ? "bg-white" : ""}`}
+              className={`p-2 rounded mb-1  ${selectedMessage.id === msg.id ? "bg-white" : ""}`}
               style={{ cursor: "pointer" }}
               onClick={() => setSelectedMessage(msg)}
             >
@@ -61,7 +61,7 @@ const MessagesUI = () => {
         </div>
 
         {/* Message Details */}
-        <div className="col-md-8 d-flex flex-column p-4">
+        <div className="col-md-8 d-flex flex-column p-4 card-green">
           <div>
             <h6 className="fw-bold">{selectedMessage.name}</h6>
             <p className="text-muted mb-1 small">{selectedMessage.email || "—"}</p>
@@ -85,12 +85,12 @@ const MessagesUI = () => {
               </button>
             </div>
             <textarea
-              className="form-control mb-3"
+              className="form-control mb-3 textarea-green"
               rows="4"
               placeholder="Type your reply here..."
             ></textarea>
             <div className="text-end">
-              <button className="btn btn-primary">Send Reply</button>
+              <button className="btn btn-success">Send Reply</button>
             </div>
           </div>
         </div>

@@ -59,8 +59,8 @@ const NotificationItem = ({ title, message, time, unread }) => (
     {unread && (
       <div className="ms-2 mt-1">
         <span
-          className="rounded-circle"
-          style={{ width: 8, height: 8, backgroundColor: "#0d6efd", display: "inline-block" }}
+          className="rounded-circle "
+          style={{ width: 8, height: 8,  display: "inline-block",backgroundColor:"green" }}
         ></span>
       </div>
     )}
@@ -75,7 +75,7 @@ const NotificationsCard = () => {
 
       <div className="mb-5 mt-3">
         <h6 className=" mb-3">New Requests</h6>
-        <div className="border rounded overflow-hidden">
+        <div className="border rounded overflow-hidden card-green">
           {notifications.newRequests.map((item, idx) => (
             <NotificationItem key={idx} {...item} />
           ))}
@@ -84,7 +84,7 @@ const NotificationsCard = () => {
 
       <div>
         <h6 className="mb-3">Messages from Customers</h6>
-        <div className="border rounded overflow-hidden">
+        <div className="border rounded overflow-hidden card-green">
           {notifications.customerMessages.map((item, idx) => (
             <NotificationItem key={idx} {...item} />
           ))}

@@ -1,27 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ toggleSidebar }) => {
-  const navigate = useNavigate(); // ✅ useNavigate at top level
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("userName") || "User";
+    setUserName(storedName);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("userRole");
     localStorage.removeItem("userEmail");
-    navigate("/"); // ✅ navigate to root
+    localStorage.removeItem("userName");
+    navigate("/");
   };
 
   return (
     <nav className="navbar navbar-light p-2">
       <div className="container-fluid">
         <div className="d-flex justify-content-between w-100 align-items-center">
-          {/* Left side - Brand and company name */}
+          {/* Left side - Brand and user name */}
           <div className="d-flex align-items-center">
             <div className="nav-bran me-3">
               <a className="nav-brand fw-bold" href="#">
-                Hi, Jacob Hills
+                Hi, {userName}
               </a>
               <p className="p-0 m-0 d-none d-md-block">
-                Jocob Hills Group Of Company
+                {userName} Group Of Company
               </p>
             </div>
             <div

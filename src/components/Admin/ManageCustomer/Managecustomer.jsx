@@ -1,0 +1,164 @@
+import React from 'react';
+import { useState } from 'react';
+import { Button } from 'react-bootstrap';
+import AddCustomerModal from './AddCustomerModal';
+import CustomerDetailsModal from './CustomerDetailsModal';
+import EditCreditLineModal from './EditCreditLineModal';
+
+
+const Managecustomer = () => {
+      const [showModal, setShowModal] = useState(false);
+         const [showCustomerDetailsModal, setShowCustomerDetailsModal] = useState(false);
+         const [showEditModal, setShowEditModal] = useState(false);
+  // Static customer data
+  const customers = [
+    {
+      id: 'CUST-001',
+      name: 'John Smith',
+      phone: '+1 (555) 123-4567',
+      email: 'john.smith@example.com',
+      creditLine: 50000,
+      status: 'Active',
+      company: 'Smith Enterprises',
+    },
+    {
+      id: 'CUST-002',
+      name: 'Sarah Johnson',
+      phone: '+1 (555) 987-6543',
+      email: 'sarah.j@example.com',
+      creditLine: 75000,
+      status: 'Active',
+      company: 'Johnson & Associates',
+    },
+    {
+      id: 'CUST-003',
+      name: 'Michael Chen',
+      phone: '+1 (555) 456-7890',
+      email: 'mchen@example.com',
+      creditLine: 100000,
+      status: 'Pending Review',
+      company: 'Chen Technologies',
+    },
+    {
+      id: 'CUST-004',
+      name: 'Emily Wilson',
+      phone: '+1 (555) 234-5678',
+      email: 'e.wilson@example.com',
+      creditLine: 30000,
+      status: 'Inactive',
+      company: 'Wilson Retail Group',
+    },
+    {
+      id: 'CUST-005',
+      name: 'David Rodriguez',
+      phone: '+1 (555) 876-5432',
+      email: 'drodriguez@example.com',
+      creditLine: 85000,
+      status: 'Active',
+      company: 'Rodriguez Imports',
+    },
+  ];
+
+  return (
+    <div className="container mt-4">
+      <div className="card">
+        <div className="card-header bg-white">
+          <div className="d-flex justify-content-between align-items-center">
+            <h4 className="mb-0">Manage Customer</h4>
+            <div className="input-group" style={{width: '300px'}}>
+              <span className="input-group-text">
+                <i className="fas fa-search"></i>
+              </span>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search customers..."
+              />
+            </div>
+             <Button variant="primary" onClick={() => setShowModal(true)}>
+        + Add New Customer
+      </Button>
+
+      <AddCustomerModal
+        show={showModal}
+        handleClose={() => setShowModal(false)}
+      />
+          </div>
+        </div>
+        
+        <div className="card-body">
+          <div className="table-responsive">
+            <table className="table table-hover align-middle">
+              <thead className="table-light">
+                <tr>
+                  <th>Customer Name</th>
+                  <th>Customer ID</th>
+                  <th>Contact Number</th>
+                  <th>Email</th>
+                  <th>Credit Line</th>
+                  <th>Status</th>
+                  <th className="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {customers.map((customer) => (
+                  <tr key={customer.id}>
+                    <td>
+                      <div className="fw-bold">{customer.name}</div>
+                      <div className="text-muted small">{customer.company}</div>
+                    </td>
+                    <td>{customer.id}</td>
+                    <td>{customer.phone}</td>
+                    <td>{customer.email}</td>
+                    <td>${customer.creditLine.toLocaleString()}</td>
+                    <td>
+                      <span className={`badge ${
+                        customer.status === 'Active' ? 'bg-success' :
+                        customer.status === 'Inactive' ? 'bg-danger' :
+                        'bg-warning text-dark'
+                      }`}>
+                        {customer.status}
+                      </span>
+                    </td>
+                    <td className="text-end">
+                      <button className="btn btn-sm btn-outline-primary me-2" onClick={() => setShowCustomerDetailsModal(true)}>
+                        <i className="fas fa-eye me-1"></i> View
+                      </button>
+       <CustomerDetailsModal
+  show={showCustomerDetailsModal}
+  handleClose={() => setShowCustomerDetailsModal(false)}
+  
+/>
+                      <button className="btn btn-sm btn-outline-success" onClick={() => setShowEditModal(true)}>
+                        <i className="fas fa-edit me-1"></i> Edit
+                      </button>
+                      <EditCreditLineModal show={showEditModal} handleClose={() => setShowEditModal(false)} />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <div className="text-muted">
+              Showing <span className="fw-bold">1</span> to{' '}
+              <span className="fw-bold">5</span> of{' '}
+              <span className="fw-bold">5</span> customers
+            </div>
+            <div>
+              <button className="btn btn-outline-secondary me-2" disabled>
+                <i className="fas fa-chevron-left me-1"></i> Previous
+              </button>
+              <button className="btn btn-outline-secondary" disabled>
+                Next <i className="fas fa-chevron-right ms-1"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Managecustomer;

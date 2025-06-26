@@ -71,7 +71,7 @@ const NotificationItem = ({ title, message, time, unread }) => (
 const NotificationsCard = () => {
   return (
     <div className="p-4" style={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}>
-      <h3 className="fw-bold mb-4">Notifications</h3>
+      <h3 className="page-heading">Notifications</h3>
 
       <div className="mb-5">
         <h6 className="text-muted mb-3">New Requests</h6>

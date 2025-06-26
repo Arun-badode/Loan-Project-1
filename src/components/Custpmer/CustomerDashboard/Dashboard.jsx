@@ -26,8 +26,8 @@ const Customerdashboard = () => {
     <div className="container py-5">
       {/* Greeting */}
       <div className="mb-4">
-        <h1 className="h4 fw-bold text-dark">Hello Customer</h1>
-        <p className="text-muted">Welcome to Your Dashboard</p>
+        <h1 className="page-heading">Hello Customer</h1>
+        <p className="page-subheading">Welcome to Your Dashboard</p>
       </div>
 
       {/* Top 3 Cards */}

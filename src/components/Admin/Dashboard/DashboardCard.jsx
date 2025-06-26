@@ -3,20 +3,20 @@ import { Container, Row, Col } from "react-bootstrap";
 import DashboardCharts from "./DashboardChart";
 import DashboardTable from "./DashboardTable";
 
-const DashboardCard= () => {
+const DashboardCard = () => {
   return (
     <div className="bg-success-subtle py-4 min-vh-100">
-      <Container>
+      <Container fluid="lg">
         {/* Heading */}
-        <div className="mb-4">
-          <h4 className="fw-bold">Hello Admin</h4>
-          <p className="text-muted">Welcome to the Admin Dashboard</p>
+        <div className="mb-4 text-center text-md-start">
+          <h4 className="page-heading">Hello Admin</h4>
+          <p className="page-subheading text-muted">Welcome to the Admin Dashboard</p>
         </div>
 
         {/* Stats Cards */}
         <Row className="g-4">
           {/* Card 1 */}
-          <Col xs={12} md={4}>
+          <Col xs={12} sm={6} lg={4}>
             <div className="p-4 rounded shadow-sm bg-white h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
@@ -30,7 +30,7 @@ const DashboardCard= () => {
           </Col>
 
           {/* Card 2 */}
-          <Col xs={12} md={4}>
+          <Col xs={12} sm={6} lg={4}>
             <div className="p-4 rounded shadow-sm bg-white h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
@@ -44,7 +44,7 @@ const DashboardCard= () => {
           </Col>
 
           {/* Card 3 */}
-          <Col xs={12} md={4}>
+          <Col xs={12} sm={6} lg={4}>
             <div className="p-4 rounded shadow-sm bg-white h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
@@ -57,12 +57,16 @@ const DashboardCard= () => {
             </div>
           </Col>
         </Row>
-      </Container>
-      <DashboardCharts/>
-      <DashboardTable/>
 
+        {/* Dashboard Charts and Table */}
+        <div className="mt-5">
+          <DashboardCharts />
+        </div>
+        <div className="mt-4">
+          <DashboardTable />
+        </div>
+      </Container>
     </div>
-    
   );
 };
 

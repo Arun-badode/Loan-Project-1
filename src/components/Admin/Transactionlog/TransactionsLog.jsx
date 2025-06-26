@@ -61,7 +61,7 @@ const TransactionsLog = () => {
 
   return (
     <div className="container my-4">
-      <h4 className="fw-bold mb-3">Transactions Log</h4>
+      <h4 className="page-heading">Transactions Log</h4>
 
       {/* Compact Filters */}
       <Row className="g-2 mb-3 align-items-center">

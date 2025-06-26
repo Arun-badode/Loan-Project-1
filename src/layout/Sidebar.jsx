@@ -26,58 +26,58 @@ const Sidebar = ({ collapsed }) => {
       <div className="sidebar">
         <ul className="menu">
           {/* Dashboard Section */}
-          <li className={`menu-item ${isActive("/aaa") ? "active" : ""}`}>
+          <li className={`menu-item ${isActive("/dashboard") ? "active" : ""}`}>
             <div
               className="menu-link menu-i"
-              onClick={() => {navigate("/kkk"); menuItemClick();} } >
+              onClick={() => {navigate("/dashboard"); menuItemClick();} } >
               {/* <i className="fa-solid fa-cubes"></i> */}
               <span className="menu-text">Dashboard</span>
             </div>
           </li>
-          <li className={`menu-item ${isActive("/aaa") ? "active" : ""}`}>
+          <li className={`menu-item ${isActive("/manage") ? "active" : ""}`}>
             <div
               className="menu-link menu-i"
-              onClick={() => {navigate("/kkk"); menuItemClick();} } >
+              onClick={() => {navigate("/manage"); menuItemClick();} } >
               {/* <i className="fa-solid fa-cubes"></i> */}
               <span className="menu-text">Manage Customers</span>
             </div>
           </li>
-          <li className={`menu-item ${isActive("/aaa") ? "active" : ""}`}>
+          <li className={`menu-item ${isActive("/requests") ? "active" : ""}`}>
             <div
               className="menu-link menu-i"
-              onClick={() => {navigate("/kkk"); menuItemClick();} } >
+              onClick={() => {navigate("/requests"); menuItemClick();} } >
               {/* <i className="fa-solid fa-cubes"></i> */}
               <span className="menu-text">Fund Requests</span>
             </div>
           </li>
-          <li className={`menu-item ${isActive("/aaa") ? "active" : ""}`}>
+          <li className={`menu-item ${isActive("/transactions") ? "active" : ""}`}>
             <div
               className="menu-link menu-i"
-              onClick={() => {navigate("/kkk"); menuItemClick();} } >
+              onClick={() => {navigate("/transactions"); menuItemClick();} } >
               {/* <i className="fa-solid fa-cubes"></i> */}
               <span className="menu-text">Transactions Log</span>
             </div>
           </li>
-          <li className={`menu-item ${isActive("/aaa") ? "active" : ""}`}>
+          <li className={`menu-item ${isActive("/notifications") ? "active" : ""}`}>
             <div
               className="menu-link menu-i"
-              onClick={() => {navigate("/kkk"); menuItemClick();} } >
+              onClick={() => {navigate("/notifications"); menuItemClick();} } >
               {/* <i className="fa-solid fa-cubes"></i> */}
               <span className="menu-text">Notifications</span>
             </div>
           </li>
-          <li className={`menu-item ${isActive("/aaa") ? "active" : ""}`}>
+          <li className={`menu-item ${isActive("/support") ? "active" : ""}`}>
             <div
               className="menu-link menu-i"
-              onClick={() => {navigate("/kkk"); menuItemClick();} } >
+              onClick={() => {navigate("/support"); menuItemClick();} } >
               {/* <i className="fa-solid fa-cubes"></i> */}
               <span className="menu-text">Support / Messages</span>
             </div>
           </li>
-          <li className={`menu-item ${isActive("/aaa") ? "active" : ""}`}>
+          <li className={`menu-item ${isActive("/settings") ? "active" : ""}`}>
             <div
               className="menu-link menu-i"
-              onClick={() => {navigate("/kkk"); menuItemClick();} } >
+              onClick={() => {navigate("/settings"); menuItemClick();} } >
               {/* <i className="fa-solid fa-cubes"></i> */}
               <span className="menu-text">Settings</span>
             </div>

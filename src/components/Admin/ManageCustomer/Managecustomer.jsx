@@ -60,29 +60,38 @@ const Managecustomer = () => {
   return (
     <div className="container mt-4">
       {/* Page Heading */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3">
-        <div>
-          <h4 className="page-heading ">Manage Customer</h4>
-          <p className="page-subheading ">
-            View and manage customer credit details
-          </p>
-        </div>
-        <div className="d-flex gap-2 flex-wrap mt-2 mt-md-0">
-          <div className="input-group" style={{ maxWidth: "280px" }}>
-            <span className="input-group-text">
-              <i className="fas fa-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search customers..."
-            />
-          </div>
-          <Button variant="primary" onClick={() => setShowModal(true)}>
-            + Add New Customer
-          </Button>
-        </div>
-      </div>
+     <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+  {/* Left Side: Heading & Subheading */}
+  <div className="text-start">
+    <h4 className="page-heading mb-1">Manage Customer</h4>
+    <p className="page-subheading mb-0">View and manage customer credit details</p>
+  </div>
+
+  {/* Right Side: Search & Button aligned in one row */}
+  <div className="d-flex flex-column flex-sm-row align-items-stretch gap-2">
+    {/* Search Field */}
+    <div className="input-group" style={{ maxWidth: "280px" }}>
+      <span className="input-group-text">
+        <i className="fas fa-search"></i>
+      </span>
+      <input
+        type="text"
+        className="form-control"
+        placeholder="Search customers..."
+      />
+    </div>
+
+    {/* Button */}
+    <Button
+      variant="primary"
+      className="w-100 w-sm-auto"
+      onClick={() => setShowModal(true)}
+    >
+      + Add New Customer
+    </Button>
+  </div>
+</div>
+
 
       {/* Card Table */}
       <div className="card shadow-sm">
@@ -113,13 +122,12 @@ const Managecustomer = () => {
                     <td>${customer.creditLine.toLocaleString()}</td>
                     <td>
                       <span
-                        className={`badge ${
-                          customer.status === "Active"
+                        className={`badge ${customer.status === "Active"
                             ? "bg-success"
                             : customer.status === "Inactive"
-                            ? "bg-danger"
-                            : "bg-warning text-dark"
-                        }`}
+                              ? "bg-danger"
+                              : "bg-warning text-dark"
+                          }`}
                       >
                         {customer.status}
                       </span>

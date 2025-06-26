@@ -1,61 +1,88 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
 const Navbar = ({ toggleSidebar }) => {
+  const navigate = useNavigate(); // ✅ useNavigate at top level
+
+  const handleLogout = () => {
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userEmail");
+    navigate("/"); // ✅ navigate to root
+  };
+
   return (
-    <>
-      <nav className="navbar navbar-light">
-        <div className="container-fluid nav-conte">
-          <div className="nav-content -">
-            <div className="nav-bran">
-              <a className="nav-brand d-flex" href="#">
+    <nav className="navbar navbar-light">
+      <div className="container-fluid">
+        <div className="d-flex justify-content-between w-100 align-items-center">
+          {/* Left side - Brand and company name */}
+          <div className="d-flex align-items-center">
+            <div className="nav-bran me-3">
+              <a className="nav-brand fw-bold" href="#">
                 Hi, Jacob Hills
               </a>
-              <p className="p-0">Jocob Hills Group Of Company</p>
+              <p className="p-0 m-0 d-none d-md-block">
+                Jocob Hills Group Of Company
+              </p>
             </div>
-            <div className="nav-main-icon">
-              <a className="bell-icon" href="#">
-                <i className="fa-regular fa-bell"></i>
-              </a>
-              <div className="dropdown profile-elemen">
-                <div
-                  className="me-2 fw-bold p-1 rounded-4 profile d-flex align-items-center"
-                  style={{ cursor: "pointer" }}
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <div className="profile-element">
-                    <div className="avatar online">
-                      <i className="fa-solid user-icon fa-circle-user"></i>
-                      <span className="text-dark ms-2"></span>
-                    </div>
+            <div
+              className="nav-toggle-icon me-3 d-lg-none"
+              onClick={toggleSidebar}
+            >
+              <button className="btn p-0 border-0 bg-transparent">
+                <i className="fa fa-bars fs-4" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          {/* Middle - Empty space for potential center content */}
+          <div className="flex-grow-1 d-none d-lg-block"></div>
+
+          {/* Right side - Icons and profile */}
+          <div className="d-flex align-items-center">
+            {/* Notification bell */}
+            <a className="bell-icon me-3" href="#">
+              <i className="fa-regular fa-bell fs-4"></i>
+            </a>
+
+            {/* Profile dropdown */}
+            <div className="dropdown">
+              <div
+                className="fw-bold rounded-4 d-flex align-items-center"
+                style={{ cursor: "pointer" }}
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <div className="profile-element">
+                  <div className="avatar online">
+                    <i className="fa-solid user-icon fa-circle-user fs-3"></i>
                   </div>
                 </div>
-                <ul className="dropdown-menu dropdown-menu-end">
-                  <li>
-                    <Link className="dropdown-item" to="/">
-                      Update Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/changepassword">
-                      Change Password
-                    </Link>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" to="/">
-                      Logout
-                    </Link>
-                  </li>
-                </ul>
               </div>
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li>
+                  <Link className="dropdown-item" to="/">
+                    Update Profile
+                  </Link>
+                </li>
+                <li>
+                  <Link className="dropdown-item" to="/changepassword">
+                    Change Password
+                  </Link>
+                </li>
+                <li>
+                  <hr className="dropdown-divider" />
+                </li>
+                <li>
+                  <button className="dropdown-item" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 };
 

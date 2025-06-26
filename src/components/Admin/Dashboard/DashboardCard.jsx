@@ -1,5 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import DashboardCharts from "./DashboardChart";
+import DashboardTable from "./DashboardTable";
 
 const DashboardCard= () => {
   return (
@@ -56,7 +58,11 @@ const DashboardCard= () => {
           </Col>
         </Row>
       </Container>
+      <DashboardCharts/>
+      <DashboardTable/>
+
     </div>
+    
   );
 };
 

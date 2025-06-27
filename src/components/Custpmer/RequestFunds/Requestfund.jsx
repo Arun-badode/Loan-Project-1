@@ -89,7 +89,7 @@ const Requestfund = () => {
 
                   {/* Submit Button */}
                   <div className="col-12">
-                    <button type="submit" className="btn btn-success w-100 py-2">
+                    <button type="submit" className="btn btn-success  py-2">
                       Submit Request
                     </button>
                   </div>

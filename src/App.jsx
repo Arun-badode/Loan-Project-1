@@ -10,7 +10,6 @@ import DashboardCard from "./components/Admin/Dashboard/DashboardCard";
 import Managecustomer from "./components/Admin/ManageCustomer/Managecustomer";
 import FundRequest from "./components/Admin/FundRequest/FundRequest";
 import TransactionsLog from "./components/Admin/Transactionlog/TransactionsLog";
-
 import Requestfund from "./components/Custpmer/RequestFunds/Requestfund";
 import Transactionhistory from "./components/Custpmer/TransactionHistory/Transactionhistory";
 import Updateprofile from "./components/Profile/Updateprofile";

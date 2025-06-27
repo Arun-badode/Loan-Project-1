@@ -85,19 +85,19 @@ const CreditUpgradeRequests = () => {
                       {req.status === "Pending" ? (
                         <>
                           <button
-                            className="btn btn-sm btn-outline-secondary me-2"
+                            className="btn btn-sm btn-outline-secondary me-2 mb-1"
                             onClick={() => handleRequestDocs(req.id)}
                           >
                             Request Docs
                           </button>
                           <button
-                            className="btn btn-sm btn-success me-2"
+                            className="btn btn-sm btn-success me-2 mb-1"
                             onClick={() => handleApprove(req.id)}
                           >
                             Approve
                           </button>
                           <button
-                            className="btn btn-sm btn-danger"
+                            className="btn btn-sm btn-danger mb-1"
                             onClick={() => handleDecline(req.id)}
                           >
                             Decline

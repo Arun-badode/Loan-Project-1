@@ -112,7 +112,7 @@ const Login = () => {
                 />
               </div>
               <div className="d-flex justify-content-end mb-4">
-                <a href="#" className="text-decoration-none text-secondary">
+                <a href="/forgotpassword" className="text-decoration-none text-secondary">
                   Forgot Password?
                 </a>
               </div>

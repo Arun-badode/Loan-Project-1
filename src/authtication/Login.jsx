@@ -7,8 +7,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const roleCredentials = {
-    Admin: { email: "admin123", password: "admin@123" },
-    Customer: { email: "customer123", password: "customer@123" },
+    Admin: { email: "admin@gmail.com", password: "admin123" },
+    Customer: { email: "customer@gmail.com", password: "customer123" },
   };
 
   const handleSubmit = (e) => {
@@ -51,7 +51,7 @@ const Login = () => {
 
   return (
     <div className="container-fluid min-vh-100 d-flex justify-content-center align-items-center rounded-5" style={{ backgroundColor: "#ccf8db" }}>
-      <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow bg-white text-center">
+      <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow text-center" >
         <img
           src="https://i.ibb.co/KxdfWFTv/3db2775f70a199b26bc47425ca16af18-1-removebg-preview.png"
           alt="Logo"

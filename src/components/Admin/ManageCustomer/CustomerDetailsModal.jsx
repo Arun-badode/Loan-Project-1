@@ -3,7 +3,7 @@ import { Modal, Button, Row, Col } from 'react-bootstrap';
 
 const CustomerDetailsModal = ({ show, handleClose }) => {
   return (
-    <Modal show={show} onHide={handleClose} size="lg" centered backdrop="static" keyboard={false}>
+    <Modal className='modal-green' show={show} onHide={handleClose} size="lg" centered backdrop="static" keyboard={false}>
       <Modal.Header closeButton>
         <Modal.Title>Customer Details</Modal.Title>
         <Button

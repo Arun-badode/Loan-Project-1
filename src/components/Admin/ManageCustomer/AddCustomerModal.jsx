@@ -44,7 +44,7 @@ const AddCustomerModal = ({ show, handleClose }) => {
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-secondary" onClick={handleClose}>
+        <Button variant="outline-success" onClick={handleClose}>
           Cancel
         </Button>
         <Button variant="success">Add Customer</Button>

@@ -169,10 +169,10 @@ const Managecustomer = () => {
               <span className="fw-bold">5</span> customers
             </div>
             <div>
-              <button className="btn btn-outline-secondary me-2" disabled>
+              <button className="btn btn-outline-success  me-2" >
                 <i className="fas fa-chevron-left me-1"></i> Previous
               </button>
-              <button className="btn btn-outline-secondary" disabled>
+              <button className="btn btn-outline-success " >
                 Next <i className="fas fa-chevron-right ms-1"></i>
               </button>
             </div>

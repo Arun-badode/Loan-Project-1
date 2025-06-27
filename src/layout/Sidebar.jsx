@@ -155,12 +155,12 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
               </li>
               <li
                 className={`menu-item ${
-                  isActive("/transactionhistory") ? "active" : ""
+                  isActive("/discount") ? "active" : ""
                 }`}
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => {navigate("/transactionhistory"); menuItemClick();}}
+                  onClick={() => {navigate("/discount"); menuItemClick();}}
                 >
                   <i className="fas fa-history me-2"></i>
                   <span className="menu-text">Discount</span>
@@ -168,12 +168,12 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
               </li>
               <li
                 className={`menu-item ${
-                  isActive("/transactionhistory") ? "active" : ""
+                  isActive("/notificationalert") ? "active" : ""
                 }`}
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => {navigate("/transactionhistory"); menuItemClick();}}
+                  onClick={() => {navigate("/notificationalert"); menuItemClick();}}
                 >
                   <i className="fas fa-history me-2"></i>
                   <span className="menu-text">Notifications</span>

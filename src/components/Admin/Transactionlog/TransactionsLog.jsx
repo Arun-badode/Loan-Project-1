@@ -87,6 +87,8 @@ const TransactionsLog = () => {
 
 
       {/* Transactions Table */}
+      <div className="card shadow-sm ">
+        <div className="card-body card-green">
       <Table responsive hover bordered className=" shadow-sm small table-green ">
         <thead className="table-light">
           <tr>
@@ -116,6 +118,24 @@ const TransactionsLog = () => {
           ))}
         </tbody>
       </Table>
+       {/* Footer Pagination Info */}
+          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
+            <div className="text-muted mb-2 mb-md-0">
+              Showing <span className="fw-bold">1</span> to{" "}
+              <span className="fw-bold">5</span> of{" "}
+              <span className="fw-bold">5</span> customers
+            </div>
+            <div>
+              <button className="btn btn-outline-success me-2" >
+                <i className="fas fa-chevron-left me-1"></i> Previous
+              </button>
+              <button className="btn btn-outline-success" >
+                Next <i className="fas fa-chevron-right ms-1"></i>
+              </button>
+            </div>
+          </div>
+      </div>
+      </div>
 
       {/* Transaction Details Modal */}
       <Modal show={showModal} onHide={() => setShowModal(false)} centered className='modal-green'>

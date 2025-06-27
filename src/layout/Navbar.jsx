@@ -4,14 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   useEffect(() => {
     const storedName = localStorage.getItem("userName") || "User";
     setUserName(storedName);
   }, []);
-
-  const [showChangePassword, setShowChangePassword] = useState(false);
-  // ✅ useNavigate at top level
 
   const handleLogout = () => {
     localStorage.removeItem("userRole");
@@ -23,10 +22,8 @@ const Navbar = ({ toggleSidebar }) => {
   const handleOpenChangePassword = () => setShowChangePassword(true);
   const handleCloseChangePassword = () => setShowChangePassword(false);
 
-  // Dummy submit handler for modal
   const handleChangePasswordSubmit = (e) => {
     e.preventDefault();
-    // Add your password change logic here
     setShowChangePassword(false);
   };
 
@@ -34,7 +31,7 @@ const Navbar = ({ toggleSidebar }) => {
     <nav className="navbar navbar-light p-2">
       <div className="container-fluid">
         <div className="d-flex justify-content-between w-100 align-items-center">
-          {/* Left side - Brand and user name */}
+          {/* Left side */}
           <div className="d-flex align-items-center">
             <div className="nav-bran me-3">
               <a className="nav-brand fw-bold" href="#">
@@ -54,15 +51,71 @@ const Navbar = ({ toggleSidebar }) => {
             </div>
           </div>
 
-          {/* Middle - Empty space for potential center content */}
+          {/* Middle spacer */}
           <div className="flex-grow-1 d-none d-lg-block"></div>
 
-          {/* Right side - Icons and profile */}
-          <div className="d-flex align-items-center">
+          {/* Right side */}
+          <div className="d-flex align-items-center position-relative">
             {/* Notification bell */}
-            <a className="bell-icon me-3" href="#">
-              <i className="fa-regular fa-bell fs-4"></i>
-            </a>
+            <div className="position-relative me-3">
+              <button
+                className="btn btn-sm p-0 border-0 bg-transparent"
+                onClick={() => setShowNotification(!showNotification)}
+              >
+                <i className="fa-regular fa-bell fs-4 text-success"></i>
+              </button>
+
+              {/* Notification Card */}
+              {showNotification && (
+               <div
+  className="position-absolute end-0 mt-2 shadow-sm rounded-3 border border-success bg-white"
+  style={{
+    width: "280px",
+    zIndex: 1000,
+    right: 0,
+  }}
+>
+  <div className="border-bottom px-3 py-2 d-flex justify-content-between align-items-center bg-success bg-opacity-10 rounded-top">
+    <strong className="text-white">Notifications</strong>
+    <button
+      className="btn-close"
+      onClick={() => setShowNotification(false)}
+      style={{ fontSize: "0.8rem" }}
+    ></button>
+  </div>
+
+  <div className="p-3">
+    {/* Notification Item 1 */}
+    <div className="d-flex align-items-start gap-2 mb-3">
+      <i className="fas fa-bell mt-1 text-success"></i>
+      <div className="small text-dark">
+        <div className="fw-semibold">3 new transaction alerts</div>
+        <div className="text-muted small">Just now</div>
+      </div>
+    </div>
+
+    {/* Notification Item 2 */}
+    <div className="d-flex align-items-start gap-2 mb-3">
+      <i className="fas fa-check-circle mt-1 text-success"></i>
+      <div className="small text-dark">
+        <div className="fw-semibold">Withdrawal approved</div>
+        <div className="text-muted small">15 minutes ago</div>
+      </div>
+    </div>
+
+    {/* Notification Item 3 */}
+    <div className="d-flex align-items-start gap-2">
+      <i className="fas fa-file-alt mt-1 text-success"></i>
+      <div className="small text-dark">
+        <div className="fw-semibold">Monthly report available</div>
+        <div className="text-muted small">1 hour ago</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+              )}
+            </div>
 
             {/* Profile dropdown */}
             <div className="dropdown">

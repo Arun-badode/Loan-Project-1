@@ -95,7 +95,7 @@ const FundRequest = () => {
 
         {/* Request Status Tabs */}
         <Tab.Container activeKey={activeTab} onSelect={(k) => setActiveTab(k)}>
-    <Nav
+         <Nav
   variant="pills"
   className="d-flex flex-nowrap overflow-auto mb-4 bg-white p-2 shadow-sm rounded-pill"
   style={{ whiteSpace: 'nowrap', gap: '0.5rem' }}
@@ -156,7 +156,6 @@ const FundRequest = () => {
     </Nav.Link>
   </Nav.Item>
 </Nav>
-
 
 
 

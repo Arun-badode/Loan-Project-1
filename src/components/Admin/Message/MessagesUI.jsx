@@ -74,13 +74,13 @@ const MessagesUI = () => {
           {/* Reply Box */}
           <div className="mt-auto">
             <div className="mb-2">
-              <button className="btn btn-sm btn-outline-secondary me-2">
+              <button className="btn btn-sm btn-outline-success me-2">
                 <i className="fas fa-bold"></i>
               </button>
-              <button className="btn btn-sm btn-outline-secondary me-2">
+              <button className="btn btn-sm btn-outline-success me-2">
                 <i className="fas fa-italic"></i>
               </button>
-              <button className="btn btn-sm btn-outline-secondary me-2">
+              <button className="btn btn-sm btn-outline-success me-2">
                 <i className="fas fa-paperclip"></i>
               </button>
             </div>

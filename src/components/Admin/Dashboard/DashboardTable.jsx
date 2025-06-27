@@ -89,7 +89,7 @@ const DashboardTable = () => {
                 <td>{item.date}</td>
                 <td>{statusBadge(item.status)}</td>
                 <td>
-                  {/* <button className="btn btn-sm btn-link text-primary me-2" title="View">
+                  {/* <button className="btn btn-sm btn-link text-Success me-2" title="View">
                     <i className="fas fa-eye"></i>
                   </button> */}
 
@@ -122,8 +122,8 @@ const DashboardTable = () => {
       <div className="d-flex justify-content-between align-items-center px-2 pt-2 small text-muted">
         <span>Showing 5 of 25 requests</span>
         <div>
-          <button className="btn btn-outline-secondary btn-sm me-2">Previous</button>
-          <button className="btn btn-outline-secondary btn-sm">Next</button>
+          <button className="btn btn-outline-success btn-sm me-2">Previous</button>
+          <button className="btn btn-outline-success btn-sm">Next</button>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 
 const AddCustomerModal = ({ show, handleClose }) => {
   return (
-    <Modal show={show} onHide={handleClose} centered backdrop="static">
+    <Modal show={show} onHide={handleClose} centered backdrop="static" className='modal-green'>
       <Modal.Header closeButton>
         <Modal.Title>Add New Customer</Modal.Title>
       </Modal.Header>
@@ -47,7 +47,7 @@ const AddCustomerModal = ({ show, handleClose }) => {
         <Button variant="outline-secondary" onClick={handleClose}>
           Cancel
         </Button>
-        <Button variant="primary">Add Customer</Button>
+        <Button variant="success">Add Customer</Button>
       </Modal.Footer>
     </Modal>
   );

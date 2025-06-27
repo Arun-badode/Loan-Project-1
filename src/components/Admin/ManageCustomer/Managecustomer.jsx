@@ -115,24 +115,33 @@ const ManageCustomer = () => {
 
         {/* Right Side: Search + Button */}
         <Col xs={6} md="auto" className="ms-md-auto w-md-auto">
-          <div className="d-flex flex-column flex-sm-row align-items-stretch gap-2">
-            <InputGroup>
-              <InputGroup.Text>
-                <i className="fas fa-search"></i>
-              </InputGroup.Text>
-              <Form.Control
+          <div className="d-flex flex-row align-items-center gap-2">
+            <div className="input-group flex-grow-1">
+              <span className="input-group-text">
+                <i className="fas fa-search" />
+              </span>
+              <input
+                type="text"
+                className="form-control"
                 placeholder="Search customers..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                defaultValue=""
+                onchange="handleSearchChange(event)"
               />
-            </InputGroup>
-            <Button
-              variant="success"
+            </div>
+
+
+
+            <button
+              className="btn btn-success text-nowrap"
+              title="Add New Customer"
               onClick={() => setShowAddModal(true)}
             >
               + Add Customer
-            </Button>
+            </button>
+
           </div>
+
+
         </Col>
       </Row>
       {/* Customers Table */}

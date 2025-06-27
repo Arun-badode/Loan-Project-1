@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { RiMenuUnfold2Line } from "react-icons/ri";
 
 const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
@@ -36,17 +37,18 @@ const Navbar = ({ toggleSidebar }) => {
               <a className="nav-brand fw-bold" href="#">
                 Hi, {userName}
               </a>
-              <p className="p-0 m-0 d-none d-md-block">
+              {/* <p className="p-0 m-0 d-none d-md-block">
                 {userName} Group Of Company
-              </p>
+              </p> */}
             </div>
             <div
-              className="nav-toggle-icon  me-3"
+              className="nav-toggle-icon ms-4 mt-2"
               onClick={toggleSidebar}
             >
-              <button className="btn p-0 border-0 bg-transparent">
-                <i className="fa fa-bars fs-4" aria-hidden="true"></i>
-              </button>
+              <div>
+                <RiMenuUnfold2Line size={28} />
+              </div>
+
             </div>
           </div>
 
@@ -145,12 +147,12 @@ const Navbar = ({ toggleSidebar }) => {
                     to="/updateprofile"
                   >
                     <i className="fas fa-user-pen text-success"></i>
-                     Profile
+                    Profile
                   </Link>
                 </li>
 
                 <li className="mb-2">
-                      <Link
+                  <Link
                     className="dropdown-item d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-success"
                     to="/changepassword"
                   >
@@ -178,7 +180,7 @@ const Navbar = ({ toggleSidebar }) => {
         </div>
       </div>
 
-     
+
     </nav>
   );
 };

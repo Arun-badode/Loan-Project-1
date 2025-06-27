@@ -104,39 +104,37 @@ const ManageCustomer = () => {
   return (
     <div className="container mt-4">
       {/* Page Header and Search */}
-     <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
-  <div>
-    <h4 className="mb-1">Customers Management</h4>
-    <p className="mb-0">List of all customers and manage their details</p>
-  </div>
+      <Row className="align-items-center justify-content-between g-3 mb-3 flex-column flex-md-row">
+        {/* Left Side: Heading + Subheading */}
+        <Col xs="auto" className="text-start">
+          <div className="d-flex flex-column">
+            <h4 className="mb-1">Customers Management</h4>
+            <p className="mb-0 small text-muted">List of all customers and manage their details</p>
+          </div>
+        </Col>
 
-  <div className="w-100">
-    <Row className="g-2">
-      <Col xs={12} sm={8}>
-        <InputGroup>
-          <InputGroup.Text>
-            <i className="fas fa-search"></i>
-          </InputGroup.Text>
-          <Form.Control
-            placeholder="Search customers..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </InputGroup>
-      </Col>
-      <Col xs={12} sm={4}>
-        <Button
-          variant="success"
-          className="w-100"
-          onClick={() => setShowAddModal(true)}
-        >
-          + Add Customer
-        </Button>
-      </Col>
-    </Row>
-  </div>
-</div>
-
+        {/* Right Side: Search + Button */}
+        <Col xs={6} md="auto" className="ms-md-auto w-md-auto">
+          <div className="d-flex flex-column flex-sm-row align-items-stretch gap-2">
+            <InputGroup>
+              <InputGroup.Text>
+                <i className="fas fa-search"></i>
+              </InputGroup.Text>
+              <Form.Control
+                placeholder="Search customers..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </InputGroup>
+            <Button
+              variant="success"
+              onClick={() => setShowAddModal(true)}
+            >
+              + Add Customer
+            </Button>
+          </div>
+        </Col>
+      </Row>
       {/* Customers Table */}
       <div className="card shadow-sm">
         <div className="card-body card-green">

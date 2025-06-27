@@ -188,11 +188,11 @@ const Customerdashboard = () => {
                         </td>
                         <td>
                           <span
-                            className={`badge rounded-pill px-3 py-2 fw-semibold text-uppercase ${item.status === "Completed"
-                              ? "bg-success-subtle text-success"
+                            className={`badge rounded-pill  fw-semibold text-uppercase ${item.status === "Completed"
+                              ? "badge-success-soft "
                               : item.status === "Processing"
-                                ? "bg-warning-subtle text-warning"
-                                : "bg-danger-subtle text-danger"
+                                ? "badge-warning-soft "
+                                : "badge-danger-soft "
                               }`}
                           >
                             {item.status}

@@ -19,8 +19,8 @@ const Navbar = ({ toggleSidebar }) => {
     navigate("/");
   };
 
-  const handleOpenChangePassword = () => setShowChangePassword(true);
-  const handleCloseChangePassword = () => setShowChangePassword(false);
+ 
+
 
   const handleChangePasswordSubmit = (e) => {
     e.preventDefault();
@@ -67,53 +67,56 @@ const Navbar = ({ toggleSidebar }) => {
 
               {/* Notification Card */}
               {showNotification && (
-               <div
-  className="position-absolute end-0 mt-2 shadow-sm rounded-3 border border-success bg-white"
-  style={{
-    width: "280px",
-    zIndex: 1000,
-    right: 0,
-  }}
->
-  <div className="border-bottom px-3 py-2 d-flex justify-content-between align-items-center bg-success bg-opacity-10 rounded-top">
-    <strong className="text-white">Notifications</strong>
-    <button
-      className="btn-close"
-      onClick={() => setShowNotification(false)}
-      style={{ fontSize: "0.8rem" }}
-    ></button>
-  </div>
+                <div
+                  className="position-absolute end-0 mt-2 shadow-sm rounded-3 border border-success bg-white"
+                  style={{
+                    width: "280px",
+                    zIndex: 1000,
+                    right: 0,
+                  }}
+                >
+                  <div className="border-bottom px-3 py-2 d-flex justify-content-between align-items-center bg-success bg-opacity-10 rounded-top">
+                    <strong className="text-white">Notifications</strong>
+                    <button
+                      className="btn-close"
+                      onClick={() => setShowNotification(false)}
+                      style={{ fontSize: "0.8rem" }}
+                    ></button>
+                  </div>
 
-  <div className="p-3">
-    {/* Notification Item 1 */}
-    <div className="d-flex align-items-start gap-2 mb-3">
-      <i className="fas fa-bell mt-1 text-success"></i>
-      <div className="small text-dark">
-        <div className="fw-semibold">3 new transaction alerts</div>
-        <div className="text-muted small">Just now</div>
-      </div>
-    </div>
+                  <div className="p-3">
+                    {/* Notification Item 1 */}
+                    <div className="d-flex align-items-start gap-2 mb-3">
+                      <i className="fas fa-bell mt-1 text-success"></i>
+                      <div className="small text-dark">
+                        <div className="fw-semibold">
+                          3 new transaction alerts
+                        </div>
+                        <div className="text-muted small">Just now</div>
+                      </div>
+                    </div>
 
-    {/* Notification Item 2 */}
-    <div className="d-flex align-items-start gap-2 mb-3">
-      <i className="fas fa-check-circle mt-1 text-success"></i>
-      <div className="small text-dark">
-        <div className="fw-semibold">Withdrawal approved</div>
-        <div className="text-muted small">15 minutes ago</div>
-      </div>
-    </div>
+                    {/* Notification Item 2 */}
+                    <div className="d-flex align-items-start gap-2 mb-3">
+                      <i className="fas fa-check-circle mt-1 text-success"></i>
+                      <div className="small text-dark">
+                        <div className="fw-semibold">Withdrawal approved</div>
+                        <div className="text-muted small">15 minutes ago</div>
+                      </div>
+                    </div>
 
-    {/* Notification Item 3 */}
-    <div className="d-flex align-items-start gap-2">
-      <i className="fas fa-file-alt mt-1 text-success"></i>
-      <div className="small text-dark">
-        <div className="fw-semibold">Monthly report available</div>
-        <div className="text-muted small">1 hour ago</div>
-      </div>
-    </div>
-  </div>
-</div>
-
+                    {/* Notification Item 3 */}
+                    <div className="d-flex align-items-start gap-2">
+                      <i className="fas fa-file-alt mt-1 text-success"></i>
+                      <div className="small text-dark">
+                        <div className="fw-semibold">
+                          Monthly report available
+                        </div>
+                        <div className="text-muted small">1 hour ago</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
 
@@ -140,22 +143,21 @@ const Navbar = ({ toggleSidebar }) => {
                 <li className="mb-2">
                   <Link
                     className="dropdown-item d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-success"
-                    to="/"
+                    to="/updateprofile"
                   >
                     <i className="fas fa-user-pen text-success"></i>
-                    Update Profile
+                     Profile
                   </Link>
                 </li>
 
                 <li className="mb-2">
-                  <button
-                    className="dropdown-item d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-success border-0"
-                    type="button"
-                    onClick={handleOpenChangePassword}
+                      <Link
+                    className="dropdown-item d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-success"
+                    to="/changepassword"
                   >
-                    <i className="fas fa-lock text-success"></i>
+                    <i className="fas fa-user-pen text-success"></i>
                     Change Password
-                  </button>
+                  </Link>
                 </li>
 
                 <li>
@@ -177,55 +179,7 @@ const Navbar = ({ toggleSidebar }) => {
         </div>
       </div>
 
-      {/* Change Password Modal */}
-      {showChangePassword && (
-        <div
-          className="modal fade show modal-green"
-          style={{ display: "block", background: "rgba(0,0,0,0.5)" }}
-          tabIndex="-1"
-        >
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <form onSubmit={handleChangePasswordSubmit}>
-                <div className="modal-header">
-                  <h5 className="modal-title">Change Password</h5>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    onClick={handleCloseChangePassword}
-                  ></button>
-                </div>
-                <div className="modal-body">
-                  <div className="mb-3">
-                    <label className="form-label">Current Password</label>
-                    <input type="password" className="form-control" required />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">New Password</label>
-                    <input type="password" className="form-control" required />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label">Confirm New Password</label>
-                    <input type="password" className="form-control" required />
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="btn btn-secondary"
-                    onClick={handleCloseChangePassword}
-                  >
-                    Cancel
-                  </button>
-                  <button type="submit" className="btn btn-success">
-                    Change Password
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      )}
+     
     </nav>
   );
 };

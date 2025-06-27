@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
-const Sidebar = ({ collapsed }) => {
+const Sidebar = ({ collapsed,menuItemClick}) => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
 
   const navigate = useNavigate();
@@ -15,9 +15,7 @@ const Sidebar = ({ collapsed }) => {
 
   const isActive = (path) => location.pathname === path;
 
-  const menuItemClick = () => {
-    console.log("Menu item clicked");
-  };
+  
 
   // Show loading state if role hasn't been retrieved yet
 
@@ -35,7 +33,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => {navigate("/dashboard");  menuItemClick();}}
                 >
                   <i className="fas fa-tachometer-alt me-2 "></i>
                   <span className="menu-text">Dashboard</span>
@@ -49,7 +47,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/managecustomer")}
+                  onClick={() => {navigate("/managecustomer");menuItemClick();}}
                 >
                   <i className="fas fa-users me-2 "></i>
                   <span className="menu-text">Manage Customers</span>
@@ -63,7 +61,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/fundrequest")}
+                  onClick={() => {navigate("/fundrequest");menuItemClick();}}
                 >
                   <i className="fas fa-hand-holding-usd me-2 "></i>
                   <span className="menu-text">Fund Requests</span>
@@ -77,7 +75,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/transactionlog")}
+                  onClick={() => {navigate("/transactionlog");menuItemClick();}}
                 >
                   <i className="fas fa-receipt me-2 "></i>
                   <span className="menu-text">Transactions Log</span>
@@ -91,7 +89,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/notification")}
+                  onClick={() => {navigate("/notification"); menuItemClick();}}
                 >
                   <i className="fas fa-bell me-2 "></i>
                   <span className="menu-text">Notifications</span>
@@ -103,7 +101,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/message")}
+                  onClick={() => {navigate("/message"); menuItemClick();}}
                 >
                   <i className="fas fa-comments me-2 "></i>
                   <span className="menu-text">Support / Messages</span>
@@ -121,7 +119,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/customer-dashboard")}
+                  onClick={() => {navigate("/customer-dashboard"); menuItemClick();}}
                 >
                   <i className="fas fa-home me-2"></i>
                   <span className="menu-text">Dashboard</span>
@@ -135,7 +133,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/requestfund")}
+                  onClick={() => {navigate("/requestfund"); menuItemClick();}}
                 >
                   <i className="fas fa-wallet me-2 "></i>
                   <span className="menu-text">Request Funds</span>
@@ -149,7 +147,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/transactionhistory")}
+                  onClick={() => {navigate("/transactionhistory"); menuItemClick();}}
                 >
                   <i className="fas fa-history me-2"></i>
                   <span className="menu-text">Transaction History</span>

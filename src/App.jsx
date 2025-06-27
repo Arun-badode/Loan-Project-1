@@ -74,10 +74,10 @@ const isNoLayoutPage = noLayoutRoutes.includes(location.pathname);
           <Route path="/managecustomer" element={<Managecustomer />} />
           <Route path="/fundrequest" element={<FundRequest />} />
           <Route path="/transactionlog" element={<TransactionsLog />} />
-          <Route path="/notification" element={<NotificationsCard />} />
+          {/* <Route path="/notification" element={<NotificationsCard />} /> */}
           <Route path="/updateprofile" element={<Updateprofile />} />
           <Route path="/changepassword" element={<Changepassword />} />
-          <Route path="/message" element={<MessagesUI />} />
+          {/* <Route path="/message" element={<MessagesUI />} /> */}
 
           {/* CustomerDashboard */}
           <Route path="/customer-dashboard" element={<Customerdashboard />} />

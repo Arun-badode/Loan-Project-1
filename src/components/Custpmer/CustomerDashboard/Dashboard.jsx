@@ -1,210 +1,128 @@
 import React from "react";
+import { Doughnut } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+} from "chart.js";
 
-const Customerdashboard = () => {
-  const transactions = [
-    {
-      id: "TXN-2025-06-26-001",
-      date: "2025-06-26",
-      amount: 25000,
-      status: "Completed",
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+const CustomerDashboard = () => {
+  const userName = "John Doe";
+  const approvedLimit = 10000;
+  const remainingBalance = 5000;
+  const usedBalance = approvedLimit - remainingBalance;
+  const weeklyPayment = 200;
+  const nextPaymentDate = "2025-07-01";
+  const termEndDate = "2025-08-15";
+  const factorRate = 1.2;
+
+  const doughnutData = {
+    labels: ["Used Balance", "Remaining Balance"],
+    datasets: [
+      {
+        data: [usedBalance, remainingBalance],
+        backgroundColor: ["#28a745", "#A0D468"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const doughnutOptions = {
+    cutout: "70%",
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
     },
-    {
-      id: "TXN-2025-06-25-003",
-      date: "2025-06-25",
-      amount: 50000,
-      status: "Processing",
-    },
-    {
-      id: "TXN-2025-06-24-002",
-      date: "2025-06-24",
-      amount: 75000,
-      status: "Completed",
-    },
-  ];
+    maintainAspectRatio: false,
+  };
 
   return (
-    <div className="p-3 mt-3">
-      {/* Greeting */}
+    <div className="container p-3 mt-4">
+      {/* Welcome Message */}
       <div className="mb-4">
-        <h1 className="page-heading">Hello Customer</h1>
-        <p className="page-subheading">Welcome to Your Dashboard</p>
+        <h2 className="page-heading">Welcome, {userName}</h2>
+        <p className="page-subheading">Here's your line of credit summary</p>
       </div>
 
-      {/* Top 3 Cards */}
       <div className="row g-4">
-        <div className="col-12 col-sm-6 col-lg-4">
-          <div className="card shadow-sm h-100 card-green border-0">
-            <div className="card-body p-4">
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h6 className="mb-0">TOTAL LINE OF CREDIT</h6>
-                <div className=" bg-opacity-10 p-3 rounded-circle">
-                  <i className="fas fa-credit-card fa-lg text-success"></i>
-                </div>
-              </div>
-              <h2 className="fw-bold mb-1">1,250</h2>
-              <p className=" small mb-0">
-                <i className="fas fa-arrow-up text-success me-1"></i>
-                +8.5% from last month
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-12 col-sm-6 col-lg-4">
-          <div className="card shadow-sm h-100 card-green border-0">
-            <div className="card-body p-4">
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h6 className=" mb-0">AMOUNT USED</h6>
-                <div className="bg-opacity-10 p-3 rounded-circle">
-                  <i className="fas fa-chart-pie fa-lg text-success"></i>
-                </div>
-              </div>
-              <h2 className="fw-bold mb-1">$150,000,000</h2>
-              <p className=" small mb-0">
-                <i className="fas fa-arrow-up text-success me-1"></i>
-                +12% from last month
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="col-12 col-sm-12 col-lg-4">
-          <div className="card shadow-sm h-100 card-green border-0">
-            <div className="card-body p-4">
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h6 className=" mb-0">AVAILABLE BALANCE</h6>
-                <div className="bg-opacity-10 p-3 rounded-circle">
-                  <i className="fas fa-wallet fa-lg text-success"></i>
-                </div>
-              </div>
-              <h2 className="fw-bold mb-1">$60,000,000</h2>
-              <p className=" small mb-0">
-                <i className="fas fa-arrow-up text-success me-1"></i>
-                +5% from last month
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Credit Summary & Transactions */}
-      <div className="row g-4 mt-4">
-        {/* Credit Summary */}
-        <div className="col-12 col-md-6">
-          <div className="card shadow-sm h-100 card-green">
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card shadow-sm border-0 card-green">
             <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h5 className="card-title fw-semibold mb-0">Credit Summary</h5>
-                <button className="btn btn-sm btn-outline-success">
-                  Download Report
-                </button>
-              </div>
-
-              {/* Circular Progress */}
-              <div className="d-flex flex-column align-items-center mb-4">
-                <div className="position-relative" style={{ width: "160px", height: "160px" }}>
-                  {/* Background circle */}
-                  <div className="position-absolute top-0 start-0 rounded-circle"
-                    style={{
-                      width: "160px",
-                      height: "160px",
-                      background: "conic-gradient(#e9ecef 0% 100%)",
-                    }}></div>
-
-                  {/* Progress circle */}
-                  <div className="position-absolute top-0 start-0 rounded-circle"
-                    style={{
-                      width: "160px",
-                      height: "160px",
-                      background: "conic-gradient(#28a745 0% 60%)",
-                      clipPath: "circle(80px at center)",
-                    }}></div>
-
-                  {/* Inner circle */}
-                  <div className="position-absolute top-50 start-50 translate-middle d-flex flex-column align-items-center justify-content-center rounded-circle bg-white"
-                    style={{
-                      width: "120px",
-                      height: "120px",
-                      transform: "translate(-50%, -50%)",
-                    }}>
-                    <span className="fw-bold fs-3 text-dark">60%</span>
-                    <span className="text-muted small">Used</span>
-                  </div>
-                </div>
-
-                <div className="mt-3 text-center">
-                  <span className="badge bg-success bg-opacity-10 text-white px-3 py-2 rounded-pill">
-                    <i className="fas fa-check-circle me-2"></i>
-                    Good progress
-                  </span>
-                </div>
-              </div>
-
-              <ul className="list-group d-flex gap-2 list-group-flush">
-                <li className="list-group-item d-flex justify-content-between card-green">
-                  <span className="text-muted small">Total Loan</span>
-                  <strong>$150,000,000</strong>
-                </li>
-                <li className="list-group-item d-flex justify-content-between card-green">
-                  <span className="text-muted small">Pending Balance</span>
-                  <strong>$90,000,000</strong>
-                </li>
-              </ul>
+              <h6 className="text-muted">Approved Limit</h6>
+              <h3 className="text-success fw-bold">${approvedLimit.toLocaleString()}</h3>
             </div>
           </div>
         </div>
 
-        {/* Recent Transactions */}
-        <div className="col-12 col-md-6">
-          <div className="card shadow-sm h-100 card-green">
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card shadow-sm border-0 card-green">
             <div className="card-body">
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <h5 className="card-title fw-semibold mb-0">Recent Transactions</h5>
-                <button className="btn btn-outline-success text-decoration-none btn-sm view-all-btn">
-                  View All
-                </button>
-              </div>
+              <h6 className="text-muted">Remaining Balance</h6>
+              <h3 className="text-success fw-bold">${remainingBalance.toLocaleString()} available</h3>
+            </div>
+          </div>
+        </div>
 
-              <div className="table-responsive">
-                <table className="table table-sm table-hover align-middle border shadow-sm rounded overflow-hidden">
-                  <thead className="table-success text-dark">
-                    <tr>
-                      <th>Transaction ID</th>
-                      <th>Date</th>
-                      <th className="text-end">Amount</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {transactions.map((item, index) => (
-                      <tr
-                        key={item.id}
-                        className={index % 2 === 0 ? "bg-white" : "bg-light"}
-                      >
-                        <td>{item.id}</td>
-                        <td>{item.date}</td>
-                        <td className="text-end text-success fw-semibold">
-                          ${item.amount.toLocaleString()}
-                        </td>
-                        <td>
-                          <span
-                            className={`badge rounded-pill  fw-semibold text-uppercase ${item.status === "Completed"
-                              ? "badge-success-soft "
-                              : item.status === "Processing"
-                                ? "badge-warning-soft "
-                                : "badge-danger-soft "
-                              }`}
-                          >
-                            {item.status}
-                          </span>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card shadow-sm border-0 card-green">
+            <div className="card-body">
+              <h6 className="text-muted">Weekly Payment</h6>
+              <h3 className="text-success fw-bold">${weeklyPayment.toLocaleString()}</h3>
+            </div>
+          </div>
+        </div>
 
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card shadow-sm border-0 card-green">
+            <div className="card-body">
+              <h6 className="text-muted">Next Payment Date</h6>
+              <h5 className="fw-bold text-dark">{nextPaymentDate}</h5>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card shadow-sm border-0 card-green">
+            <div className="card-body">
+              <h6 className="text-muted">Term End Date</h6>
+              <h5 className="fw-bold text-dark">{termEndDate}</h5>
+              <p className="text-warning small mt-2 mb-0">
+                ⚠️ Withdraw all funds before {termEndDate}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card shadow-sm border-0 card-green">
+            <div className="card-body">
+              <h6 className="text-muted">Factor Rate</h6>
+              <h4 className="fw-bold text-dark">{factorRate}x</h4>
+            </div>
+          </div>
+        </div>
+
+        {/* Doughnut Chart Section */}
+        <div className="col-12 col-md-6 col-lg-4">
+          <div className="card shadow-sm border-0 card-green">
+            <div className="card-body">
+              <h6 className="fw-semibold mb-3">Balance Usage</h6>
+              <div style={{ height: "220px" }}>
+                <Doughnut data={doughnutData} options={doughnutOptions} />
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Note Section */}
+        <div className="col-12">
+          <div className="alert alert-success border-success bg-success bg-opacity-10">
+            <i className="fas fa-info-circle me-2"></i>
+            This is a <strong>draw-down</strong> line of credit, not revolving.
           </div>
         </div>
       </div>
@@ -212,4 +130,4 @@ const Customerdashboard = () => {
   );
 };
 
-export default Customerdashboard;
+export default CustomerDashboard;

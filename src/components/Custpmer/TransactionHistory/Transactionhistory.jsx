@@ -1,55 +1,43 @@
 import React from "react";
 
-const Transactionhistory = () => {
+const TransactionHistory = () => {
+  const factorRate = 1.2;
+  const weeklyPaymentRate = 0.1; // e.g., 10% weekly
+
   const transactions = [
     {
       id: 1,
-      amount: "$5,000.00",
-      date: "June 26, 2025",
+      amount: 5000,
+      date: "2025-06-26",
       status: "Pending",
-      reference: "TRX-2025-001",
-      description: "Project Funding Phase 1",
-      account: "****4587",
     },
     {
       id: 2,
-      amount: "$3,200.00",
-      date: "June 25, 2025",
+      amount: 3200,
+      date: "2025-06-25",
       status: "Approved",
-      reference: "TRX-2025-002",
-      description: "Equipment Purchase",
-      account: "****7823",
     },
     {
       id: 3,
-      amount: "$7,800.00",
-      date: "June 24, 2025",
+      amount: 7800,
+      date: "2025-06-24",
       status: "Rejected",
-      reference: "TRX-2025-003",
-      description: "Office Renovation",
-      account: "****9354",
     },
     {
       id: 4,
-      amount: "$2,500.00",
-      date: "June 23, 2025",
+      amount: 2500,
+      date: "2025-06-23",
       status: "Approved",
-      reference: "TRX-2025-004",
-      description: "Marketing Campaign",
-      account: "****1298",
     },
     {
       id: 5,
-      amount: "$4,100.00",
-      date: "June 22, 2025",
+      amount: 4100,
+      date: "2025-06-22",
       status: "Pending",
-      reference: "TRX-2025-005",
-      description: "Software Licenses",
-      account: "****6547",
     },
   ];
 
-  const getStatusBadge = (status) => {
+  const getStatusClass = (status) => {
     switch (status) {
       case "Approved":
         return "badge-success-soft";
@@ -63,81 +51,71 @@ const Transactionhistory = () => {
   };
 
   return (
-    <div className="p-3 mt-3">
-      <div className="">
-        <div className="col-12 col-lg-12">
-          {/* Heading */}
-          <h2 className="page-heading">Transaction History</h2>
-          <p className="page-subheading">All past draw down requests</p>
+    <div className="container mt-3 p-3">
+      <h2 className="page-heading">My Draws / History</h2>
+      <p className="page-subheading">Complete breakdown of all fund draws and status</p>
 
-          {/* Card */}
-          <div className="card-green shadow-sm rounded p-3">
-            <div className="table-responsive">
-              <table className="table align-middle table-hover table-green">
-                <thead className="table-light ">
-                  <tr>
-                    <th>Reference</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Account</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactions.length > 0 ? (
-                    transactions.map((txn) => (
+      <div className="card shadow-sm border-0 card-green">
+        <div className="card-body">
+          <div className="table-responsive">
+            <table className="table table-hover align-middle">
+              <thead className="table-success text-dark">
+                <tr>
+                  <th>Date</th>
+                  <th className="text-end">Amount Drawn</th>
+                  <th className="text-end">Weekly Payment</th>
+                  <th className="text-end">Total Due (1.2x)</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.length > 0 ? (
+                  transactions.map((txn) => {
+                    const weeklyPayment = txn.amount * weeklyPaymentRate;
+                    const totalDue = txn.amount * factorRate;
+                    return (
                       <tr key={txn.id}>
-                        <td className="fw-semibold">{txn.reference}</td>
                         <td>
-                          <i className="fas fa-calendar-alt text-secondary me-2" />
+                          <i className="fas fa-calendar-alt text-secondary me-2"></i>
                           {txn.date}
                         </td>
-                        <td className="text-wrap">{txn.description}</td>
-                        <td>
-                          <i className="fas fa-credit-card text-secondary me-2" />
-                          {txn.account}
+                        <td className="text-end fw-semibold text-success">
+                          ${txn.amount.toLocaleString()}
                         </td>
+                        <td className="text-end">${weeklyPayment.toFixed(2)}</td>
+                        <td className="text-end">${totalDue.toFixed(2)}</td>
                         <td>
-                          <strong>{txn.amount}</strong>
-                        </td>
-                        <td>
-                          <span
-                            className={`badge rounded-pill px-3 py-2 d-inline-flex align-items-center ${getStatusBadge(
-                              txn.status
-                            )}`}
-                          >
+                          <span className={`badge rounded-pill ${getStatusClass(txn.status)}`}>
                             {txn.status}
                           </span>
                         </td>
                       </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td colSpan="6" className="text-center py-5">
-                        <i className="fas fa-receipt text-secondary fs-1 mb-3 d-block" />
-                        <p className="text-muted">No transactions found</p>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-               {/* Footer Pagination Info */}
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
-            <div className="text-muted mb-2 mb-md-0">
-              Showing <span className="fw-bold">1</span> to{" "}
-              <span className="fw-bold">5</span> of{" "}
-              <span className="fw-bold">5</span> customers
-            </div>
-            <div>
-              <button className="btn btn-outline-success me-2" >
-                <i className="fas fa-chevron-left me-1"></i> Previous
-              </button>
-              <button className="btn btn-outline-success" >
-                Next <i className="fas fa-chevron-right ms-1"></i>
-              </button>
-            </div>
+                    );
+                  })
+                ) : (
+                  <tr>
+                    <td colSpan="5" className="text-center py-5">
+                      <i className="fas fa-info-circle fs-2 text-muted mb-2"></i>
+                      <p className="text-muted mb-0">No draw history found.</p>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
           </div>
+
+          {/* Pagination Footer */}
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <small className="text-muted">
+              Showing <strong>1</strong> to <strong>5</strong> of <strong>{transactions.length}</strong> entries
+            </small>
+            <div>
+              <button className="btn btn-outline-success btn-sm me-2">
+                <i className="fas fa-chevron-left"></i> Prev
+              </button>
+              <button className="btn btn-outline-success btn-sm">
+                Next <i className="fas fa-chevron-right"></i>
+              </button>
             </div>
           </div>
         </div>
@@ -146,4 +124,4 @@ const Transactionhistory = () => {
   );
 };
 
-export default Transactionhistory;
+export default TransactionHistory;

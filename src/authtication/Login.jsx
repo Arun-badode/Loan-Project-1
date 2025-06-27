@@ -9,7 +9,7 @@ const Login = () => {
   const [role, setRole] = useState("");
   const roleCredentials = {
     Admin: { email: "admin123", password: "admin@123" },
-    Customer: { email: "Customer123", password: "Customer@123" },
+    Customer: { email: "customer123", password: "customer@123" },
   };
 
   const toggleForm = () => {
@@ -17,50 +17,47 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!role) {
-      Swal.fire({
-        icon: "warning",
-        title: "Select Role",
-        text: "Please select a role before logging in.",
-      });
-      return;
+  let matchedRole = null;
+  Object.keys(roleCredentials).forEach((r) => {
+    const cred = roleCredentials[r];
+    if (cred.email === email && cred.password === password) {
+      matchedRole = r;
     }
+  });
 
-    const credentials = roleCredentials[role];
+  if (matchedRole) {
+    localStorage.setItem("userRole", matchedRole);
+    localStorage.setItem("userEmail", email);
+    localStorage.setItem("userName", matchedRole);
 
-    if (email === credentials.email && password === credentials.password) {
-      localStorage.setItem("userRole", role);
-      localStorage.setItem("userEmail", email);
-      localStorage.setItem("userName", role); // Replace with actual name from API
+    Swal.fire({
+      icon: "success",
+      title: "Login Successful",
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+    });
 
+    setTimeout(() => {
+      if (matchedRole === "Admin") {
+        navigate("/dashboard");
+      } else if (matchedRole === "Customer") {
+        navigate("/customer-dashboard");
+      }
+    }, 1000);
+  } else {
+    Swal.fire({
+      icon: "error",
+      title: "Login Failed",
+      text: "Invalid credentials. Please try again.",
+    });
+  }
+};
 
-      Swal.fire({
-        icon: "success",
-        title: "Login Successful",
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-
-      setTimeout(() => {
-        if (role === "Admin") {
-          navigate("/dashboard");
-        } else if (role === "Customer") {
-          navigate("/customer-dashboard");
-        }
-      }, 1000);
-    } else {
-      Swal.fire({
-        icon: "error",
-        title: "Login Failed",
-        text: "Invalid credentials. Please try again.",
-      });
-    }
-  };
   const handleRoleSelect = (selectedRole) => {
     setRole(selectedRole);
     setEmail(roleCredentials[selectedRole].email);
@@ -137,7 +134,7 @@ const Login = () => {
                 </Link>
               </p>
 
-              <div className="d-flex flex-wrap justify-content-center mt-3 gap-2">
+              {/* <div className="d-flex flex-wrap justify-content-center mt-3 gap-2">
                 {Object.keys(roleCredentials).map((r) => (
                   <button
                     type="button"
@@ -154,7 +151,7 @@ const Login = () => {
                     {r}
                   </button>
                 ))}
-              </div>
+              </div> */}
 
             </form>
           ) : (

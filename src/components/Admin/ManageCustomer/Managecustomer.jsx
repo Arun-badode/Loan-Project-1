@@ -101,7 +101,7 @@ const Managecustomer = () => {
               <thead className="table-light">
                 <tr>
                   <th>Customer Name</th>
-                  <th>Customer ID</th>
+                  
                   <th>Contact Number</th>
                   <th>Email</th>
                   <th>Credit Line</th>
@@ -116,7 +116,7 @@ const Managecustomer = () => {
                       <div className="fw-bold">{customer.name}</div>
                       <div className="text-muted small">{customer.company}</div>
                     </td>
-                    <td>{customer.id}</td>
+                    
                     <td>{customer.phone}</td>
                     <td>{customer.email}</td>
                     <td>${customer.creditLine.toLocaleString()}</td>

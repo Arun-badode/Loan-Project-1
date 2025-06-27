@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, Tab, Nav, Table, Modal, Form } from 'react-bootstrap';
 
 const FundRequest = () => {
-  const [activeTab, setActiveTab] = useState('pending');
+  const [activeTab, setActiveTab] = useState('all'); // Default to 'all'
   const [showModal, setShowModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
-  const [showDocuments, setShowDocuments] = useState(false);
 
   // Sample data for fund requests
   const requests = [
@@ -56,7 +55,9 @@ const FundRequest = () => {
     }
   ];
 
-  const filteredRequests = requests.filter(request => request.status === activeTab);
+  const filteredRequests = activeTab === 'all' 
+    ? requests 
+    : requests.filter(request => request.status === activeTab);
 
   const getStatusBadge = (status) => {
     switch (status) {
@@ -91,12 +92,10 @@ const FundRequest = () => {
   };
 
   const handleApprove = (id) => {
-    // Approval logic would go here
     alert(`Request ${id} approved`);
   };
 
   const handleDecline = (id) => {
-    // Decline logic would go here
     alert(`Request ${id} declined`);
   };
 
@@ -114,56 +113,91 @@ const FundRequest = () => {
               <i className="fas fa-download me-2"></i>
               Export
             </Button>
-            <Button variant="success" className="d-flex align-items-center">
+            {/* <Button variant="success" className="d-flex align-items-center">
               <i className="fas fa-filter me-2"></i>
               Filters
-            </Button>
+            </Button> */}
           </div>
         </div>
         <hr className="my-4" />
       </div>
 
       {/* Request Status Tabs */}
-      <Nav variant="pills" className="mb-4">
+      <Nav
+        variant="pills"
+        className="d-flex flex-nowrap overflow-auto mb-4 bg-white p-2 shadow-sm rounded-pill"
+        style={{ whiteSpace: 'nowrap', gap: '0.5rem' }}
+        activeKey={activeTab}
+        onSelect={(selectedKey) => setActiveTab(selectedKey)}
+      >
+        {/* All Requests */}
         <Nav.Item>
-          <Nav.Link 
-            eventKey="pending" 
-            active={activeTab === 'pending'}
-            onClick={() => setActiveTab('pending')}
-            className="d-flex align-items-center"
+          <Nav.Link
+            eventKey="all"
+            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
+              activeTab === "all"
+                ? "bg-success text-white"
+                : "text-success border border-success"
+            }`}
+          >
+            <i className="fas fa-list me-2"></i>
+            All Requests
+            <span className="badge bg-white text-success ms-2">
+              {requests.length}
+            </span>
+          </Nav.Link>
+        </Nav.Item>
+
+        {/* Pending Requests */}
+        <Nav.Item>
+          <Nav.Link
+            eventKey="pending"
+            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
+              activeTab === "pending"
+                ? "bg-success text-white"
+                : "text-success border border-success"
+            }`}
           >
             <i className="fas fa-clock me-2"></i>
             Pending
-            <span className="badge bg-white text-dark ms-2">
-              {requests.filter(r => r.status === 'pending').length}
+            <span className="badge bg-white text-success ms-2">
+              {requests.filter((r) => r.status === "pending").length}
             </span>
           </Nav.Link>
         </Nav.Item>
+
+        {/* Approved */}
         <Nav.Item>
-          <Nav.Link 
-            eventKey="approved" 
-            active={activeTab === 'approved'}
-            onClick={() => setActiveTab('approved')}
-            className="d-flex align-items-center"
+          <Nav.Link
+            eventKey="approved"
+            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
+              activeTab === "approved"
+                ? "bg-success text-white"
+                : "text-success border border-success"
+            }`}
           >
             <i className="fas fa-check-circle me-2"></i>
             Approved
-            <span className="badge bg-white text-dark ms-2">
-              {requests.filter(r => r.status === 'approved').length}
+            <span className="badge bg-white text-success ms-2">
+              {requests.filter((r) => r.status === "approved").length}
             </span>
           </Nav.Link>
         </Nav.Item>
+
+        {/* Declined */}
         <Nav.Item>
-          <Nav.Link 
-            eventKey="declined" 
-            active={activeTab === 'declined'}
-            onClick={() => setActiveTab('declined')}
-            className="d-flex align-items-center"
+          <Nav.Link
+            eventKey="declined"
+            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
+              activeTab === "declined"
+                ? "bg-success text-white"
+                : "text-success border border-success"
+            }`}
           >
             <i className="fas fa-times-circle me-2"></i>
             Declined
-            <span className="badge bg-white text-dark ms-2">
-              {requests.filter(r => r.status === 'declined').length}
+            <span className="badge bg-white text-success ms-2">
+              {requests.filter((r) => r.status === "declined").length}
             </span>
           </Nav.Link>
         </Nav.Item>
@@ -173,7 +207,7 @@ const FundRequest = () => {
       <Card className="border-0 shadow-sm">
         <Card.Body className="p-0">
           <div className="table-responsive">
-            <Table hover className="mb-0">
+            <Table hover className="mb-0 table-green">
               <thead className="table-light">
                 <tr>
                   <th>Request ID</th>
@@ -231,7 +265,7 @@ const FundRequest = () => {
                         <i className="fas fa-folder-open fa-3x opacity-25"></i>
                       </div>
                       <h4 className="h5 fw-bold mb-2">No requests found</h4>
-                      <p className="text-muted">There are no {activeTab} requests at this time.</p>
+                      <p className="text-muted">There are no requests matching your criteria.</p>
                     </td>
                   </tr>
                 )}

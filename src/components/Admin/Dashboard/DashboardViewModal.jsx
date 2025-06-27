@@ -1,13 +1,13 @@
 import React from "react";
 import { Modal, Button } from "react-bootstrap";
 
+const DashboardViewModal = ({ show, handleClose, request }) => {
+  if (!request) return null;
 
-
-const DashboardViewModal = ({ show, handleClose }) => {
   return (
     <Modal show={show} onHide={handleClose} centered size="lg" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title className="fw-bold">Fund Request Details</Modal.Title>
+        <Modal.Title className="fw-bold">Funding Request Details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {/* Request & Applicant Info */}
@@ -15,13 +15,18 @@ const DashboardViewModal = ({ show, handleClose }) => {
           {/* Request Information */}
           <div className="col-md-6">
             <h6 className="fw-bold">Request Information</h6>
-            <p className="mb-1"><strong>Request ID:</strong> REQ-2025-06-26-001</p>
-            <p className="mb-1"><strong>Customer:</strong> Acme Corp</p>
-            <p className="mb-1"><strong>Amount:</strong> $250,000</p>
-            <p className="mb-1"><strong>Date:</strong> 2025-06-26</p>
+            <p className="mb-1"><strong>Request ID:</strong> {request.id}</p>
+            <p className="mb-1"><strong>Customer:</strong> {request.customer}</p>
+            <p className="mb-1"><strong>Amount:</strong> {request.amount}</p>
+            <p className="mb-1"><strong>Date:</strong> {request.date}</p>
             <p className="mb-1">
               <strong>Status:</strong>{" "}
-              <span className="badge bg-warning text-dark">Pending</span>
+              <span className={`badge ${
+                request.status === "Approved" ? "bg-success" :
+                request.status === "Pending" ? "bg-warning text-dark" : "bg-danger"
+              }`}>
+                {request.status}
+              </span>
             </p>
           </div>
 
@@ -52,8 +57,7 @@ const DashboardViewModal = ({ show, handleClose }) => {
             {[
               { label: "Financial Statements.pdf", icon: "fas fa-file-pdf text-danger" },
               { label: "Business Plan.xlsx", icon: "fas fa-file-excel text-success" },
-              { label: "Company Profile.docx", icon: "fas fa-file-word text-Success" },
-              { label: "Additional Document.zip", icon: "fas fa-file-archive text-secondary" },
+              { label: "Company Profile.docx", icon: "fas fa-file-word text-primary" },
             ].map((doc, idx) => (
               <div className="col-md-6" key={idx}>
                 <div className="border rounded p-2 bg-light d-flex align-items-center">
@@ -69,12 +73,18 @@ const DashboardViewModal = ({ show, handleClose }) => {
         <div>
           <h6 className="fw-bold">Approval History</h6>
           <ul className="list-unstyled small mb-2">
-            <li className="mb-1">
-              <strong>Jun 25, 2025:</strong> Initial Review by John Smith
-            </li>
-            <li>
-              <strong>Risk Assessment:</strong> In Progress
-            </li>
+            {request.status === "Pending" ? (
+              <li>No approval actions yet</li>
+            ) : (
+              <>
+                <li className="mb-1">
+                  <strong>Jun 25, 2025:</strong> Initial Review by John Smith
+                </li>
+                <li>
+                  <strong>Final Decision:</strong> {request.status} by Admin User
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </Modal.Body>
@@ -84,8 +94,12 @@ const DashboardViewModal = ({ show, handleClose }) => {
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="danger">Reject</Button>
-        <Button variant="success">Approve</Button>
+        <Button variant="danger" disabled={request.status === "Rejected"}>
+          Reject
+        </Button>
+        <Button variant="success" disabled={request.status === "Approved"}>
+          Approve
+        </Button>
       </Modal.Footer>
     </Modal>
   );

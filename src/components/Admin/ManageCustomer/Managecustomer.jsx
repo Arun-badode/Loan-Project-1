@@ -1,189 +1,239 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import AddCustomerModal from "./AddCustomerModal";
-import CustomerDetailsModal from "./CustomerDetailsModal";
-import EditCreditLineModal from "./EditCreditLineModal";
+import React, { useState } from 'react';
+import { Button, Table, Badge, InputGroup, Form } from 'react-bootstrap';
+import AddCustomerModal from './AddCustomerModal';
+import CustomerDetailsModal from './CustomerDetailsModal';
+import EditCreditModal from './EditCreditModal';
+import DocumentsModal from './DocumentsModal';
+import DisqualifyModal from './DisqualifyModal';
 
-const Managecustomer = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [showCustomerDetailsModal, setShowCustomerDetailsModal] = useState(false);
+const ManageCustomer = () => {
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDocsModal, setShowDocsModal] = useState(false);
+  const [showDisqualifyModal, setShowDisqualifyModal] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const customers = [
     {
-      id: "CUST-001",
-      name: "John Smith",
-      phone: "+1 (555) 123-4567",
-      email: "john.smith@example.com",
-      creditLine: 50000,
+      id: 1,
+      name: "John Doe",
+      company: "ABC Corp",
+      email: "john@abc.com",
+      approvedLimit: 50000,
+      factorRate: 1.2,
+      term: "12 months",
+      documents: ["PAN.pdf", "GST.pdf"],
+      currentBalance: 20000,
       status: "Active",
-      company: "Smith Enterprises",
+      phone: "1234567890"
     },
     {
-      id: "CUST-002",
-      name: "Sarah Johnson",
-      phone: "+1 (555) 987-6543",
-      email: "sarah.j@example.com",
-      creditLine: 75000,
-      status: "Active",
-      company: "Johnson & Associates",
+      id: 2,
+      name: "Jane Smith",
+      company: "XYZ Ltd",
+      email: "jane@xyz.com",
+      approvedLimit: 75000,
+      factorRate: 1.1,
+      term: "18 months",
+      documents: ["PAN.pdf"],
+      currentBalance: 35000,
+      status: "Under Review",
+      phone: "9876543210"
     },
     {
-      id: "CUST-003",
-      name: "Michael Chen",
-      phone: "+1 (555) 456-7890",
-      email: "mchen@example.com",
-      creditLine: 100000,
-      status: "Active",
-      company: "Chen Technologies",
-    },
-    {
-      id: "CUST-004",
-      name: "Emily Wilson",
-      phone: "+1 (555) 234-5678",
-      email: "e.wilson@example.com",
-      creditLine: 30000,
-      status: "Inactive",
-      company: "Wilson Retail Group",
-    },
-    {
-      id: "CUST-005",
-      name: "David Rodriguez",
-      phone: "+1 (555) 876-5432",
-      email: "drodriguez@example.com",
-      creditLine: 85000,
-      status: "Active",
-      company: "Rodriguez Imports",
-    },
+      id: 3,
+      name: "Bob Johnson",
+      company: "QWE Inc",
+      email: "bob@qwe.com",
+      approvedLimit: 100000,
+      factorRate: 1.3,
+      term: "24 months",
+      documents: ["PAN.pdf", "GST.pdf", "Address.pdf"],
+      currentBalance: 50000,
+      status: "Disqualified",
+      phone: "5555555555"
+    }
   ];
+
+  const filteredCustomers = customers.filter(customer =>
+    customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    customer.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    customer.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+  };
+
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case 'Active': return <Badge bg="success">{status}</Badge>;
+      case 'Under Review': return <Badge bg="warning" text="dark">{status}</Badge>;
+      case 'Disqualified': return <Badge bg="danger">{status}</Badge>;
+      default: return <Badge bg="secondary">{status}</Badge>;
+    }
+  };
+
+  const handleViewDetails = (customer) => {
+    setSelectedCustomer(customer);
+    setShowDetailsModal(true);
+  };
+
+  const handleEditCredit = (customer) => {
+    setSelectedCustomer(customer);
+    setShowEditModal(true);
+  };
+
+  const handleViewDocuments = (customer) => {
+    setSelectedCustomer(customer);
+    setShowDocsModal(true);
+  };
+
+  const handleDisqualify = (customer) => {
+    setSelectedCustomer(customer);
+    setShowDisqualifyModal(true);
+  };
 
   return (
     <div className="container mt-4">
-      {/* Page Heading */}
+      {/* Page Header and Search */}
       <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
-        {/* Left Side: Heading & Subheading */}
-        <div className="text-start">
-          <h4 className="page-heading mb-1">Manage Customer</h4>
-          <p className="page-subheading mb-0">View and manage customer credit details</p>
+        <div>
+          <h4 className="mb-1">Customers Management</h4>
+          <p className="mb-0">List of all customers and manage their details</p>
         </div>
-
-        {/* Right Side: Search & Button aligned in one row */}
-        <div className="d-flex flex-column flex-sm-row align-items-stretch gap-2">
-          {/* Search Field */}
-          <div className="input-group" style={{ maxWidth: "280px" }}>
-            <span className="input-group-text">
+        <div className="d-flex gap-2">
+          <InputGroup>
+            <InputGroup.Text>
               <i className="fas fa-search"></i>
-            </span>
-            <input
-              type="text"
-              className="form-control input-green"
+            </InputGroup.Text>
+            <Form.Control
               placeholder="Search customers..."
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
             />
-          </div>
-
-          {/* Button */}
-          <Button
-            variant="success"
-            className="w-100 w-sm-auto btn-green"
-            onClick={() => setShowModal(true)}
-          >
-            + Add New Customer
+          </InputGroup>
+          <Button variant="success" onClick={() => setShowAddModal(true)}>
+            + Add Customer
           </Button>
         </div>
       </div>
 
-
-      {/* Card Table */}
-      <div className="card shadow-sm ">
+      {/* Customers Table */}
+      <div className="card shadow-sm">
         <div className="card-body card-green">
           <div className="table-responsive">
-            <table className="table table-hover align-middle table-green">
-              <thead className="table-light">
+            <Table hover className="mb-0 table-green">
+              <thead>
                 <tr>
-                  <th>Customer Name</th>
-                  
-                  <th>Contact Number</th>
+                  <th>Name</th>
+                  <th>Company</th>
                   <th>Email</th>
-                  <th>Credit Line</th>
+                  <th>Phone</th>
+                  <th>Approved Limit</th>
+                  <th>Factor Rate</th>
+                  <th>Term</th>
+                  <th>Documents</th>
+                  <th>Current Balance</th>
                   <th>Status</th>
-                  <th className="text-end">Actions</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {customers.map((customer) => (
+                {filteredCustomers.map((customer) => (
                   <tr key={customer.id}>
-                    <td>
-                      <div className="fw-bold">{customer.name}</div>
-                      <div className="text-muted small">{customer.company}</div>
-                    </td>
-                    
-                    <td>{customer.phone}</td>
+                    <td>{customer.name}</td>
+                    <td>{customer.company}</td>
                     <td>{customer.email}</td>
-                    <td>${customer.creditLine.toLocaleString()}</td>
+                    <td>{customer.phone}</td>
+                    <td>{formatCurrency(customer.approvedLimit)}</td>
+                    <td>{customer.factorRate}</td>
+                    <td>{customer.term}</td>
                     <td>
-                      <span className={
-                        customer.status === "Active"
-                          ? "badge-success-soft py-1 px-2 rounded-pill"
-                          : customer.status === "Inactive"
-                            ? "badge-danger-soft py-1 px-2 rounded-pill"
-
-                            : "badge-status-pending"
-                      }>
-                        {customer.status}
-                      </span>
-
+                      {customer.documents.map((doc, idx) => (
+                        <Badge bg="light" text="dark" className="me-1" key={idx}>{doc}</Badge>
+                      ))}
                     </td>
-                    <td className="text-end">
-                      <button
-                        className="btn btn-sm btn-link text-success me-2"
-                        onClick={() => setShowCustomerDetailsModal(true)}
+                    <td>{formatCurrency(customer.currentBalance)}</td>
+                    <td>{getStatusBadge(customer.status)}</td>
+                    <td>
+                      <Button
+                        variant="link"
+                        size="sm"
+                        className="text-success p-0 me-2"
+                        title="View Details"
+                        onClick={() => handleViewDetails(customer)}
                       >
-                        <i className="fas fa-eye me-1"></i>
-                      </button>
-                      <CustomerDetailsModal
-                        show={showCustomerDetailsModal}
-                        handleClose={() => setShowCustomerDetailsModal(false)}
-                      />
-                      <button
-                        className="btn btn-sm btn-link text-success me-2"
-                        onClick={() => setShowEditModal(true)}
+                        <i className="fas fa-eye"></i>
+                      </Button>
+                      <Button
+                        variant="link"
+                        size="sm"
+                        className="text-primary p-0 me-2"
+                        title="Update Limit / Factor Rate"
+                        onClick={() => handleEditCredit(customer)}
                       >
-                        <i className="fas fa-edit me-1"></i>
-                      </button>
-                      <EditCreditLineModal
-                        show={showEditModal}
-                        handleClose={() => setShowEditModal(false)}
-                      />
+                        <i className="fas fa-edit"></i>
+                      </Button>
+                      <Button
+                        variant="link"
+                        size="sm"
+                        className="text-warning p-0 me-2"
+                        title="Request More Documents"
+                        onClick={() => handleViewDocuments(customer)}
+                      >
+                        <i className="fas fa-file-alt"></i>
+                      </Button>
+                      <Button
+                        variant="link"
+                        size="sm"
+                        className="text-danger p-0"
+                        title="Mark as Disqualified"
+                        onClick={() => handleDisqualify(customer)}
+                      >
+                        <i className="fas fa-user-slash"></i>
+                      </Button>
                     </td>
                   </tr>
                 ))}
               </tbody>
-            </table>
+            </Table>
           </div>
-
-          {/* Footer Pagination Info */}
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
-            <div className="text-muted mb-2 mb-md-0">
-              Showing <span className="fw-bold">1</span> to{" "}
-              <span className="fw-bold">5</span> of{" "}
-              <span className="fw-bold">5</span> customers
-            </div>
-            <div>
-              <button className="btn btn-outline-success me-2" >
-                <i className="fas fa-chevron-left me-1"></i> Previous
-              </button>
-              <button className="btn btn-outline-success" >
-                Next <i className="fas fa-chevron-right ms-1"></i>
-              </button>
-            </div>
-          </div>
+          {/* Pagination - you can add your pagination logic here */}
         </div>
       </div>
 
-      {/* Add Modal */}
-      <AddCustomerModal show={showModal} handleClose={() => setShowModal(false)} />
+      {/* Modal Components */}
+      <AddCustomerModal show={showAddModal} handleClose={() => setShowAddModal(false)} />
+      <CustomerDetailsModal
+        show={showDetailsModal}
+        handleClose={() => setShowDetailsModal(false)}
+        customer={selectedCustomer}
+      />
+      <EditCreditModal
+        show={showEditModal}
+        handleClose={() => setShowEditModal(false)}
+        customer={selectedCustomer}
+      />
+      <DocumentsModal
+        show={showDocsModal}
+        handleClose={() => setShowDocsModal(false)}
+        customer={selectedCustomer}
+      />
+      <DisqualifyModal
+        show={showDisqualifyModal}
+        handleClose={() => setShowDisqualifyModal(false)}
+        customer={selectedCustomer}
+      />
     </div>
   );
 };
 
-export default Managecustomer;
+export default ManageCustomer;

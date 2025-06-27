@@ -1,42 +1,61 @@
 import React from 'react';
-import { Modal, Button, Row, Col } from 'react-bootstrap';
+import { Modal, Button, Badge } from 'react-bootstrap';
 
-const CustomerDetailsModal = ({ show, handleClose }) => {
+const CustomerDetailsModal = ({ show, handleClose, customer }) => {
+  if (!customer) return null;
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-US', { 
+      style: 'currency', 
+      currency: 'USD' 
+    }).format(amount);
+  };
+
   return (
-    <Modal show={show} onHide={handleClose} size="lg" centered backdrop="static" keyboard={false} className="modal-green">
+    <Modal show={show} onHide={handleClose} size="lg" centered backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Customer Details</Modal.Title>
-        {/* <Button
-          variant="link"
-          className="ms-auto text-decoration-none"
-          onClick={handleClose}
-        >
-          Back to List
-        </Button> */}
+        <Modal.Title>Customer Details - {customer.name}</Modal.Title>
       </Modal.Header>
-
       <Modal.Body>
-        <Row>
-          <Col md={6}>
-            <div className="p-3 bg-light rounded">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="p-3 bg-light rounded mb-3">
               <h6 className="fw-bold mb-3">Basic Information</h6>
-              <p className="mb-2"><strong>Customer Name</strong><br />John Smith</p>
-              <p className="mb-2"><strong>Company</strong><br />Smith Enterprises</p>
-              <p className="mb-2"><strong>Email</strong><br />john.smith@example.com</p>
-              <p className="mb-0"><strong>Phone</strong><br />+1 (555) 123-4567</p>
+              <p className="mb-2"><strong>Customer ID:</strong> {customer.id}</p>
+              <p className="mb-2"><strong>Name:</strong> {customer.name}</p>
+              <p className="mb-2"><strong>Company:</strong> {customer.company}</p>
+              <p className="mb-2"><strong>Email:</strong> {customer.email}</p>
+              <p className="mb-0"><strong>Phone:</strong> {customer.phone}</p>
             </div>
-          </Col>
-
-          <Col md={6}>
-            <div className="p-3 bg-light rounded">
+          </div>
+          <div className="col-md-6">
+            <div className="p-3 bg-light rounded mb-3">
               <h6 className="fw-bold mb-3">Credit Information</h6>
-              <p className="mb-2"><strong>Credit Line</strong><br /><span className="text-Success">$50,000</span></p>
-              <p className="mb-2"><strong>Current Balance</strong><br />$12,500</p>
-              <p className="mb-0"><strong>Status</strong><br /><span className="badge bg-success">Active</span></p>
+              <p className="mb-2"><strong>Approved Limit:</strong> {formatCurrency(customer.creditLine)}</p>
+              <p className="mb-2"><strong>Factor Rate:</strong> {customer.factorRate}</p>
+              <p className="mb-2"><strong>Term:</strong> {customer.term} months</p>
+              <p className="mb-2"><strong>Current Balance:</strong> {formatCurrency(customer.balance)}</p>
+              <p className="mb-0">
+                <strong>Status:</strong>{" "}
+                <Badge bg={
+                  customer.status === 'Active'
+                    ? 'success'
+                    : customer.status === 'Disqualified'
+                    ? 'danger'
+                    : 'warning'
+                }>
+                  {customer.status}
+                </Badge>
+              </p>
             </div>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+      </Modal.Footer>
     </Modal>
   );
 };

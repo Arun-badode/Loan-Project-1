@@ -27,6 +27,7 @@ const barData = [
   { year: "Mar", amount: 45000 },
   { year: "Apr", amount: 47000 },
   { year: "May", amount: 52000 },
+  { year: "Jun", amount: 60000 },
 ];
 
 const DashboardCharts = () => {
@@ -38,11 +39,11 @@ const DashboardCharts = () => {
           <Col xs={12} md={6}>
             <div className="card-green p-4 rounded shadow-sm h-100">
               <div className="d-flex justify-content-between align-items-center flex-wrap">
-                <h4 className="fw-bold mb-2 mb-md-0">Credit Summary</h4>
+                <h4 className="fw-bold mb-2 mb-md-0">Portfolio Summary</h4>
               </div>
 
-              <div className="d-flex flex-column flex-md-row align-items-center mt-3 ">
-                <div style={{ width: "100%", maxWidth: 250, height: 200 }} >
+              <div className="d-flex flex-column flex-md-row align-items-center mt-3">
+                <div style={{ width: "100%", maxWidth: 250, height: 200 }}>
                   <ResponsiveContainer width="100%" height="100%">
                     <PieChart>
                       <Pie
@@ -60,9 +61,9 @@ const DashboardCharts = () => {
                 </div>
 
                 <div className="ms-md-5 mt-4 mt-md-0 text-center text-md-start">
-                  <p className="mb-1 text-muted">Total Loan</p>
+                  <p className="mb-1 text-muted">Total Portfolio</p>
                   <h5 className="fw-bold">$150,000,000</h5>
-                  <p className="mb-1 mt-3 text-muted">Pending Balance</p>
+                  <p className="mb-1 mt-3 text-muted">Available Balance</p>
                   <h6 className="fw-bold">$90,000,000</h6>
                 </div>
               </div>
@@ -73,20 +74,20 @@ const DashboardCharts = () => {
                   <small>Amount Loaned ($)</small>
                 </div>
                 <div className="d-flex align-items-center gap-2">
-                  <div style={{ width: 12, height: 12, backgroundColor: "#000000" }}></div>
+                  <div style={{ width: 12, height: 12, backgroundColor: "#6c757d" }}></div>
                   <small>Available Balance ($)</small>
                 </div>
               </div>
             </div>
           </Col>
 
-          {/* Monthly Returns */}
+          {/* Monthly Disbursements */}
           <Col xs={12} md={6}>
             <div className="card-green p-4 rounded shadow-sm h-100">
               <div className="d-flex justify-content-between align-items-center flex-wrap">
-                <h4 className="fw-bold mb-2 mb-md-0">Monthly Returns</h4>
+                <h4 className="fw-bold mb-2 mb-md-0">Monthly Disbursements</h4>
                 <div className="text-muted">
-                  2024
+                  2025
                 </div>
               </div>
 
@@ -95,7 +96,7 @@ const DashboardCharts = () => {
                   <BarChart data={barData} barSize={25}>
                     <XAxis dataKey="year" />
                     <YAxis />
-                    <Tooltip />
+                    <Tooltip formatter={(value) => [`$${value.toLocaleString()}`, "Amount"]} />
                     <Bar dataKey="amount" fill="#22c55e" radius={[6, 6, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>

@@ -15,8 +15,8 @@ const DashboardCard = () => {
 
         {/* Stats Cards */}
         <Row className="g-4">
-          {/* Card 1 */}
-          <Col xs={12} sm={6} lg={4}>
+          {/* Card 1 - Total Customers */}
+          <Col xs={12} sm={6} lg={3}>
             <div className="p-4 rounded shadow-sm card-green h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
@@ -29,30 +29,44 @@ const DashboardCard = () => {
             </div>
           </Col>
 
-          {/* Card 2 */}
-          <Col xs={12} sm={6} lg={4}>
+          {/* Card 2 - Pending Funding Requests */}
+          <Col xs={12} sm={6} lg={3}>
             <div className="p-4 rounded shadow-sm card-green h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
-                  <p className="mb-1 text-muted">Total Credit Approved</p>
-                  <h5 className="fw-bold">$150,000,000</h5>
-                  <small className="text-success">+8% from last month</small>
+                  <p className="mb-1 text-muted">Pending Requests</p>
+                  <h5 className="fw-bold">42</h5>
+                  <small className="text-warning">5 new today</small>
                 </div>
-                <i className="fa-solid fa-circle-check text-Success fs-4"></i>
+                <i className="fa-solid fa-clock text-warning fs-4"></i>
               </div>
             </div>
           </Col>
 
-          {/* Card 3 */}
-          <Col xs={12} sm={6} lg={4}>
+          {/* Card 3 - Total Disbursed */}
+          <Col xs={12} sm={6} lg={3}>
             <div className="p-4 rounded shadow-sm card-green h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
-                  <p className="mb-1 text-muted">Total Drawn Amount</p>
+                  <p className="mb-1 text-muted">Total Disbursed</p>
                   <h5 className="fw-bold">$60,000,000</h5>
                   <small className="text-success">+12% from last month</small>
                 </div>
-                <i className="fa-solid fa-money-bill-wave text-danger fs-4"></i>
+                <i className="fa-solid fa-money-bill-wave text-primary fs-4"></i>
+              </div>
+            </div>
+          </Col>
+
+          {/* Card 4 - Payments Overdue */}
+          <Col xs={12} sm={6} lg={3}>
+            <div className="p-4 rounded shadow-sm card-green h-100">
+              <div className="d-flex justify-content-between align-items-start">
+                <div>
+                  <p className="mb-1 text-muted">Payments Overdue</p>
+                  <h5 className="fw-bold">$1,250,000</h5>
+                  <small className="text-danger">3% of portfolio</small>
+                </div>
+                <i className="fa-solid fa-exclamation-circle text-danger fs-4"></i>
               </div>
             </div>
           </Col>

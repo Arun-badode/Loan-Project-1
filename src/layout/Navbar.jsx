@@ -67,53 +67,56 @@ const Navbar = ({ toggleSidebar }) => {
 
               {/* Notification Card */}
               {showNotification && (
-               <div
-  className="position-absolute end-0 mt-2 shadow-sm rounded-3 border border-success bg-white"
-  style={{
-    width: "280px",
-    zIndex: 1000,
-    right: 0,
-  }}
->
-  <div className="border-bottom px-3 py-2 d-flex justify-content-between align-items-center bg-success bg-opacity-10 rounded-top">
-    <strong className="text-white">Notifications</strong>
-    <button
-      className="btn-close"
-      onClick={() => setShowNotification(false)}
-      style={{ fontSize: "0.8rem" }}
-    ></button>
-  </div>
+                <div
+                  className="position-absolute end-0 mt-2 shadow-sm rounded-3 border border-success bg-white"
+                  style={{
+                    width: "280px",
+                    zIndex: 1000,
+                    right: 0,
+                  }}
+                >
+                  <div className="border-bottom px-3 py-2 d-flex justify-content-between align-items-center bg-success bg-opacity-10 rounded-top">
+                    <strong className="text-white">Notifications</strong>
+                    <button
+                      className="btn-close"
+                      onClick={() => setShowNotification(false)}
+                      style={{ fontSize: "0.8rem" }}
+                    ></button>
+                  </div>
 
-  <div className="p-3">
-    {/* Notification Item 1 */}
-    <div className="d-flex align-items-start gap-2 mb-3">
-      <i className="fas fa-bell mt-1 text-success"></i>
-      <div className="small text-dark">
-        <div className="fw-semibold">3 new transaction alerts</div>
-        <div className="text-muted small">Just now</div>
-      </div>
-    </div>
+                  <div className="p-3">
+                    {/* Notification Item 1 */}
+                    <div className="d-flex align-items-start gap-2 mb-3">
+                      <i className="fas fa-bell mt-1 text-success"></i>
+                      <div className="small text-dark">
+                        <div className="fw-semibold">
+                          3 new transaction alerts
+                        </div>
+                        <div className="text-muted small">Just now</div>
+                      </div>
+                    </div>
 
-    {/* Notification Item 2 */}
-    <div className="d-flex align-items-start gap-2 mb-3">
-      <i className="fas fa-check-circle mt-1 text-success"></i>
-      <div className="small text-dark">
-        <div className="fw-semibold">Withdrawal approved</div>
-        <div className="text-muted small">15 minutes ago</div>
-      </div>
-    </div>
+                    {/* Notification Item 2 */}
+                    <div className="d-flex align-items-start gap-2 mb-3">
+                      <i className="fas fa-check-circle mt-1 text-success"></i>
+                      <div className="small text-dark">
+                        <div className="fw-semibold">Withdrawal approved</div>
+                        <div className="text-muted small">15 minutes ago</div>
+                      </div>
+                    </div>
 
-    {/* Notification Item 3 */}
-    <div className="d-flex align-items-start gap-2">
-      <i className="fas fa-file-alt mt-1 text-success"></i>
-      <div className="small text-dark">
-        <div className="fw-semibold">Monthly report available</div>
-        <div className="text-muted small">1 hour ago</div>
-      </div>
-    </div>
-  </div>
-</div>
-
+                    {/* Notification Item 3 */}
+                    <div className="d-flex align-items-start gap-2">
+                      <i className="fas fa-file-alt mt-1 text-success"></i>
+                      <div className="small text-dark">
+                        <div className="fw-semibold">
+                          Monthly report available
+                        </div>
+                        <div className="text-muted small">1 hour ago</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               )}
             </div>
 

@@ -52,7 +52,7 @@ const DashboardViewModal = ({ show, handleClose }) => {
             {[
               { label: "Financial Statements.pdf", icon: "fas fa-file-pdf text-danger" },
               { label: "Business Plan.xlsx", icon: "fas fa-file-excel text-success" },
-              { label: "Company Profile.docx", icon: "fas fa-file-word text-primary" },
+              { label: "Company Profile.docx", icon: "fas fa-file-word text-Success" },
               { label: "Additional Document.zip", icon: "fas fa-file-archive text-secondary" },
             ].map((doc, idx) => (
               <div className="col-md-6" key={idx}>

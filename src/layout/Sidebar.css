@@ -11,7 +11,7 @@
 }
 
 .sidebar-container.collapsed {
-  width: 80px;
+  width: 63px;
 }
 
 .sidebar-container.collapsed .submenu .submenu-item {
@@ -96,7 +96,7 @@
   transform: rotate(360deg);
 }
 .menu-item.active .menu-link {
-  background-color: #578E7E; /* Highlight active menu item */
+  background-color: #414a47; 
   color: white; /* Active text color */
   border-radius: 12px;
 }

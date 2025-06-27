@@ -23,6 +23,9 @@ function App() {
     setIsSidebarCollapsed(true);
   };
 
+   const  menuItemClick = () => {
+    setIsSidebarCollapsed((prev) => !prev);
+  };
   const toggleSidebar = () => {
     setIsSidebarCollapsed((prev) => !prev);
   };
@@ -40,8 +43,8 @@ function App() {
         {!hideLayout && (
           <Sidebar
             collapsed={isSidebarCollapsed}
-            menuItemClick={menusidebarcollaps}
-          />  
+            menuItemClick={ menuItemClick}
+          />
         )}
         {/* sidebar end */}
         {/* right side  */}

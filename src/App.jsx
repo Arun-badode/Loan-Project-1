@@ -17,6 +17,7 @@ import Transactionhistory from "./components/Custpmer/TransactionHistory/Transac
 import Updateprofile from "./components/Profile/Updateprofile";
 import Changepassword from "./components/Profile/Changepassword";
 import ForgotPassword from "./authtication/ForgotPassword";
+import Signup from "./authtication/Signup";
 import EarlyPayoffDiscount from "./components/Custpmer/Discount/EarlyPayoffDiscount";
 import NotificationsAlerts from "./components/Custpmer/Notification/NotificationsAlerts";
 import PaymentTracking from "./components/Admin/PaymentTracker/Paymenttracking";
@@ -37,7 +38,7 @@ function App() {
   const location = useLocation();
 
   // Hide layout (navbar/sidebar) only on login page
-  const hideLayout = location.pathname === "/"  || location.pathname === "/forgotpassword";
+  const hideLayout = location.pathname === "/"  || location.pathname === "/forgotpassword" || location.pathname === "/signup";
   return (
     <>
       {/* navbar */}
@@ -59,6 +60,7 @@ function App() {
         >
           <Routes>
             <Route path="/" element={<Login />} />
+             <Route path="/signup" element={<Signup />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             {/* AdminDashboard */}
             <Route path="/dashboard" element={<DashboardCard />} />

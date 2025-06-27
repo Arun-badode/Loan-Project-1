@@ -17,6 +17,8 @@ import Transactionhistory from "./components/Custpmer/TransactionHistory/Transac
 import Updateprofile from "./components/Profile/Updateprofile";
 import Changepassword from "./components/Profile/Changepassword";
 import ForgotPassword from "./authtication/ForgotPassword";
+import EarlyPayoffDiscount from "./components/Custpmer/Discount/EarlyPayoffDiscount";
+import NotificationsAlerts from "./components/Custpmer/Notification/NotificationsAlerts";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -69,6 +71,8 @@ function App() {
             <Route path="/customer-dashboard" element={<Customerdashboard />} />
             <Route path="/requestfund" element={<Requestfund />} />
             <Route path="/transactionhistory" element={<Transactionhistory />} />
+            <Route path="/discount" element={<EarlyPayoffDiscount />} />
+            <Route path="/notificationalert" element={<NotificationsAlerts />} />
           </Routes>
         </div>
       </div>

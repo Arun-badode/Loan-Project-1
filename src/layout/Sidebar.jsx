@@ -2,12 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
-const Sidebar = ({ collapsed,menuItemClick}) => {
+const Sidebar = ({ collapsed, menuItemClick }) => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
-
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const role = localStorage.getItem("userRole");
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize(); // Check on initial render
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const toggleSubmenu = (menuName) => {
     setOpenSubmenu((prev) => (prev === menuName ? null : menuName));
@@ -15,196 +25,51 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
 
   const isActive = (path) => location.pathname === path;
 
-  
+  const handleNavigation = (path) => {
+    navigate(path);
+    if (isMobile) {
+      menuItemClick(); // Close sidebar automatically on mobile after navigation
+    }
+  };
 
-  // Show loading state if role hasn't been retrieved yet
+  // Menu items configuration
+  const adminMenuItems = [
+    { path: "/dashboard", icon: "fa-tachometer-alt", text: "Dashboard" },
+    { path: "/managecustomer", icon: "fa-users", text: "Manage Customers" },
+    { path: "/fundrequest", icon: "fa-hand-holding-usd", text: "Fund Requests" },
+    { path: "/transactionlog", icon: "fa-receipt", text: "Funding Balance Tracker" },
+    { path: "/paymenttracking", icon: "fa-bell", text: "Payment Tracking" },
+    { path: "/payoff", icon: "fa-comments-dollar", text: "Payoff Management" },
+    { path: "/createrequest", icon: "fa-arrow-up", text: "Credit Upgrade Requests" },
+    { path: "/reportdownload", icon: "fa-file-download", text: "Reports & Download" }
+  ];
+
+  const customerMenuItems = [
+    { path: "/customer-dashboard", icon: "fa-home", text: "Dashboard" },
+    { path: "/requestfund", icon: "fa-wallet", text: "Request Funds" },
+    { path: "/transactionhistory", icon: "fa-history", text: "History" },
+    { path: "/discount", icon: "fa-percentage", text: "Discount" },
+    { path: "/notificationalert", icon: "fa-bell", text: "Notifications" }
+  ];
 
   return (
     <div className={`sidebar-container ${collapsed ? "collapsed" : ""}`}>
       <div className="sidebar">
         <ul className="menu">
-          {/* Dashboard Section */}
-          {role === "Admin" && (
-            <>
-              <li
-                className={`menu-item ${
-                  isActive("/dashboard") ? "active" : ""
-                }`}
+          {(role === "Admin" ? adminMenuItems : customerMenuItems).map((item) => (
+            <li
+              key={item.path}
+              className={`menu-item ${isActive(item.path) ? "active" : ""}`}
+            >
+              <div
+                className="menu-link menu-i"
+                onClick={() => handleNavigation(item.path)}
               >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/dashboard");  menuItemClick();}}
-                >
-                  <i className="fas fa-tachometer-alt me-2 "></i>
-                  <span className="menu-text">Dashboard</span>
-                </div>
-              </li>
-
-              <li
-                className={`menu-item ${
-                  isActive("/managecustomer") ? "active" : ""
-                }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/managecustomer"); menuItemClick();}}
-                >
-                  <i className="fas fa-users me-2 "></i>
-                  <span className="menu-text">Manage_Customers</span>
-                </div>
-              </li>
-
-              <li
-                className={`menu-item ${
-                  isActive("/fundrequest") ? "active" : ""
-                }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/fundrequest");menuItemClick();}}
-                >
-                  <i className="fas fa-hand-holding-usd me-2 "></i>
-                  <span className="menu-text">Fund_Requests</span>
-                </div>
-              </li>
-
-              <li
-                className={`menu-item ${
-                  isActive("/transactionlog") ? "active" : ""
-                }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/transactionlog");menuItemClick();}}
-                >
-                  <i className="fas fa-receipt me-2 "></i>
-                  <span className="menu-text">Funding Balance Tracker</span>
-                </div>
-              </li>
-
-              <li
-                className={`menu-item ${
-                  isActive("/paymenttracking") ? "active" : ""
-                }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/paymenttracking"); menuItemClick();}}
-                >
-                  <i className="fas fa-bell me-2 "></i>
-                  <span className="menu-text">Payment Tracking</span>
-                </div>
-              </li>
-
-              <li
-                className={`menu-item ${isActive("/payoff") ? "active" : ""}`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/payoff"); menuItemClick();}}
-                >
-                  <i className="fas fa-comments me-2 "></i>
-                  <span className="menu-text">Payoff Management</span>
-                </div>
-              </li>
-                <li
-                className={`menu-item ${isActive("/createrequest") ? "active" : ""}`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/createrequest"); menuItemClick();}}
-                >
-                  <i className="fas fa-comments me-2 "></i>
-                  <span className="menu-text">Credit Upgrade Requests</span>
-                </div>
-              </li>
-                <li
-                className={`menu-item ${isActive("/reportdownload") ? "active" : ""}`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/reportdownload"); menuItemClick();}}
-                >
-                  <i className="fas fa-comments me-2 "></i>
-                  <span className="menu-text">. Reports & Download</span>
-                </div>
-              </li>
-            </>
-          )}
-
-          {role === "Customer" && (
-            <>
-              <li
-                className={`menu-item ${
-                  isActive("/customer-dashboard") ? "active" : ""
-                }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/customer-dashboard"); menuItemClick();}}
-                >
-                  <i className="fas fa-home me-2"></i>
-                  <span className="menu-text">Dashboard</span>
-                </div>
-              </li>
-
-              <li
-                className={`menu-item ${
-                  isActive("/requestfund") ? "active" : ""
-                }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/requestfund"); menuItemClick();}}
-                >
-                  <i className="fas fa-wallet me-2 "></i>
-                  <span className="menu-text">Request_Funds</span>
-                </div>
-              </li>
-
-              <li
-                className={`menu-item ${
-                  isActive("/transactionhistory") ? "active" : ""
-                }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/transactionhistory"); menuItemClick();}}
-                >
-                  <i className="fas fa-history me-2"></i>
-                  <span className="menu-text">History</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${
-                  isActive("/discount") ? "active" : ""
-                }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/discount"); menuItemClick();}}
-                >
-                  <i className="fas fa-history me-2"></i>
-                  <span className="menu-text">Discount</span>
-                </div>
-              </li>
-              <li
-                className={`menu-item ${
-                  isActive("/notificationalert") ? "active" : ""
-                }`}
-              >
-                <div
-                  className="menu-link menu-i"
-                  onClick={() => {navigate("/notificationalert"); menuItemClick();}}
-                >
-                  <i className="fas fa-history me-2"></i>
-                  <span className="menu-text">Notifications</span>
-                </div>
-              </li>
-            
-            
-            </>
-          )}
+                <i className={`fas ${item.icon} me-2`}></i>
+                <span className="menu-text">{item.text}</span>
+              </div>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

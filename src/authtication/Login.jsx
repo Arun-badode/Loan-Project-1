@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2"; // Add this at the top
+import Swal from "sweetalert2";
+
 const Login = () => {
   const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState(false);
@@ -33,8 +34,7 @@ const Login = () => {
     if (email === credentials.email && password === credentials.password) {
       localStorage.setItem("userRole", role);
       localStorage.setItem("userEmail", email);
-      localStorage.setItem("userName", role); // Replace with actual name from API
-
+      localStorage.setItem("userName", role);
 
       Swal.fire({
         icon: "success",
@@ -61,6 +61,7 @@ const Login = () => {
       });
     }
   };
+
   const handleRoleSelect = (selectedRole) => {
     setRole(selectedRole);
     setEmail(roleCredentials[selectedRole].email);
@@ -68,173 +69,108 @@ const Login = () => {
   };
 
   return (
-    <>
-      <main>
-        <div className="login-container" style={{ backgroundColor: "#ccf8db" }}>
+    <div className="login-page-container">
+      <main className="login-main">
+        <div className="login-container">
           <img
             src="https://i.ibb.co/KxdfWFTv/3db2775f70a199b26bc47425ca16af18-1-removebg-preview.png"
             alt="Logo"
-            className="mb-1"
-            style={{ height: "100px", objectFit: "contain" }}
+            className="login-logo"
           />
-          <h4 className="mb-4 fw-bold" style={{ color: "#4d4d4d" }}>
-            Client sign-in
-          </h4>
+          <h4 className="login-title">Client sign-in</h4>
 
           {!showSignUp ? (
-            // Login Form
-            <form onSubmit={handleSubmit}>
-              <div className="mb-3">
+            <form onSubmit={handleSubmit} className="login-form">
+              <div className="form-group">
                 <input
                   type="text"
-                  className="form-control rounded-pill py-2 px-3"
+                  className="form-control"
                   placeholder="Username"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)} // ✅ Make editable
-                  style={{
-                    borderColor: "#4d4d4d",
-                    color: "#4d4d4d",
-                    fontWeight: "500",
-                  }}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
 
-              {/* Password Input */}
-              <div className="mb-4">
+              <div className="form-group">
                 <input
                   type="password"
-                  className="form-control rounded-pill py-2 px-3"
+                  className="form-control"
                   placeholder="Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)} // ✅ Make editable
-                  style={{
-                    borderColor: "#4d4d4d",
-                    color: "#4d4d4d",
-                    fontWeight: "500",
-                  }}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
-              <div className="d-flex justify-content-end mb-4">
-                <a href="#" className="text-decoration-none text-secondary">
+              
+              <div className="forgot-password">
+                <a href="#" className="forgot-link">
                   Forgot Password?
                 </a>
               </div>
 
-              <button
-                type="submit"
-                className="btn btn-success rounded-pill w-100 py-2 fw-semibold"
-              >
+              <button type="submit" className="login-button">
                 Sign in
               </button>
 
-              <p className="mt-3" style={{ color: "#4d4d4d" }}>
-                Don’t have an account?{" "}
-                <Link
-                  className="text-success fw-semibold text-decoration-none"
-                  onClick={toggleForm}
-                >
+              <p className="toggle-form-text">
+                Don't have an account?{" "}
+                <Link className="toggle-form-link" onClick={toggleForm}>
                   Sign up
                 </Link>
               </p>
 
-              <div className="d-flex flex-wrap justify-content-center mt-3 gap-2">
+              <div className="role-buttons">
                 {Object.keys(roleCredentials).map((r) => (
                   <button
                     type="button"
                     key={r}
-                    className={`btn ${role === r ? "btn-success" : "btn-outline-success"
-                      } px-4 py-2 rounded-pill shadow-sm`}
-                    style={{
-                      minWidth: "120px",
-                      fontWeight: "500",
-                      transition: "all 0.3s ease-in-out",
-                    }}
+                    className={`role-button ${role === r ? "active" : ""}`}
                     onClick={() => handleRoleSelect(r)}
                   >
                     {r}
                   </button>
                 ))}
               </div>
-
             </form>
           ) : (
-            // Sign-Up Form
             <form className="signup-form">
               <input
                 type="text"
-                className="form-control rounded-pill py-2 px-3"
+                className="form-control"
                 placeholder="Full Name"
-                style={{
-                  borderColor: "#4d4d4d",
-                  color: "#4d4d4d",
-                  fontWeight: "500",
-                }}
               />
               <input
                 type="email"
-                className="form-control rounded-pill py-2 px-3"
+                className="form-control"
                 placeholder="Email Address"
-                style={{
-                  borderColor: "#4d4d4d",
-                  color: "#4d4d4d",
-                  fontWeight: "500",
-                }}
               />
               <input
                 type="tel"
-                className="form-control rounded-pill py-2 px-3"
+                className="form-control"
                 placeholder="Phone Number"
-                style={{
-                  borderColor: "#4d4d4d",
-                  color: "#4d4d4d",
-                  fontWeight: "500",
-                }}
               />
               <input
                 type="password"
-                className="form-control rounded-pill py-2 px-3"
+                className="form-control"
                 placeholder="Password"
-                style={{
-                  borderColor: "#4d4d4d",
-                  color: "#4d4d4d",
-                  fontWeight: "500",
-                }}
               />
               <input
                 type="password"
-                className="form-control rounded-pill py-2 px-3"
+                className="form-control"
                 placeholder="Confirm Password"
-                style={{
-                  borderColor: "#4d4d4d",
-                  color: "#4d4d4d",
-                  fontWeight: "500",
-                }}
               />
 
-              <div className="form-check text-start">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="terms"
-                />
-                <label className="form-check-label small" htmlFor="terms">
-                  I agree to the{" "}
-                  <span className="text-success">terms and conditions</span>
+              <div className="terms-checkbox">
+                <input type="checkbox" id="terms" />
+                <label htmlFor="terms">
+                  I agree to the <span>terms and conditions</span>
                 </label>
               </div>
 
-              <button
-                className="btn btn-success rounded-pill py-2 fw-semibold"
-              >
-                Sign Up
-              </button>
+              <button className="signup-button">Sign Up</button>
 
-              <p className="mt-2" style={{ color: "#4d4d4d" }}>
+              <p className="toggle-form-text">
                 Already have an account?{" "}
-                <Link
-                  onClick={toggleForm}
-                  className="text-success fw-semibold text-decoration-none"
-                >
+                <Link className="toggle-form-link" onClick={toggleForm}>
                   Sign in
                 </Link>
               </p>
@@ -242,7 +178,7 @@ const Login = () => {
           )}
         </div>
       </main>
-    </>
+    </div>
   );
 };
 

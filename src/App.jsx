@@ -19,6 +19,11 @@ import ForgotPassword from "./authtication/ForgotPassword";
 import Signup from "./authtication/Signup";
 import EarlyPayoffDiscount from "./components/Custpmer/Discount/EarlyPayoffDiscount";
 import NotificationsAlerts from "./components/Custpmer/Notification/NotificationsAlerts";
+import PaymentTracking from "./components/Admin/PaymentTracker/Paymenttracking";
+import CreditUpgradeRequests from "./components/Admin/CreditUpgradeRequests/CreditUpgradeRequests";
+import ReportsDownload from "./components/Admin/ReportsDownload/ReportsDownload";
+import PayoffManagement from "./components/Admin/Message/PayoffManagement";
+
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -37,10 +42,7 @@ function App() {
   const noLayoutRoutes = ["/", "/signup", "/forgotpassword"];
   const isNoLayoutPage = noLayoutRoutes.includes(location.pathname);
   // Hide layout (navbar/sidebar) only on login page
-  const hideLayout =
-    location.pathname === "/" ||
-    location.pathname === "/forgotpassword" ||
-    location.pathname === "/signup";
+  const hideLayout = location.pathname === "/" || location.pathname === "/forgotpassword" || location.pathname === "/signup";
   return (
     <>
       {/* navbar */}
@@ -64,35 +66,28 @@ function App() {
               <Route path="/forgotpassword" element={<ForgotPassword />} />
             </Routes>
           ) : (
-            <div
-              className={`right-side-content ${
-                isSidebarCollapsed ? "collapsed" : ""
-              }`}
-            >
+            <div className={`right-side-content ${isSidebarCollapsed ? "collapsed" : ""}`}>
               <Routes>
                 {/* AdminDashboard */}
                 <Route path="/dashboard" element={<DashboardCard />} />
                 <Route path="/managecustomer" element={<Managecustomer />} />
                 <Route path="/fundrequest" element={<FundRequest />} />
                 <Route path="/transactionlog" element={<TransactionsLog />} />
+                {/* <Route path="/notification" element={<NotificationsCard />} /> */}
                 <Route path="/updateprofile" element={<Updateprofile />} />
                 <Route path="/changepassword" element={<Changepassword />} />
+                <Route path="/paymenttracking" element={<PaymentTracking />} />
+                <Route path="/creditupgraderequests" element={<CreditUpgradeRequests />} />
+                <Route path="/reportdownload" element={<ReportsDownload />} />
+                <Route path="/payoff" element={<PayoffManagement />} />
+                {/* <Route path="/message" element={<MessagesUI />} /> */}
 
                 {/* CustomerDashboard */}
-                <Route
-                  path="/customer-dashboard"
-                  element={<Customerdashboard />}
-                />
+                <Route path="/customer-dashboard" element={<Customerdashboard />} />
                 <Route path="/requestfund" element={<Requestfund />} />
-                <Route
-                  path="/transactionhistory"
-                  element={<Transactionhistory />}
-                />
+                <Route path="/transactionhistory" element={<Transactionhistory />} />
                 <Route path="/discount" element={<EarlyPayoffDiscount />} />
-                <Route
-                  path="/notificationalert"
-                  element={<NotificationsAlerts />}
-                />
+                <Route path="/notificationalert" element={<NotificationsAlerts />} />
               </Routes>
             </div>
           )}

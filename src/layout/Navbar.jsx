@@ -54,33 +54,39 @@ const Navbar = ({ toggleSidebar }) => {
             {/* Profile dropdown */}
             <div className="dropdown">
               <div
-                className="fw-bold rounded-4 d-flex align-items-center"
+                className="d-flex align-items-center gap-2"
                 style={{ cursor: "pointer" }}
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <div className="profile-element">
-                  <div className="avatar online">
-                    <i className="fa-solid user-icon fa-circle-user fs-3"></i>
-                  </div>
+                <div className="avatar online">
+                  <i className="fa-solid fa-circle-user fs-2 text-success"></i>
                 </div>
+              
               </div>
-              <ul className="dropdown-menu dropdown-menu-end">
+              <ul className="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 p-2 mt-2">
                 <li>
-                  <Link className="dropdown-item" to="/">
+                <h6 className="dropdown-header small px-3 py-1 fw-bold">ACCOUNT</h6>
+                </li>
+                <li>
+                  <Link className="dropdown-item d-flex align-items-center gap-2 px-3 py-2 rounded-2" to="/">
+                    <i className="fas fa-user-pen text-success"></i>
                     Update Profile
                   </Link>
                 </li>
                 <li>
-                  <Link className="dropdown-item" to="/changepassword">
+                  <Link className="dropdown-item d-flex align-items-center gap-2 px-3 py-2 rounded-2" to="/changepassword">
+                    <i className="fas fa-lock text-success"></i>
                     Change Password
                   </Link>
                 </li>
+                <li><hr className="dropdown-divider my-2" /></li>
                 <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <button className="dropdown-item" onClick={handleLogout}>
+                  <button
+                    className="dropdown-item d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-success"
+                    onClick={handleLogout}
+                  >
+                    <i className="fas fa-sign-out-alt"></i>
                     Logout
                   </button>
                 </li>

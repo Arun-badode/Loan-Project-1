@@ -42,7 +42,7 @@ const Navbar = ({ toggleSidebar }) => {
               </p>
             </div>
             <div
-              className="nav-toggle-icon me-3"
+              className="nav-toggle-icon  me-3"
               onClick={toggleSidebar}
             >
               <button className="btn p-0 border-0 bg-transparent">

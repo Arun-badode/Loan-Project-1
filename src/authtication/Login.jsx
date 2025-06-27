@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2"; // Add this at the top
-import "./Login.css"; // Import your CSS file for styling
 const Login = () => {
   const navigate = useNavigate();
   const [showSignUp, setShowSignUp] = useState(false);
@@ -70,14 +69,14 @@ const Login = () => {
 
   return (
     <>
-      <main className="">
+      <main>
         <div className="login-container" style={{ backgroundColor: "#ccf8db" }}>
-          {/* <img
+          <img
             src="https://i.ibb.co/KxdfWFTv/3db2775f70a199b26bc47425ca16af18-1-removebg-preview.png"
             alt="Logo"
             className="mb-1"
             style={{ height: "100px", objectFit: "contain" }}
-          /> */}
+          />
           <h4 className="mb-4 fw-bold" style={{ color: "#4d4d4d" }}>
             Client sign-in
           </h4>

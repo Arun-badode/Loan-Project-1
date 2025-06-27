@@ -47,28 +47,37 @@ function App() {
             isSidebarCollapsed ? "collapsed " : ""
           }`}
         >
-          <Routes><Route path="/" element={<Login />} /></Routes>
+          <Routes>
+            <Route path="/" element={<Login />} />
+          </Routes>
 
           {/* AdminDashboard */}
-<Routes>
-  <Route path="/dashboard" element={<DashboardCard />} />
-  <Route path="/managecustomer" element={<Managecustomer />} />
-  <Route path="/fundrequest" element={<FundRequest/>} />
-  <Route path="/transactionlog" element={<TransactionsLog/>} />
-  <Route path="/notification" element={<NotificationsCard/>} />
-  <Route path="/message" element={<MessagesUI/>} />
-  </Routes>
+          <Routes>
+            <Route path="/dashboard" element={<DashboardCard />} />
+            <Route path="/managecustomer" element={<Managecustomer />} />
+            <Route path="/fundrequest" element={<FundRequest />} />
+            <Route path="/transactionlog" element={<TransactionsLog />} />
+            <Route path="/notification" element={<NotificationsCard />} />
+            <Route path="/message" element={<MessagesUI />} />
+          </Routes>
           {/*End-AdminDashboard */}
-
 
           {/* ------------------------------------------------------------------------------------------------------ */}
 
-
-           {/* CustomerDashboard */}
-          <Routes><Route path="/customer-dashboard" element={<Customerdashboard />} /></Routes>
-          <Routes><Route path="/requestfund" element={<Requestfund />} /></Routes>
-          <Routes><Route path="/transactionhistory" element={<Transactionhistory />} /></Routes>
-           {/* End-CustomerDashboard */}
+          {/* CustomerDashboard */}
+          <Routes>
+            <Route path="/customer-dashboard" element={<Customerdashboard />} />
+          </Routes>
+          <Routes>
+            <Route path="/requestfund" element={<Requestfund />} />
+          </Routes>
+          <Routes>
+            <Route
+              path="/transactionhistory"
+              element={<Transactionhistory />}
+            />
+          </Routes>
+          {/* End-CustomerDashboard */}
         </div>
       </div>
     </>

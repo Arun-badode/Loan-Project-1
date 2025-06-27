@@ -6,11 +6,9 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("");
-  
   const roleCredentials = {
-    Admin: { email: "admin123", password: "admin@123" },
-    Customer: { email: "customer123", password: "customer@123" },
+    Admin: { email: "admin@gmail.com", password: "admin123" },
+    Customer: { email: "customer@gmail.com", password: "customer123" },
   };
 
   const handleSubmit = (e) => {
@@ -40,11 +38,7 @@ const Login = () => {
       });
 
       setTimeout(() => {
-        if (matchedRole === "Admin") {
-          navigate("/dashboard");
-        } else if (matchedRole === "Customer") {
-          navigate("/customer-dashboard");
-        }
+        navigate(matchedRole === "Admin" ? "/dashboard" : "/customer-dashboard");
       }, 1000);
     } else {
       Swal.fire({
@@ -55,25 +49,18 @@ const Login = () => {
     }
   };
 
-  const handleRoleSelect = (selectedRole) => {
-    setRole(selectedRole);
-    setEmail(roleCredentials[selectedRole].email);
-    setPassword(roleCredentials[selectedRole].password);
-  };
-
   return (
-    <main>
-      <div className="login-container" style={{ backgroundColor: "#ccf8db" }}>
+    <div className="container-fluid min-vh-100 d-flex justify-content-center align-items-center rounded-5" style={{ backgroundColor: "#ccf8db" }}>
+      <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow bg-white text-center">
         <img
           src="https://i.ibb.co/KxdfWFTv/3db2775f70a199b26bc47425ca16af18-1-removebg-preview.png"
           alt="Logo"
-          className="mb-1"
+          className="mb-3"
           style={{ height: "100px", objectFit: "contain" }}
         />
         <h4 className="mb-4 fw-bold" style={{ color: "#4d4d4d" }}>
           Client sign-in
         </h4>
-
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <input
@@ -82,54 +69,39 @@ const Login = () => {
               placeholder="Username"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{
-                borderColor: "#4d4d4d",
-                color: "#4d4d4d",
-                fontWeight: "500",
-              }}
+              style={{ borderColor: "#4d4d4d", color: "#4d4d4d", fontWeight: "500" }}
             />
           </div>
-
-          <div className="mb-4">
+          <div className="mb-3">
             <input
               type="password"
               className="form-control rounded-pill py-2 px-3"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{
-                borderColor: "#4d4d4d",
-                color: "#4d4d4d",
-                fontWeight: "500",
-              }}
+              style={{ borderColor: "#4d4d4d", color: "#4d4d4d", fontWeight: "500" }}
             />
           </div>
-          
-          <div className="d-flex justify-content-end mb-4">
-            <a href="/forgotpassword" className="text-decoration-none text-secondary">
+          <div className="text-end mb-3">
+            <Link to="/forgotpassword" className="text-decoration-none text-secondary">
               Forgot Password?
-            </a>
+            </Link>
           </div>
-
           <button
             type="submit"
             className="btn btn-success rounded-pill w-100 py-2 fw-semibold"
           >
             Sign in
           </button>
-
           <p className="mt-3" style={{ color: "#4d4d4d" }}>
-            Don't have an account?{" "}
-            <Link
-              to="/signup"
-              className="text-success fw-semibold text-decoration-none"
-            >
+            Don’t have an account?{" "}
+            <Link to="/signup" className="text-success fw-semibold text-decoration-none">
               Sign up
             </Link>
           </p>
         </form>
       </div>
-    </main>
+    </div>
   );
 };
 

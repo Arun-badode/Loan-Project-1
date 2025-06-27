@@ -8,6 +8,7 @@
   position: fixed;
   background-color: #ccf8db;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  scrollbar-width: none;
 }
 
 .sidebar-container.collapsed {
@@ -96,10 +97,10 @@
   transform: rotate(360deg);
 }
 .menu-item.active .menu-link {
-  background-color: #43a385; 
+  background-color: #198754; 
   color: white; /* Active text color */
   border-radius: 12px;
-  border-left: 6px solid green;
+  border-left: 6px solid rgb(6, 90, 6);
 }
 .sidebar-container.collapsed .submenu .submenu-item i{
   visibility: visible !important;

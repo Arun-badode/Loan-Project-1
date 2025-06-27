@@ -34,6 +34,8 @@ const Login = () => {
     if (email === credentials.email && password === credentials.password) {
       localStorage.setItem("userRole", role);
       localStorage.setItem("userEmail", email);
+      localStorage.setItem("userName", role); // Replace with actual name from API
+
 
       Swal.fire({
         icon: "success",

@@ -1,14 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = ({ toggleSidebar }) => {
+  const navigate = useNavigate();
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    const storedName = localStorage.getItem("userName") || "User";
+    setUserName(storedName);
+  }, []);
+
   const [showChangePassword, setShowChangePassword] = useState(false);
-  const navigate = useNavigate(); // ✅ useNavigate at top level
+  // ✅ useNavigate at top level
 
   const handleLogout = () => {
     localStorage.removeItem("userRole");
     localStorage.removeItem("userEmail");
-    navigate("/"); // ✅ navigate to root
+    localStorage.removeItem("userName");
+    navigate("/");
   };
 
   const handleOpenChangePassword = () => setShowChangePassword(true);
@@ -25,14 +34,14 @@ const Navbar = ({ toggleSidebar }) => {
     <nav className="navbar navbar-light p-2">
       <div className="container-fluid">
         <div className="d-flex justify-content-between w-100 align-items-center">
-          {/* Left side - Brand and company name */}
+          {/* Left side - Brand and user name */}
           <div className="d-flex align-items-center">
             <div className="nav-bran me-3">
               <a className="nav-brand fw-bold" href="#">
-                Hi, Jacob Hills
+                Hi, {userName}
               </a>
               <p className="p-0 m-0 d-none d-md-block">
-                Jocob Hills Group Of Company
+                {userName} Group Of Company
               </p>
             </div>
             <div
@@ -96,7 +105,9 @@ const Navbar = ({ toggleSidebar }) => {
                   </button>
                 </li>
 
-                <li><hr className="dropdown-divider my-2" /></li>
+                <li>
+                  <hr className="dropdown-divider my-2" />
+                </li>
 
                 <li className="mb-1">
                   <button
@@ -108,9 +119,7 @@ const Navbar = ({ toggleSidebar }) => {
                   </button>
                 </li>
               </ul>
-
             </div>
-
           </div>
         </div>
       </div>

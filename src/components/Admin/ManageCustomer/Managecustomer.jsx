@@ -60,37 +60,37 @@ const Managecustomer = () => {
   return (
     <div className="container mt-4">
       {/* Page Heading */}
-     <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
-  {/* Left Side: Heading & Subheading */}
-  <div className="text-start">
-    <h4 className="page-heading mb-1">Manage Customer</h4>
-    <p className="page-subheading mb-0">View and manage customer credit details</p>
-  </div>
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+        {/* Left Side: Heading & Subheading */}
+        <div className="text-start">
+          <h4 className="page-heading mb-1">Manage Customer</h4>
+          <p className="page-subheading mb-0">View and manage customer credit details</p>
+        </div>
 
-  {/* Right Side: Search & Button aligned in one row */}
-  <div className="d-flex flex-column flex-sm-row align-items-stretch gap-2">
-    {/* Search Field */}
-    <div className="input-group" style={{ maxWidth: "280px" }}>
-      <span className="input-group-text">
-        <i className="fas fa-search"></i>
-      </span>
-      <input
-        type="text"
-        className="form-control input-green"
-        placeholder="Search customers..."
-      />
-    </div>
+        {/* Right Side: Search & Button aligned in one row */}
+        <div className="d-flex flex-column flex-sm-row align-items-stretch gap-2">
+          {/* Search Field */}
+          <div className="input-group" style={{ maxWidth: "280px" }}>
+            <span className="input-group-text">
+              <i className="fas fa-search"></i>
+            </span>
+            <input
+              type="text"
+              className="form-control input-green"
+              placeholder="Search customers..."
+            />
+          </div>
 
-    {/* Button */}
-    <Button
-      variant="success"
-      className="w-100 w-sm-auto btn-green"
-      onClick={() => setShowModal(true)}
-    >
-      + Add New Customer
-    </Button>
-  </div>
-</div>
+          {/* Button */}
+          <Button
+            variant="success"
+            className="w-100 w-sm-auto btn-green"
+            onClick={() => setShowModal(true)}
+          >
+            + Add New Customer
+          </Button>
+        </div>
+      </div>
 
 
       {/* Card Table */}
@@ -121,34 +121,34 @@ const Managecustomer = () => {
                     <td>{customer.email}</td>
                     <td>${customer.creditLine.toLocaleString()}</td>
                     <td>
-                     <span className={
-  customer.status === "Active"
-    ? "badge-success-soft py-1 px-2 rounded-pill"
-    : customer.status === "Inactive"
-    ? "badge-danger-soft py-1 px-2 rounded-pill"
-    
-    : "badge-status-pending"
-}>
-  {customer.status}
-</span>
+                      <span className={
+                        customer.status === "Active"
+                          ? "badge-success-soft py-1 px-2 rounded-pill"
+                          : customer.status === "Inactive"
+                            ? "badge-danger-soft py-1 px-2 rounded-pill"
+
+                            : "badge-status-pending"
+                      }>
+                        {customer.status}
+                      </span>
 
                     </td>
                     <td className="text-end">
                       <button
-                        className="btn btn-sm btn-outline-primary me-2"
+                        className="btn btn-sm btn-link text-success me-2"
                         onClick={() => setShowCustomerDetailsModal(true)}
                       >
-                        <i className="fas fa-eye me-1"></i> View
+                        <i className="fas fa-eye me-1"></i>
                       </button>
                       <CustomerDetailsModal
                         show={showCustomerDetailsModal}
                         handleClose={() => setShowCustomerDetailsModal(false)}
                       />
                       <button
-                        className="btn btn-sm btn-outline-success"
+                        className="btn btn-sm btn-link text-success me-2"
                         onClick={() => setShowEditModal(true)}
                       >
-                        <i className="fas fa-edit me-1"></i> Edit
+                        <i className="fas fa-edit me-1"></i>
                       </button>
                       <EditCreditLineModal
                         show={showEditModal}

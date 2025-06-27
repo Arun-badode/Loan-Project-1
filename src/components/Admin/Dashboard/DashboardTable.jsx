@@ -58,15 +58,15 @@ const statusBadge = (status) => {
 };
 
 
-const  DashboardTable = () => {
-     const [showModal, setShowModal] = React.useState(false);
+const DashboardTable = () => {
+  const [showModal, setShowModal] = React.useState(false);
   return (
     <div className="card border-0 shadow-sm rounded-4 p-3 card-green">
       <div className="d-flex justify-content-between align-items-center px-2 pb-2 ">
         <h5 className="fw-semibold mb-0">Recent Fund Requests</h5>
-        <a href="#view-all" className="text-danger text-decoration-none fw-semibold">
+        {/* <a href="#view-all" className="text-danger text-decoration-none fw-semibold">
           View All
-        </a>
+        </a> */}
       </div>
       <div className="table-responsive">
         <table className="table table-hover align-middle table-green">
@@ -93,18 +93,18 @@ const  DashboardTable = () => {
                     <i className="fas fa-eye"></i>
                   </button> */}
 
-           
-       <button
-                        className="btn btn-sm btn-outline-primary me-2"
-                       onClick={() => setShowModal(true)}
-                      >
-                        <i className="fas fa-eye me-1"></i> View
-                      </button>
 
-      <DashboardViewModal
-        show={showModal}
-        handleClose={() => setShowModal(false)}
-      />
+                  <button
+                    className="btn btn-sm btn-link text-success me-2"
+                    onClick={() => setShowModal(true)}
+                  >
+                    <i className="fas fa-eye me-1"></i> 
+                  </button>
+
+                  <DashboardViewModal
+                    show={showModal}
+                    handleClose={() => setShowModal(false)}
+                  />
                   <button className="btn btn-sm btn-link text-success me-2" title="Approve">
                     <i className="fas fa-check"></i>
                   </button>

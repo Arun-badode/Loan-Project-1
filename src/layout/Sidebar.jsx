@@ -150,9 +150,37 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
                   onClick={() => {navigate("/transactionhistory"); menuItemClick();}}
                 >
                   <i className="fas fa-history me-2"></i>
-                  <span className="menu-text">Transaction_History</span>
+                  <span className="menu-text">History</span>
                 </div>
               </li>
+              <li
+                className={`menu-item ${
+                  isActive("/transactionhistory") ? "active" : ""
+                }`}
+              >
+                <div
+                  className="menu-link menu-i"
+                  onClick={() => {navigate("/transactionhistory"); menuItemClick();}}
+                >
+                  <i className="fas fa-history me-2"></i>
+                  <span className="menu-text">Discount</span>
+                </div>
+              </li>
+              <li
+                className={`menu-item ${
+                  isActive("/transactionhistory") ? "active" : ""
+                }`}
+              >
+                <div
+                  className="menu-link menu-i"
+                  onClick={() => {navigate("/transactionhistory"); menuItemClick();}}
+                >
+                  <i className="fas fa-history me-2"></i>
+                  <span className="menu-text">Notifications</span>
+                </div>
+              </li>
+            
+            
             </>
           )}
         </ul>

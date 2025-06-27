@@ -16,6 +16,10 @@ import Requestfund from "./components/Custpmer/RequestFunds/Requestfund";
 import Transactionhistory from "./components/Custpmer/TransactionHistory/Transactionhistory";
 import Updateprofile from "./components/Profile/Updateprofile";
 import Changepassword from "./components/Profile/Changepassword";
+import ForgotPassword from "./authtication/ForgotPassword";
+import Signup from "./authtication/Signup";
+import EarlyPayoffDiscount from "./components/Custpmer/Discount/EarlyPayoffDiscount";
+import NotificationsAlerts from "./components/Custpmer/Notification/NotificationsAlerts";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -32,7 +36,7 @@ function App() {
   const location = useLocation();
 
   // Hide layout (navbar/sidebar) only on login page
-  const hideLayout = location.pathname === "/" || location.pathname === "/login";
+  const hideLayout = location.pathname === "/"  || location.pathname === "/forgotpassword" || location.pathname === "/signup";
   return (
     <>
       {/* navbar */}
@@ -54,6 +58,8 @@ function App() {
         >
           <Routes>
             <Route path="/" element={<Login />} />
+             <Route path="/signup" element={<Signup />} />
+            <Route path="/forgotpassword" element={<ForgotPassword />} />
             {/* AdminDashboard */}
             <Route path="/dashboard" element={<DashboardCard />} />
             <Route path="/managecustomer" element={<Managecustomer />} />
@@ -67,6 +73,8 @@ function App() {
             <Route path="/customer-dashboard" element={<Customerdashboard />} />
             <Route path="/requestfund" element={<Requestfund />} />
             <Route path="/transactionhistory" element={<Transactionhistory />} />
+            <Route path="/discount" element={<EarlyPayoffDiscount />} />
+            <Route path="/notificationalert" element={<NotificationsAlerts />} />
           </Routes>
         </div>
       </div>

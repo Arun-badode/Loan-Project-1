@@ -153,6 +153,32 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
                   <span className="menu-text">History</span>
                 </div>
               </li>
+              <li
+                className={`menu-item ${
+                  isActive("/discount") ? "active" : ""
+                }`}
+              >
+                <div
+                  className="menu-link menu-i"
+                  onClick={() => {navigate("/discount"); menuItemClick();}}
+                >
+                  <i className="fas fa-history me-2"></i>
+                  <span className="menu-text">Discount</span>
+                </div>
+              </li>
+              <li
+                className={`menu-item ${
+                  isActive("/notificationalert") ? "active" : ""
+                }`}
+              >
+                <div
+                  className="menu-link menu-i"
+                  onClick={() => {navigate("/notificationalert"); menuItemClick();}}
+                >
+                  <i className="fas fa-history me-2"></i>
+                  <span className="menu-text">Notifications</span>
+                </div>
+              </li>
             
             
             </>

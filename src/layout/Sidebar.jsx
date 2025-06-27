@@ -107,6 +107,28 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
                   <span className="menu-text">Payoff Management</span>
                 </div>
               </li>
+                <li
+                className={`menu-item ${isActive("/creditrequest") ? "active" : ""}`}
+              >
+                <div
+                  className="menu-link menu-i"
+                  onClick={() => {navigate("/creditrequest"); menuItemClick();}}
+                >
+                  <i className="fas fa-comments me-2 "></i>
+                  <span className="menu-text">Credit Upgrade Requests</span>
+                </div>
+              </li>
+                <li
+                className={`menu-item ${isActive("/reportdownload") ? "active" : ""}`}
+              >
+                <div
+                  className="menu-link menu-i"
+                  onClick={() => {navigate("/reportdownload"); menuItemClick();}}
+                >
+                  <i className="fas fa-comments me-2 "></i>
+                  <span className="menu-text">. Reports & Download</span>
+                </div>
+              </li>
             </>
           )}
 

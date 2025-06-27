@@ -5,10 +5,7 @@ const FundRequest = () => {
   const [activeTab, setActiveTab] = useState('new');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
-  const [statusUpdate, setStatusUpdate] = useState({
-    status: '',
-    comments: ''
-  });
+
 
   // Sample data for fund requests
   const requests = [
@@ -220,17 +217,7 @@ const FundRequest = () => {
                               </Button>
                             </div>
                           )}
-                          <Button
-                            variant="outline-success"
-                            className="rounded-pill px-4"
-                            onClick={() => {
-                              setSelectedRequest(request.id);
-                              setStatusUpdate({ status: request.status, comments: '' });
-                              setIsModalOpen(true);
-                            }}
-                          >
-                            <i className="fas fa-edit me-2"></i> Update Status
-                          </Button>
+                         
                         </div>
                       </Card.Body>
                     </Card>
@@ -257,59 +244,7 @@ const FundRequest = () => {
       </Container>
 
       {/* Status Update Modal */}
-      <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)} centered className='modal-green'>
-        <Modal.Header closeButton className="border-0 pb-0 ">
-          <Modal.Title className="fw-bold">Update Request Status</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="pt-0">
-          <Form>
-            <Form.Group className="mb-4">
-              <Form.Label className="fw-semibold mb-3">New Status</Form.Label>
-              <div className="d-flex flex-column gap-3">
-                {['new', 'in-progress', 'completed'].map((status) => (
-                  <Form.Check
-                    key={status}
-                    type="radio"
-                    id={`status-${status}`}
-                    name="status"
-                    label={status.replace('-', ' ')}
-                    value={status}
-                    checked={statusUpdate.status === status}
-                    onChange={(e) => setStatusUpdate({
-                      ...statusUpdate,
-                      status: e.target.value
-                    })}
-                    className="rounded-pill p-3 border"
-                  />
-                ))}
-              </div>
-            </Form.Group>
 
-            <Form.Group>
-              <Form.Label className="fw-semibold">Comments</Form.Label>
-              <Form.Control
-                as="textarea"
-                rows={3}
-                placeholder="Add any notes about this status change..."
-                value={statusUpdate.comments}
-                onChange={(e) => setStatusUpdate({
-                  ...statusUpdate,
-                  comments: e.target.value
-                })}
-                className="border-2"
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer className="border-0">
-          <Button variant="outline-secondary" onClick={() => setIsModalOpen(false)} className="rounded-pill px-4">
-            Cancel
-          </Button>
-          <Button variant="success" onClick={() => setIsModalOpen(false)} className="rounded-pill px-4">
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </div>
   );
 };

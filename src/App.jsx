@@ -14,6 +14,8 @@ import NotificationsCard from "./components/Admin/Notification/NotificationCard"
 import MessagesUI from "./components/Admin/Message/MessagesUI";
 import Requestfund from "./components/Custpmer/RequestFunds/Requestfund";
 import Transactionhistory from "./components/Custpmer/TransactionHistory/Transactionhistory";
+import Updateprofile from "./components/Profile/Updateprofile";
+import Changepassword from "./components/Profile/Changepassword";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -58,6 +60,8 @@ function App() {
             <Route path="/fundrequest" element={<FundRequest />} />
             <Route path="/transactionlog" element={<TransactionsLog />} />
             <Route path="/notification" element={<NotificationsCard />} />
+             <Route path="/updateprofile" element={<Updateprofile />} />
+               <Route path="/changepassword" element={<Changepassword />} />
             <Route path="/message" element={<MessagesUI />} />
             {/* CustomerDashboard */}
             <Route path="/customer-dashboard" element={<Customerdashboard />} />

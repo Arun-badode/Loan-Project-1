@@ -56,7 +56,7 @@ const Signup = () => {
       className="container-fluid min-vh-100 d-flex justify-content-center align-items-center"
       style={{ backgroundColor: "#ccf8db" }}
     >
-      <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow bg-white text-center">
+      <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow  text-center">
         <img
           src="https://i.ibb.co/KxdfWFTv/3db2775f70a199b26bc47425ca16af18-1-removebg-preview.png"
           alt="Logo"

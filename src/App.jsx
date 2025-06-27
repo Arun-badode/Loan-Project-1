@@ -22,6 +22,8 @@ import Signup from "./authtication/Signup";
 import EarlyPayoffDiscount from "./components/Custpmer/Discount/EarlyPayoffDiscount";
 import NotificationsAlerts from "./components/Custpmer/Notification/NotificationsAlerts";
 import PaymentTracking from "./components/Admin/PaymentTracker/Paymenttracking";
+import CreditUpgradeRequests from "./components/Admin/CreditUpgradeRequests/CreditUpgradeRequests";
+import ReportsDownload from "./components/Admin/ReportsDownload/ReportsDownload";
 
 
 function App() {
@@ -72,6 +74,8 @@ function App() {
              <Route path="/updateprofile" element={<Updateprofile />} />
                <Route path="/changepassword" element={<Changepassword />} />
             <Route path="/payoff" element={<PayoffManagement />} />
+             <Route path="/createrequest" element={<CreditUpgradeRequests />} />
+              <Route path="/reportdownload" element={<ReportsDownload />} />
             {/* CustomerDashboard */}
             <Route path="/customer-dashboard" element={<Customerdashboard />} />
             <Route path="/requestfund" element={<Requestfund />} />

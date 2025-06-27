@@ -108,11 +108,11 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
                 </div>
               </li>
                 <li
-                className={`menu-item ${isActive("/creditrequest") ? "active" : ""}`}
+                className={`menu-item ${isActive("/createrequest") ? "active" : ""}`}
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => {navigate("/creditrequest"); menuItemClick();}}
+                  onClick={() => {navigate("/createrequest"); menuItemClick();}}
                 >
                   <i className="fas fa-comments me-2 "></i>
                   <span className="menu-text">Credit Upgrade Requests</span>

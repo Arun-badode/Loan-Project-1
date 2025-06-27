@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./Sidebar.css";
 
-const Sidebar = ({ collapsed }) => {
+const Sidebar = ({ collapsed,menuItemClick}) => {
   const [openSubmenu, setOpenSubmenu] = useState(null);
 
   const navigate = useNavigate();
@@ -15,9 +15,7 @@ const Sidebar = ({ collapsed }) => {
 
   const isActive = (path) => location.pathname === path;
 
-  const menuItemClick = () => {
-    console.log("Menu item clicked");
-  };
+  
 
   // Show loading state if role hasn't been retrieved yet
 
@@ -35,7 +33,7 @@ const Sidebar = ({ collapsed }) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => navigate("/dashboard")}
+                  onClick={() => {navigate("/dashboard");  menuItemClick();}}
                 >
                   <i className="fas fa-tachometer-alt me-2 "></i>
                   <span className="menu-text">Dashboard</span>

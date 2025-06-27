@@ -1,176 +1,96 @@
-import React, { useState } from 'react';
-import { Table, Button, Modal, Form, Row, Col, Badge, InputGroup } from 'react-bootstrap';
+import React, { useState } from "react";
 
-const TransactionsLog = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState(null);
+const FundingBalanceTracker = () => {
+  const [transactions] = useState([
+    { id: 1, date: "2025-06-01", amount: 5000, type: "Draw" },
+    { id: 2, date: "2025-06-10", amount: 2000, type: "Repayment" },
+    { id: 3, date: "2025-06-15", amount: 3000, type: "Draw" },
+    { id: 4, date: "2025-06-20", amount: 1500, type: "Repayment" },
+  ]);
 
-  const transactions = [
-    {
-      id: 'TXN-2025-001',
-      datetime: '06/26/2025 09:30 AM',
-      amount: '$5,000.00',
-      type: 'Withdrawal',
-      status: 'Approved',
-    },
-    {
-      id: 'TXN-2025-002',
-      datetime: '06/26/2025 10:15 AM',
-      amount: '$3,200.00',
-      type: 'Deposit',
-      status: 'Rejected',
-    },
-    {
-      id: 'TXN-2025-003',
-      datetime: '06/26/2025 11:45 AM',
-      amount: '$8,500.00',
-      type: 'Withdrawal',
-      status: 'Approved',
-    },
-    {
-      id: 'TXN-2025-004',
-      datetime: '06/26/2025 02:20 PM',
-      amount: '$1,800.00',
-      type: 'Deposit',
-      status: 'Approved',
-    },
-    {
-      id: 'TXN-2025-005',
-      datetime: '06/26/2025 03:55 PM',
-      amount: '$4,200.00',
-      type: 'Withdrawal',
-      status: 'Rejected',
-    },
-  ];
+  const totalDraws = transactions
+    .filter((t) => t.type === "Draw")
+    .reduce((sum, t) => sum + t.amount, 0);
 
-  const handleView = (transaction) => {
-    setSelectedTransaction(transaction);
-    setShowModal(true);
-  };
+  const totalRepayments = transactions
+    .filter((t) => t.type === "Repayment")
+    .reduce((sum, t) => sum + t.amount, 0);
 
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'Approved':
-        return <span className="badge-custom badge-success-soft py-1 px-1 rounded-pill">Approved</span>;
-      case 'Rejected':
-        return <span className="badge-custom badge-danger-soft py-1 px-1 rounded-pill">Rejected</span>;
-      default:
-        return <span className="badge-custom badge-warning-soft py-1 px-1 rounded-pill">{status}</span>;
-    }
-  };
-
+  const remainingBalance = totalDraws - totalRepayments;
 
   return (
-    <div className="container my-4">
-      <h4 className="page-heading">Transactions Log</h4>
+    <div className="container mt-3 p-3">
+      <h2 className="page-heading">Funding & Balance Tracker</h2>
+      <p className="page-subheading">
+        Overview of total draws, remaining balance, and transaction history.
+      </p>
 
-      {/* Compact Filters */}
-      <Row className="g-2 mb-3 align-items-center">
-  <Col xs={12} sm={6} md={3}>
-    <Form.Control size="sm" type="text" placeholder="Search transactions..." className="w-100 p-2 input-green" />
-  </Col>
-  <Col xs={12} sm={6} md={3}>
-    <Form.Control size="sm" type="date" className="w-100 p-2 input-green" />
-  </Col>
-  <Col xs={12} sm={6} md={3}>
-    <Form.Control size="sm" type="date" className="w-100 p-2 input-green" />
-  </Col>
-  <Col xs={12} sm={6} md={3}>
-    <Form.Select size="sm" className="w-100 p-2 input-green">
-      <option>All</option>
-      <option>Approved</option>
-      <option>Rejected</option>
-    </Form.Select>
-  </Col>
-</Row>
-
-
-
-      {/* Transactions Table */}
-      <div className="card shadow-sm ">
-        <div className="card-body card-green">
-      <Table responsive hover bordered className=" shadow-sm small table-green ">
-        <thead className="table-light">
-          <tr>
-            <th>Date/Time</th>
-            <th>Transaction ID</th>
-            <th>Amount</th>
-            <th>Type</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {transactions.map((txn) => (
-            <tr key={txn.id}>
-              <td>{txn.datetime}</td>
-              <td className="text-Success">{txn.id}</td>
-              <td>{txn.amount}</td>
-              <td>{txn.type}</td>
-              <td>{getStatusBadge(txn.status)}</td>
-              <td>
-
-                <button className="btn btn-sm btn-link text-success me-2" onClick={() => handleView(txn)}>
-                  <i className="fas fa-eye me-1"></i>
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-       {/* Footer Pagination Info */}
-          <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-3">
-            <div className="text-muted mb-2 mb-md-0">
-              Showing <span className="fw-bold">1</span> to{" "}
-              <span className="fw-bold">5</span> of{" "}
-              <span className="fw-bold">5</span> customers
-            </div>
-            <div>
-              <button className="btn btn-outline-success me-2" >
-                <i className="fas fa-chevron-left me-1"></i> Previous
-              </button>
-              <button className="btn btn-outline-success" >
-                Next <i className="fas fa-chevron-right ms-1"></i>
-              </button>
+      <div className="row g-4">
+        {/* Summary Cards */}
+        <div className="col-12 col-md-4">
+          <div className="card card-green shadow-sm border-0">
+            <div className="card-body">
+              <h6 className="text-muted">Total Amount Drawn</h6>
+              <h3 className="fw-bold text-success">${totalDraws.toLocaleString()}</h3>
             </div>
           </div>
-      </div>
+        </div>
+
+        <div className="col-12 col-md-4">
+          <div className="card card-green shadow-sm border-0">
+            <div className="card-body">
+              <h6 className="text-muted">Total Repayments</h6>
+              <h3 className="fw-bold text-success">${totalRepayments.toLocaleString()}</h3>
+            </div>
+          </div>
+        </div>
+
+        <div className="col-12 col-md-4">
+          <div className="card card-green shadow-sm border-0">
+            <div className="card-body">
+              <h6 className="text-muted">Remaining Balance</h6>
+              <h3 className="fw-bold text-success">${remainingBalance.toLocaleString()}</h3>
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Transaction Details Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered className='modal-green'>
-        <Modal.Header closeButton>
-          <Modal.Title>Transaction Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {selectedTransaction && (
-            <Row>
-              <Col sm={6} className="mb-3">
-                <p><strong>Transaction ID</strong><br />{selectedTransaction.id}</p>
-              </Col>
-              <Col sm={6} className="mb-3">
-                <p><strong>Date/Time</strong><br />{selectedTransaction.datetime}</p>
-              </Col>
-              <Col sm={6} className="mb-3">
-                <p><strong>Amount</strong><br />{selectedTransaction.amount}</p>
-              </Col>
-              <Col sm={6} className="mb-3">
-                <p><strong>Type</strong><br />{selectedTransaction.type}</p>
-              </Col>
-              <Col sm={12}>
-                <p><strong>Status</strong><br />{getStatusBadge(selectedTransaction.status)}</p>
-              </Col>
-            </Row>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="light" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {/* Transaction History */}
+      <div className="card card-green shadow-sm border-0 mt-4">
+        <div className="card-body">
+          <h5 className="card-title fw-semibold mb-3">Transaction Log</h5>
+          <div className="table-responsive">
+            <table className="table table-hover align-middle">
+              <thead className="table-success">
+                <tr>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((txn) => (
+                  <tr key={txn.id}>
+                    <td>{txn.date}</td>
+                    <td>
+                      <span className={`badge rounded-pill px-3 py-1 fw-semibold ${
+                        txn.type === "Draw"
+                          ? "bg-success text-white"
+                          : "bg-light text-success border border-success"
+                      }`}>
+                        {txn.type}
+                      </span>
+                    </td>
+                    <td className="fw-bold text-success">${txn.amount.toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default TransactionsLog;
+export default FundingBalanceTracker;

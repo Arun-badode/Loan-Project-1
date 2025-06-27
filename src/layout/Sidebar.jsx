@@ -78,21 +78,21 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
                   onClick={() => {navigate("/transactionlog");menuItemClick();}}
                 >
                   <i className="fas fa-receipt me-2 "></i>
-                  <span className="menu-text">Transactions_Log</span>
+                  <span className="menu-text">Funding Balance Tracker</span>
                 </div>
               </li>
 
               <li
                 className={`menu-item ${
-                  isActive("/notification") ? "active" : ""
+                  isActive("/paymenttracking") ? "active" : ""
                 }`}
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => {navigate("/notification"); menuItemClick();}}
+                  onClick={() => {navigate("/paymenttracking"); menuItemClick();}}
                 >
                   <i className="fas fa-bell me-2 "></i>
-                  <span className="menu-text">Notifications</span>
+                  <span className="menu-text">Payment Tracking</span>
                 </div>
               </li>
 

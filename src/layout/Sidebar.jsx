@@ -47,10 +47,10 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => {navigate("/managecustomer");menuItemClick();}}
+                  onClick={() => {navigate("/managecustomer"); menuItemClick();}}
                 >
                   <i className="fas fa-users me-2 "></i>
-                  <span className="menu-text">Manage Customers</span>
+                  <span className="menu-text">Manage_Customers</span>
                 </div>
               </li>
 
@@ -64,7 +64,7 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
                   onClick={() => {navigate("/fundrequest");menuItemClick();}}
                 >
                   <i className="fas fa-hand-holding-usd me-2 "></i>
-                  <span className="menu-text">Fund Requests</span>
+                  <span className="menu-text">Fund_Requests</span>
                 </div>
               </li>
 
@@ -78,7 +78,7 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
                   onClick={() => {navigate("/transactionlog");menuItemClick();}}
                 >
                   <i className="fas fa-receipt me-2 "></i>
-                  <span className="menu-text">Transactions Log</span>
+                  <span className="menu-text">Transactions_Log</span>
                 </div>
               </li>
 
@@ -97,14 +97,14 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
               </li>
 
               <li
-                className={`menu-item ${isActive("/message") ? "active" : ""}`}
+                className={`menu-item ${isActive("/payoff") ? "active" : ""}`}
               >
                 <div
                   className="menu-link menu-i"
-                  onClick={() => {navigate("/message"); menuItemClick();}}
+                  onClick={() => {navigate("/payoff"); menuItemClick();}}
                 >
                   <i className="fas fa-comments me-2 "></i>
-                  <span className="menu-text">Support / Messages</span>
+                  <span className="menu-text">Payoff Management</span>
                 </div>
               </li>
             </>
@@ -136,7 +136,7 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
                   onClick={() => {navigate("/requestfund"); menuItemClick();}}
                 >
                   <i className="fas fa-wallet me-2 "></i>
-                  <span className="menu-text">Request Funds</span>
+                  <span className="menu-text">Request_Funds</span>
                 </div>
               </li>
 
@@ -150,7 +150,7 @@ const Sidebar = ({ collapsed,menuItemClick}) => {
                   onClick={() => {navigate("/transactionhistory"); menuItemClick();}}
                 >
                   <i className="fas fa-history me-2"></i>
-                  <span className="menu-text">Transaction History</span>
+                  <span className="menu-text">Transaction_History</span>
                 </div>
               </li>
             </>

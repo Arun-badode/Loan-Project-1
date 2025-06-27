@@ -11,11 +11,12 @@ import Managecustomer from "./components/Admin/ManageCustomer/Managecustomer";
 import FundRequest from "./components/Admin/FundRequest/FundRequest";
 import TransactionsLog from "./components/Admin/Transactionlog/TransactionsLog";
 import NotificationsCard from "./components/Admin/Notification/NotificationCard";
-import MessagesUI from "./components/Admin/Message/MessagesUI";
+// import MessagesUI from "./components/Admin/Message/PayoffManagement";
 import Requestfund from "./components/Custpmer/RequestFunds/Requestfund";
 import Transactionhistory from "./components/Custpmer/TransactionHistory/Transactionhistory";
 import Updateprofile from "./components/Profile/Updateprofile";
 import Changepassword from "./components/Profile/Changepassword";
+import PayoffManagement from "./components/Admin/Message/PayoffManagement";
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -62,7 +63,7 @@ function App() {
             <Route path="/notification" element={<NotificationsCard />} />
              <Route path="/updateprofile" element={<Updateprofile />} />
                <Route path="/changepassword" element={<Changepassword />} />
-            <Route path="/message" element={<MessagesUI />} />
+            <Route path="/payoff" element={<PayoffManagement />} />
             {/* CustomerDashboard */}
             <Route path="/customer-dashboard" element={<Customerdashboard />} />
             <Route path="/requestfund" element={<Requestfund />} />

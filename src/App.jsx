@@ -17,55 +17,61 @@ import Transactionhistory from "./components/Custpmer/TransactionHistory/Transac
 
 function App() {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const location = useLocation();
-
-  const hideLayout = location.pathname === "/"; // Hide sidebar and navbar on login page
+  const menusidebarcollaps = () => {
+    setIsSidebarCollapsed(true);
+  };
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed((prev) => !prev);
   };
+  const location = useLocation();
 
+  const hideLayout = location.pathname === "/";
   return (
     <>
-      {/* Show Navbar only if not login page */}
+      {/* navbar */}
       {!hideLayout && <Navbar toggleSidebar={toggleSidebar} />}
-
-      <div className={`main-content ${hideLayout ? "" : ""}`}>
-        {/* Show Sidebar only if not login page */}
+      {/* navbar end */}
+      {/* sidebar start */}
+      <div className={`main-content  ${hideLayout ? "" : ""}`}>
         {!hideLayout && (
           <Sidebar
             collapsed={isSidebarCollapsed}
-            menuItemClick={() => setIsSidebarCollapsed(true)}
+            menuItemClick={menusidebarcollaps}
           />
         )}
-
-        {/* Right-side content */}
+        {/* sidebar end */}
+        {/* right side  */}
         <div
-          className={`${
-            hideLayout ? "" : `right-side-content ${isSidebarCollapsed ? "collapsed" : ""}`
+          className={`right-side-content ${
+            isSidebarCollapsed ? "collapsed " : ""
           }`}
         >
-          <Routes>
-            {/* Login Page */}
-            <Route path="/" element={<Login />} />
+          <Routes><Route path="/" element={<Login />} /></Routes>
 
-            {/* Admin Dashboard Routes */}
-            <Route path="/dashboard" element={<DashboardCard />} />
-            <Route path="/managecustomer" element={<Managecustomer />} />
-            <Route path="/fundrequest" element={<FundRequest />} />
-            <Route path="/transactionlog" element={<TransactionsLog />} />
-            <Route path="/notification" element={<NotificationsCard />} />
-            <Route path="/message" element={<MessagesUI />} />
+          {/* AdminDashboard */}
+<Routes>
+  <Route path="/dashboard" element={<DashboardCard />} />
+  <Route path="/managecustomer" element={<Managecustomer />} />
+  <Route path="/fundrequest" element={<FundRequest/>} />
+  <Route path="/transactionlog" element={<TransactionsLog/>} />
+  <Route path="/notification" element={<NotificationsCard/>} />
+  <Route path="/message" element={<MessagesUI/>} />
+  </Routes>
+          {/*End-AdminDashboard */}
 
-            {/* Customer Dashboard Routes */}
-            <Route path="/customer-dashboard" element={<Customerdashboard />} />
-            <Route path="/requestfund" element={<Requestfund />} />
-            <Route path="/transactionhistory" element={<Transactionhistory />} />
-          </Routes>
+
+          {/* ------------------------------------------------------------------------------------------------------ */}
+
+
+           {/* CustomerDashboard */}
+          <Routes><Route path="/customer-dashboard" element={<Customerdashboard />} /></Routes>
+          <Routes><Route path="/requestfund" element={<Requestfund />} /></Routes>
+          <Routes><Route path="/transactionhistory" element={<Transactionhistory />} /></Routes>
+           {/* End-CustomerDashboard */}
         </div>
       </div>
     </>
   );
 }
-
 export default App;

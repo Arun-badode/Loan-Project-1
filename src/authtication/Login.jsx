@@ -7,8 +7,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const roleCredentials = {
-    Admin: { email: "admin123", password: "admin@123" },
-    Customer: { email: "customer123", password: "customer@123" },
+    Admin: { email: "admin@gmail.com", password: "admin123" },
+    Customer: { email: "customer@gmail.com", password: "customer123" },
   };
 
   const handleSubmit = (e) => {

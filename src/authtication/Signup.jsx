@@ -10,21 +10,20 @@ const Signup = () => {
     phone: "",
     password: "",
     confirmPassword: "",
-    agreeTerms: false
+    agreeTerms: false,
   });
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Basic validation
+
     if (formData.password !== formData.confirmPassword) {
       Swal.fire({
         icon: "error",
@@ -33,7 +32,7 @@ const Signup = () => {
       });
       return;
     }
-    
+
     if (!formData.agreeTerms) {
       Swal.fire({
         icon: "error",
@@ -43,8 +42,6 @@ const Signup = () => {
       return;
     }
 
-    // Here you would typically send the data to your backend
-    // For now, we'll just show a success message and redirect
     Swal.fire({
       icon: "success",
       title: "Registration Successful",
@@ -55,12 +52,15 @@ const Signup = () => {
   };
 
   return (
-    <main>
-      <div className="login-container" style={{ backgroundColor: "#ccf8db" }}>
+    <div
+      className="container-fluid min-vh-100 d-flex justify-content-center align-items-center"
+      style={{ backgroundColor: "#ccf8db" }}
+    >
+      <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow bg-white text-center">
         <img
           src="https://i.ibb.co/KxdfWFTv/3db2775f70a199b26bc47425ca16af18-1-removebg-preview.png"
           alt="Logo"
-          className="mb-1"
+          className="mb-3"
           style={{ height: "100px", objectFit: "contain" }}
         />
         <h4 className="mb-4 fw-bold" style={{ color: "#4d4d4d" }}>
@@ -82,7 +82,7 @@ const Signup = () => {
               fontWeight: "500",
             }}
           />
-          
+
           <input
             type="email"
             name="email"
@@ -97,7 +97,7 @@ const Signup = () => {
               fontWeight: "500",
             }}
           />
-          
+
           <input
             type="tel"
             name="phone"
@@ -111,7 +111,7 @@ const Signup = () => {
               fontWeight: "500",
             }}
           />
-          
+
           <input
             type="password"
             name="password"
@@ -126,7 +126,7 @@ const Signup = () => {
               fontWeight: "500",
             }}
           />
-          
+
           <input
             type="password"
             name="confirmPassword"
@@ -176,7 +176,7 @@ const Signup = () => {
           </p>
         </form>
       </div>
-    </main>
+    </div>
   );
 };
 

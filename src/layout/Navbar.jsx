@@ -19,7 +19,6 @@ const Navbar = ({ toggleSidebar }) => {
     navigate("/");
   };
 
- 
 
 
   const handleChangePasswordSubmit = (e) => {

@@ -226,13 +226,13 @@ const CustomerDashboard = () => {
     <div className="container p-3 mt-4">
       {/* Minimum Draw Requirement Modal */}
       <Modal show={showPopup} onHide={() => setShowPopup(false)} centered backdrop="static">
-        <Modal.Header closeButton className="bg-warning">
+        <Modal.Header closeButton className="card-green">
           <Modal.Title>
             <i className="fas fa-exclamation-triangle me-2"></i>
             Action Required
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="card-green">
           <div className="alert alert-warning">
             <h5 className="fw-bold">Minimum Draw Requirement Not Met</h5>
             
@@ -241,11 +241,11 @@ const CustomerDashboard = () => {
             </p>
           </div>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="card-green">
           <Button variant="secondary" onClick={() => setShowPopup(false)}>
             Remind Me Later
           </Button>
-          <Button variant="primary" onClick={approveMinimumDraw}>
+          <Button className="btn-green " onClick={approveMinimumDraw}>
             Request Minimum Draw Now
           </Button>
         </Modal.Footer>

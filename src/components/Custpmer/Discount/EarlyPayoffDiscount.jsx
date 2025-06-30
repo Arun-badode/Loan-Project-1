@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Container, Row, Col, Card, Button, Tab, Nav, Table, Modal, Form } from 'react-bootstrap';
 const EarlyPayoffDiscount = () => {
   const [requested, setRequested] = useState(false);
   const [drawnAmount, setDrawnAmount] = useState(10000); // Example amount
@@ -11,13 +11,24 @@ const EarlyPayoffDiscount = () => {
     setRequested(true);
     // Here you can add logic to notify admin or trigger API
   };
-
+  const discountTerms = [
+    "Access 100% of your funds within XX days and pay back full within XX days - Get 10% discount",
+    "Access 100% of your funds within XX days and pay back full within XX days - Get 5% discount"
+  ];
   return (
-    <div className="container mt-3 p-3">
+    <div className="container mt-3  p-3">
       <h2 className="page-heading">Early Payoff Discount</h2>
-      <p className="page-subheading">
-        Access 100% of your funds within <strong>60 days</strong> and pay back within <strong>30 days</strong> — Get <strong>5% discount</strong>.
-      </p>
+        {/* Discount Term Notice */}
+      <Card className="mb-5 card-green border-0">
+        <Card.Body>
+          <h5 className="fw-bold mb-4">Early Payback Discount Offers</h5>
+          <ul className="mb-0">
+            {discountTerms.map((term, index) => (
+              <li key={index}>{term}</li>
+            ))}
+          </ul>
+        </Card.Body>
+      </Card>
 
       <div className="card shadow-sm border-0 card-green">
         <div className="card-body">

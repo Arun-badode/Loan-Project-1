@@ -20,7 +20,7 @@ const NotificationsAlerts = () => {
     {
       id: 4,
       type: "credit",
-      message: "📈 You're eligible for a credit limit increase. 50% of your credit has been paid.",
+      message: "📈 You may be eligible for a credit increase once 50% of your credit line has been paid.",
     },
   ]);
 
@@ -55,6 +55,15 @@ const NotificationsAlerts = () => {
           </div>
         )}
       </div>
+
+      {/* 🔧 FUTURE FEATURE SUGGESTION:
+        Add an Admin configuration panel that lets admins:
+        - Set recurring ACH Debit reminder date
+        - Customize message format
+        - Warn users to keep sufficient funds
+        - Remind users not to block/stop ACH debit
+        This will help users avoid contract violations.
+      */}
     </div>
   );
 };

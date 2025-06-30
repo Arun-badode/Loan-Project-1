@@ -108,7 +108,7 @@ const ManageCustomer = () => {
         {/* Left Side: Heading + Subheading */}
         <Col xs="auto" className="text-start">
           <div className="d-flex flex-column">
-            <h4 className="mb-1">Customers Management</h4>
+            <h4 className="mb-1 page-heading">Customers Management</h4>
             <p className="mb-0 small text-muted">List of all customers and manage their details</p>
           </div>
         </Col>

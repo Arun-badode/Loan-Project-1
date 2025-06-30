@@ -60,17 +60,7 @@ const Requestfund = () => {
           documents unless specifically requested.
         </p>
 
-        {/* Credit Increase Notification */}
-        {showCreditIncrease && (
-          <div className="alert alert-info">
-            <strong>
-              Congratulations, you may be eligible for a credit increase.
-            </strong>
-            <br />
-            Submit your most recent business bank statements and AR/PO if you have
-            any.
-          </div>
-        )}
+ 
 
         <div className="card shadow-sm border-0 overflow-hidden">
           <div className="card-body card-green">
@@ -176,13 +166,7 @@ const Requestfund = () => {
             )}
           </div>
         </div>
-        <div className="alert alert-success mt-4">
-          <i className="fas fa-info-circle me-2"></i>
-          Approval is handled outside the app by our underwriting and sales team.
-          You can request funds up to your available balance. For credit increase
-          requests (after 50% repayment), please submit updated business bank
-          statements and AR/PO.
-        </div>
+    
       </div>
     </div>
   );

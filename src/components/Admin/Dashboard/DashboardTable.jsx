@@ -1,6 +1,4 @@
-import React from "react";
-
-
+import React, { useState } from "react";
 import DashboardViewModal from "./DashboardViewModal";
 import Button from 'react-bootstrap/Button';
 
@@ -11,6 +9,7 @@ const requests = [
     amount: "$250,000",
     date: "2025-06-26",
     status: "Pending",
+    factorRate: 1.12,
   },
   {
     id: "REQ-2025-06-25-003",
@@ -18,6 +17,7 @@ const requests = [
     amount: "$500,000",
     date: "2025-06-25",
     status: "Approved",
+    factorRate: 1.08,
   },
   {
     id: "REQ-2025-06-25-002",
@@ -25,6 +25,7 @@ const requests = [
     amount: "$750,000",
     date: "2025-06-25",
     status: "Rejected",
+    factorRate: 1.15,
   },
   {
     id: "REQ-2025-06-24-005",
@@ -32,6 +33,7 @@ const requests = [
     amount: "$300,000",
     date: "2025-06-24",
     status: "Approved",
+    factorRate: 1.10,
   },
   {
     id: "REQ-2025-06-23-008",
@@ -39,35 +41,39 @@ const requests = [
     amount: "$425,000",
     date: "2025-06-23",
     status: "Pending",
+    factorRate: 1.09,
   },
 ];
 
 const statusBadge = (status) => {
   const baseClasses = "px-2 py-1 rounded-pill fw-medium";
-
   switch (status) {
     case "Approved":
-      return <span className={`badge-success-soft ${baseClasses} badge-status-approved`}>Approved</span>;
+      return <span className={`badge-success-soft ${baseClasses}`}>Approved</span>;
     case "Pending":
-      return <span className={`badge-warning-soft ${baseClasses} badge-status-pending`}>Pending</span>;
+      return <span className={`badge-warning-soft ${baseClasses}`}>Pending</span>;
     case "Rejected":
-      return <span className={`badge-danger-soft ${baseClasses} badge-status-rejected`}>Rejected</span>;
+      return <span className={`badge-danger-soft ${baseClasses}`}>Rejected</span>;
     default:
-      return <span className={`badge-warning-soft ${baseClasses} badge-status-unknown`}>Unknown</span>;
+      return <span className={`badge-warning-soft ${baseClasses}`}>Unknown</span>;
   }
 };
 
-
 const DashboardTable = () => {
-  const [showModal, setShowModal] = React.useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRequest, setSelectedRequest] = useState(null);
+
+  const handleView = (request) => {
+    setSelectedRequest(request);
+    setShowModal(true);
+  };
+
   return (
     <div className="card border-0 shadow-sm rounded-4 p-3 card-green">
-      <div className="d-flex justify-content-between align-items-center px-2 pb-2 ">
+      <div className="d-flex justify-content-between align-items-center px-2 pb-2">
         <h5 className="fw-semibold mb-0">Latest Funding Requests</h5>
-        {/* <a href="#view-all" className="text-danger text-decoration-none fw-semibold">
-          View All
-        </a> */}
       </div>
+
       <div className="table-responsive">
         <table className="table table-hover align-middle table-green">
           <thead>
@@ -75,6 +81,7 @@ const DashboardTable = () => {
               <th>Request ID</th>
               <th>Customer</th>
               <th>Amount</th>
+              <th>Factor Rate</th>
               <th>Date</th>
               <th>Status</th>
               <th>Actions</th>
@@ -83,28 +90,20 @@ const DashboardTable = () => {
           <tbody>
             {requests.map((item, index) => (
               <tr key={index}>
-                <td className="">{item.id}</td>
+                <td>{item.id}</td>
                 <td>{item.customer}</td>
                 <td className="fw-bold">{item.amount}</td>
+                <td>{item.factorRate}</td>
                 <td>{item.date}</td>
                 <td>{statusBadge(item.status)}</td>
                 <td>
-                  {/* <button className="btn btn-sm btn-link text-Success me-2" title="View">
-                    <i className="fas fa-eye"></i>
-                  </button> */}
-
-
                   <button
                     className="btn btn-sm btn-link text-success me-2"
-                    onClick={() => setShowModal(true)}
+                    onClick={() => handleView(item)}
+                    title="View"
                   >
-                    <i className="fas fa-eye me-1"></i> 
+                    <i className="fas fa-eye me-1"></i>
                   </button>
-
-                  <DashboardViewModal
-                    show={showModal}
-                    handleClose={() => setShowModal(false)}
-                  />
                   <button className="btn btn-sm btn-link text-success me-2" title="Approve">
                     <i className="fas fa-check"></i>
                   </button>
@@ -117,6 +116,15 @@ const DashboardTable = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal */}
+      {selectedRequest && (
+        <DashboardViewModal
+          show={showModal}
+          handleClose={() => setShowModal(false)}
+          request={selectedRequest}
+        />
+      )}
 
       {/* Footer */}
       <div className="d-flex justify-content-between align-items-center px-2 pt-2 small text-muted">

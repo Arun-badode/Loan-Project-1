@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Table, Badge, InputGroup, Form } from 'react-bootstrap';
+import { Button, Table, Badge, InputGroup, Form, Row, Col } from 'react-bootstrap';
 import AddCustomerModal from './AddCustomerModal';
 import CustomerDetailsModal from './CustomerDetailsModal';
 import EditCreditModal from './EditCreditModal';
@@ -104,28 +104,46 @@ const ManageCustomer = () => {
   return (
     <div className="container mt-4">
       {/* Page Header and Search */}
-      <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
-        <div>
-          <h4 className="mb-1">Customers Management</h4>
-          <p className="mb-0">List of all customers and manage their details</p>
-        </div>
-        <div className="d-flex gap-2">
-          <InputGroup>
-            <InputGroup.Text>
-              <i className="fas fa-search"></i>
-            </InputGroup.Text>
-            <Form.Control
-              placeholder="Search customers..."
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-            />
-          </InputGroup>
-          <Button variant="success" onClick={() => setShowAddModal(true)}>
-            + Add Customer
-          </Button>
-        </div>
-      </div>
+      <Row className="align-items-center justify-content-between g-3 mb-3 flex-column flex-md-row">
+        {/* Left Side: Heading + Subheading */}
+        <Col xs="auto" className="text-start">
+          <div className="d-flex flex-column">
+            <h4 className="mb-1">Customers Management</h4>
+            <p className="mb-0 small text-muted">List of all customers and manage their details</p>
+          </div>
+        </Col>
 
+        {/* Right Side: Search + Button */}
+        <Col xs={6} md="auto" className="ms-md-auto w-md-auto">
+          <div className="d-flex flex-row align-items-center gap-2">
+            <div className="input-group flex-grow-1">
+              <span className="input-group-text">
+                <i className="fas fa-search" />
+              </span>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Search customers..."
+                defaultValue=""
+                onchange="handleSearchChange(event)"
+              />
+            </div>
+
+
+
+            <button
+              className="btn btn-success text-nowrap"
+              title="Add New Customer"
+              onClick={() => setShowAddModal(true)}
+            >
+              + Add Customer
+            </button>
+
+          </div>
+
+
+        </Col>
+      </Row>
       {/* Customers Table */}
       <div className="card shadow-sm">
         <div className="card-body card-green">

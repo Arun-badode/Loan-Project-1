@@ -82,13 +82,13 @@ const PaymentTracking = () => {
                       {payment.status === "Missed" ? (
                         <>
                           <button
-                            className="btn btn-sm btn-outline-success me-2"
+                            className="btn btn-sm btn-outline-success me-2 mb-1"
                             onClick={() => handleReminder(payment.id)}
                           >
                             Send Reminder
                           </button>
                           <button
-                            className="btn btn-sm btn-success"
+                            className="btn btn-sm btn-success mb-1"
                             onClick={() => markAsPaid(payment.id)}
                           >
                             Mark as Paid

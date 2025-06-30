@@ -1,29 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { RiMenuUnfold2Line } from "react-icons/ri";
 
 const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
-  const [showChangePassword, setShowChangePassword] = useState(false);
   const [showNotification, setShowNotification] = useState(false);
+  const notificationRef = useRef(null);
 
   useEffect(() => {
     const storedName = localStorage.getItem("userName") || "User";
     setUserName(storedName);
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target)
+      ) {
+        setShowNotification(false);
+      }
+    };
+
+    if (showNotification) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showNotification]);
+
   const handleLogout = () => {
     localStorage.removeItem("userRole");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userName");
     navigate("/");
-  };
-
-
-
-  const handleChangePasswordSubmit = (e) => {
-    e.preventDefault();
-    setShowChangePassword(false);
   };
 
   return (
@@ -36,17 +49,15 @@ const Navbar = ({ toggleSidebar }) => {
               <a className="nav-brand fw-bold" href="#">
                 Hi, {userName}
               </a>
-              <p className="p-0 m-0 d-none d-md-block">
-                {userName} Group Of Company
-              </p>
             </div>
             <div
-              className="nav-toggle-icon me-3"
+              className="nav-toggle-icon ms-4 mt-2"
               onClick={toggleSidebar}
+              style={{ cursor: "pointer" }}
             >
-              <button className="btn p-0 border-0 bg-transparent">
-                <i className="fa fa-bars fs-4" aria-hidden="true"></i>
-              </button>
+              <div>
+                <RiMenuUnfold2Line size={28} />
+              </div>
             </div>
           </div>
 
@@ -67,12 +78,9 @@ const Navbar = ({ toggleSidebar }) => {
               {/* Notification Card */}
               {showNotification && (
                 <div
+                  ref={notificationRef}
                   className="position-absolute end-0 mt-2 shadow-sm rounded-3 border border-success bg-white"
-                  style={{
-                    width: "280px",
-                    zIndex: 1000,
-                    right: 0,
-                  }}
+                  style={{ width: "280px", zIndex: 1000 }}
                 >
                   <div className="border-bottom px-3 py-2 d-flex justify-content-between align-items-center bg-success bg-opacity-10 rounded-top">
                     <strong className="text-white">Notifications</strong>
@@ -84,7 +92,6 @@ const Navbar = ({ toggleSidebar }) => {
                   </div>
 
                   <div className="p-3">
-                    {/* Notification Item 1 */}
                     <div className="d-flex align-items-start gap-2 mb-3">
                       <i className="fas fa-bell mt-1 text-success"></i>
                       <div className="small text-dark">
@@ -95,16 +102,16 @@ const Navbar = ({ toggleSidebar }) => {
                       </div>
                     </div>
 
-                    {/* Notification Item 2 */}
                     <div className="d-flex align-items-start gap-2 mb-3">
                       <i className="fas fa-check-circle mt-1 text-success"></i>
                       <div className="small text-dark">
-                        <div className="fw-semibold">Withdrawal approved</div>
+                        <div className="fw-semibold">
+                          Withdrawal approved
+                        </div>
                         <div className="text-muted small">15 minutes ago</div>
                       </div>
                     </div>
 
-                    {/* Notification Item 3 */}
                     <div className="d-flex align-items-start gap-2">
                       <i className="fas fa-file-alt mt-1 text-success"></i>
                       <div className="small text-dark">
@@ -145,12 +152,12 @@ const Navbar = ({ toggleSidebar }) => {
                     to="/updateprofile"
                   >
                     <i className="fas fa-user-pen text-success"></i>
-                     Profile
+                    Profile
                   </Link>
                 </li>
 
                 <li className="mb-2">
-                      <Link
+                  <Link
                     className="dropdown-item d-flex align-items-center gap-2 px-3 py-2 rounded-2 text-success"
                     to="/changepassword"
                   >
@@ -177,10 +184,22 @@ const Navbar = ({ toggleSidebar }) => {
           </div>
         </div>
       </div>
-
-     
     </nav>
   );
 };
 
 export default Navbar;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

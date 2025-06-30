@@ -8,66 +8,72 @@ const FundRequest = () => {
 
   // Sample data for fund requests
   const requests = [
-    {
-      id: 'FR-2025-0001',
-      customer: 'Acme Corporation',
-      amount: 250000,
-      date: '2025-06-20',
-      purpose: 'Working capital for Q3 expansion',
-      status: 'pending',
-      documents: ['financial_statement.pdf', 'business_plan.pdf']
-    },
-    {
-      id: 'FR-2025-0002',
-      customer: 'TechSolutions Inc',
-      amount: 500000,
-      date: '2025-06-22',
-      purpose: 'Equipment purchase for new office',
-      status: 'approved',
-      documents: ['financials_q2.pdf']
-    },
-    {
-      id: 'FR-2025-0003',
-      customer: 'Global Ventures',
-      amount: 750000,
-      date: '2025-06-23',
-      purpose: 'Market expansion funding',
-      status: 'declined',
-      documents: ['market_analysis.pdf', 'expansion_plan.pdf']
-    },
-    {
-      id: 'FR-2025-0004',
-      customer: 'Innovate Partners',
-      amount: 300000,
-      date: '2025-06-24',
-      purpose: 'Product development funding',
-      status: 'pending',
-      documents: ['product_roadmap.pdf']
-    },
-    {
-      id: 'FR-2025-0005',
-      customer: 'Sunrise Enterprises',
-      amount: 425000,
-      date: '2025-06-25',
-      purpose: 'Inventory purchase',
-      status: 'pending',
-      documents: ['inventory_list.xlsx']
-    }
-  ];
+  {
+    id: 'FR-2025-0001',
+    customer: 'Acme Corporation',
+    amount: 250000,
+    date: '2025-06-20',
+    purpose: 'Working capital for Q3 expansion',
+    status: 'pending',
+    factorRate: 1.12,
+    documents: ['financial_statement.pdf', 'business_plan.pdf']
+  },
+  {
+    id: 'FR-2025-0002',
+    customer: 'TechSolutions Inc',
+    amount: 500000,
+    date: '2025-06-22',
+    purpose: 'Equipment purchase for new office',
+    status: 'approved',
+    factorRate: 1.08,
+    documents: ['financials_q2.pdf']
+  },
+  {
+    id: 'FR-2025-0003',
+    customer: 'Global Ventures',
+    amount: 750000,
+    date: '2025-06-23',
+    purpose: 'Market expansion funding',
+    status: 'declined',
+    factorRate: 1.15,
+    documents: ['market_analysis.pdf', 'expansion_plan.pdf']
+  },
+  {
+    id: 'FR-2025-0004',
+    customer: 'Innovate Partners',
+    amount: 300000,
+    date: '2025-06-24',
+    purpose: 'Product development funding',
+    status: 'pending',
+    factorRate: 1.1,
+    documents: ['product_roadmap.pdf']
+  },
+  {
+    id: 'FR-2025-0005',
+    customer: 'Sunrise Enterprises',
+    amount: 425000,
+    date: '2025-06-25',
+    purpose: 'Inventory purchase',
+    status: 'pending',
+    factorRate: 1.09,
+    documents: ['inventory_list.xlsx']
+  }
+];
 
-  const filteredRequests = activeTab === 'all' 
-    ? requests 
+
+  const filteredRequests = activeTab === 'all'
+    ? requests
     : requests.filter(request => request.status === activeTab);
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case 'pending': 
+      case 'pending':
         return <span className="badge bg-warning text-dark">Pending</span>;
-      case 'approved': 
+      case 'approved':
         return <span className="badge bg-success">Approved</span>;
-      case 'declined': 
+      case 'declined':
         return <span className="badge bg-danger">Declined</span>;
-      default: 
+      default:
         return <span className="badge bg-secondary">Unknown</span>;
     }
   };
@@ -134,11 +140,10 @@ const FundRequest = () => {
         <Nav.Item>
           <Nav.Link
             eventKey="all"
-            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
-              activeTab === "all"
+            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${activeTab === "all"
                 ? "bg-success text-white"
                 : "text-success border border-success"
-            }`}
+              }`}
           >
             <i className="fas fa-list me-2"></i>
             All Requests
@@ -152,11 +157,10 @@ const FundRequest = () => {
         <Nav.Item>
           <Nav.Link
             eventKey="pending"
-            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
-              activeTab === "pending"
+            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${activeTab === "pending"
                 ? "bg-success text-white"
                 : "text-success border border-success"
-            }`}
+              }`}
           >
             <i className="fas fa-clock me-2"></i>
             Pending
@@ -170,11 +174,10 @@ const FundRequest = () => {
         <Nav.Item>
           <Nav.Link
             eventKey="approved"
-            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
-              activeTab === "approved"
+            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${activeTab === "approved"
                 ? "bg-success text-white"
                 : "text-success border border-success"
-            }`}
+              }`}
           >
             <i className="fas fa-check-circle me-2"></i>
             Approved
@@ -188,11 +191,10 @@ const FundRequest = () => {
         <Nav.Item>
           <Nav.Link
             eventKey="declined"
-            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${
-              activeTab === "declined"
+            className={`rounded-pill px-4 py-2 fw-semibold d-inline-flex align-items-center ${activeTab === "declined"
                 ? "bg-success text-white"
                 : "text-success border border-success"
-            }`}
+              }`}
           >
             <i className="fas fa-times-circle me-2"></i>
             Declined
@@ -213,6 +215,7 @@ const FundRequest = () => {
                   <th>Request ID</th>
                   <th>Customer</th>
                   <th>Amount</th>
+                  <th>Factor Rate</th> {/* ✅ New column header */}
                   <th>Request Date</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -225,12 +228,13 @@ const FundRequest = () => {
                       <td>{request.id}</td>
                       <td className="fw-semibold">{request.customer}</td>
                       <td>{formatCurrency(request.amount)}</td>
+                      <td>{request.factorRate || '-'}</td> {/* ✅ New data cell */}
                       <td>{formatDate(request.date)}</td>
                       <td>{getStatusBadge(request.status)}</td>
                       <td>
                         <div className="d-flex gap-2">
-                          <Button 
-                            variant="outline-success" 
+                          <Button
+                            variant="outline-success"
                             size="sm"
                             onClick={() => handleView(request)}
                           >
@@ -238,15 +242,15 @@ const FundRequest = () => {
                           </Button>
                           {request.status === 'pending' && (
                             <>
-                              <Button 
-                                variant="success" 
+                              <Button
+                                variant="success"
                                 size="sm"
                                 onClick={() => handleApprove(request.id)}
                               >
                                 <i className="fas fa-check me-1"></i> Approve
                               </Button>
-                              <Button 
-                                variant="outline-danger" 
+                              <Button
+                                variant="outline-danger"
                                 size="sm"
                                 onClick={() => handleDecline(request.id)}
                               >
@@ -260,7 +264,7 @@ const FundRequest = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6" className="text-center py-4">
+                    <td colSpan="7" className="text-center py-4"> {/* ⬅️ Updated colSpan from 6 to 7 */}
                       <div className="mx-auto mb-3 text-muted">
                         <i className="fas fa-folder-open fa-3x opacity-25"></i>
                       </div>
@@ -271,6 +275,7 @@ const FundRequest = () => {
                 )}
               </tbody>
             </Table>
+
           </div>
         </Card.Body>
       </Card>
@@ -305,14 +310,14 @@ const FundRequest = () => {
               <div className="col-md-6">
                 <h6 className="fw-bold mb-3">Purpose</h6>
                 <p>{selectedRequest.purpose}</p>
-                
+
                 <h6 className="fw-bold mt-4 mb-3">Supporting Documents</h6>
                 {selectedRequest.documents.length > 0 ? (
                   <div className="d-flex flex-wrap gap-2">
                     {selectedRequest.documents.map((doc, index) => (
-                      <Button 
-                        key={index} 
-                        variant="outline-success" 
+                      <Button
+                        key={index}
+                        variant="outline-success"
                         size="sm"
                         className="d-flex align-items-center"
                       >

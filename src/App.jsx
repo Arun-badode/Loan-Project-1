@@ -9,7 +9,7 @@ import Customerdashboard from "./components/Custpmer/CustomerDashboard/Dashboard
 import DashboardCard from "./components/Admin/Dashboard/DashboardCard";
 import Managecustomer from "./components/Admin/ManageCustomer/Managecustomer";
 import FundRequest from "./components/Admin/FundRequest/FundRequest";
-import TransactionsLog from "./components/Admin/Transactionlog/TransactionsLog";
+
 
 
 import Requestfund from "./components/Custpmer/RequestFunds/Requestfund";
@@ -21,9 +21,10 @@ import ForgotPassword from "./authtication/ForgotPassword";
 import Signup from "./authtication/Signup";
 import EarlyPayoffDiscount from "./components/Custpmer/Discount/EarlyPayoffDiscount";
 import NotificationsAlerts from "./components/Custpmer/Notification/NotificationsAlerts";
-import PaymentTracking from "./components/Admin/PaymentTracker/Paymenttracking";
+
 import CreditUpgradeRequests from "./components/Admin/CreditUpgradeRequests/CreditUpgradeRequests";
 import ReportsDownload from "./components/Admin/ReportsDownload/ReportsDownload";
+import FundingBalanceTracker from "./components/Admin/FundingBalanceTracker/FundingBalanceTracker";
 
 
 function App() {
@@ -73,11 +74,15 @@ const isNoLayoutPage = noLayoutRoutes.includes(location.pathname);
           <Route path="/dashboard" element={<DashboardCard />} />
           <Route path="/managecustomer" element={<Managecustomer />} />
           <Route path="/fundrequest" element={<FundRequest />} />
-          <Route path="/transactionlog" element={<TransactionsLog />} />
-          {/* <Route path="/notification" element={<NotificationsCard />} /> */}
+          <Route path="/balancetracker" element={<FundingBalanceTracker />} />
+          
+
+
+
+
           <Route path="/updateprofile" element={<Updateprofile />} />
           <Route path="/changepassword" element={<Changepassword />} />
-          {/* <Route path="/message" element={<MessagesUI />} /> */}
+        
 
           {/* CustomerDashboard */}
           <Route path="/customer-dashboard" element={<Customerdashboard />} />

@@ -9,7 +9,7 @@ import Customerdashboard from "./components/Custpmer/CustomerDashboard/Dashboard
 import DashboardCard from "./components/Admin/Dashboard/DashboardCard";
 import Managecustomer from "./components/Admin/ManageCustomer/Managecustomer";
 import FundRequest from "./components/Admin/FundRequest/FundRequest";
-import TransactionsLog from "./components/Admin/Transactionlog/TransactionsLog";
+
 import Requestfund from "./components/Custpmer/RequestFunds/Requestfund";
 import Transactionhistory from "./components/Custpmer/TransactionHistory/Transactionhistory";
 import Updateprofile from "./components/Profile/Updateprofile";
@@ -22,6 +22,7 @@ import PaymentTracking from "./components/Admin/PaymentTracker/Paymenttracking";
 import CreditUpgradeRequests from "./components/Admin/CreditUpgradeRequests/CreditUpgradeRequests";
 import ReportsDownload from "./components/Admin/ReportsDownload/ReportsDownload";
 import PayoffManagement from "./components/Admin/Message/PayoffManagement";
+import FundingBalanceTracker from "./components/Admin/FundingBalanceTracker/FundingBalanceTracker";
 
 
 function App() {
@@ -48,7 +49,7 @@ function App() {
       {!hideLayout && <Navbar toggleSidebar={toggleSidebar} />}
       {/* navbar end */}
       {/* sidebar start */}
-      <div className={`main-content  ${hideLayout ? "" : ""}`}>
+      <div className={`main-content${hideLayout ? "" : ""}`}>
         {!hideLayout && (
           <Sidebar
             collapsed={isSidebarCollapsed}
@@ -65,13 +66,13 @@ function App() {
               <Route path="/forgotpassword" element={<ForgotPassword />} />
             </Routes>
           ) : (
-            <div className={`right-side-content ${isSidebarCollapsed ? "collapsed" : ""}`}>
+            <div className={`right-side-content${isSidebarCollapsed ? " collapsed" : ""}`}>
               <Routes>
                 {/* AdminDashboard */}
                 <Route path="/dashboard" element={<DashboardCard />} />
                 <Route path="/managecustomer" element={<Managecustomer />} />
                 <Route path="/fundrequest" element={<FundRequest />} />
-                <Route path="/transactionlog" element={<TransactionsLog />} />
+                <Route path="/balancetracker" element={<FundingBalanceTracker />} />
                 {/* <Route path="/notification" element={<NotificationsCard />} /> */}
                 <Route path="/updateprofile" element={<Updateprofile />} />
                 <Route path="/changepassword" element={<Changepassword />} />

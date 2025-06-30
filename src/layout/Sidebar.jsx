@@ -37,7 +37,7 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
     { path: "/dashboard", icon: "fa-tachometer-alt", text: "Dashboard" },
     { path: "/managecustomer", icon: "fa-users", text: "Manage_Customers" },
     { path: "/fundrequest", icon: "fa-hand-holding-usd", text: "Fund Requests" },
-    { path: "/transactionlog", icon: "fa-receipt", text: "Funding Balance Tracker" },
+    { path: "/balancetracker", icon: "fa-receipt", text: "Funding Balance Tracker" },
     { path: "/paymenttracking", icon: "fa-bell", text: "Payment Tracking" },
     { path: "/payoff", icon: "fa-comments-dollar", text: "Payoff Management" },
     { path: "/creditupgraderequests", icon: "fa-arrow-up", text: "Credit Upgrade Requests" },

@@ -1,96 +1,53 @@
 import React from 'react';
-import { Modal, Button, Badge, Table } from 'react-bootstrap';
+import { Modal, Button, Badge } from 'react-bootstrap';
 
 const CustomerDetailsModal = ({ show, handleClose, customer }) => {
   if (!customer) return null;
 
   const formatCurrency = (amount) => {
-    if (amount === undefined || amount === null || isNaN(amount)) return "-";
     return new Intl.NumberFormat('en-US', { 
       style: 'currency', 
       currency: 'USD' 
     }).format(amount);
   };
 
-  // Fallbacks for missing fields
-  const safe = (val) => (val !== undefined && val !== null && val !== "" ? val : "-");
-
   return (
     <Modal show={show} onHide={handleClose} size="lg" centered backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Customer Details - {safe(customer.name)}</Modal.Title>
+        <Modal.Title>Customer Details - {customer.name}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="row">
-          <div className="col-12">
-            <Table bordered hover responsive>
-              <tbody>
-                <tr>
-                  <th>Customer ID</th>
-                  <td>{safe(customer.id)}</td>
-                </tr>
-                <tr>
-                  <th>Name</th>
-                  <td>{safe(customer.name)}</td>
-                </tr>
-                <tr>
-                  <th>Company</th>
-                  <td>{safe(customer.company)}</td>
-                </tr>
-                <tr>
-                  <th>Email</th>
-                  <td>{safe(customer.email)}</td>
-                </tr>
-                <tr>
-                  <th>Phone</th>
-                  <td>{safe(customer.phone)}</td>
-                </tr>
-                <tr>
-                  <th>Approved Limit</th>
-                  <td>
-                    {formatCurrency(customer.approvedLimit ?? customer.creditLine)}
-                  </td>
-                </tr>
-                <tr>
-                  <th>Factor Rate</th>
-                  <td>{safe(customer.factorRate)}</td>
-                </tr>
-                <tr>
-                  <th>Term</th>
-                  <td>{safe(customer.term)}</td>
-                </tr>
-                <tr>
-                  <th>Current Balance</th>
-                  <td>
-                    {formatCurrency(customer.currentBalance ?? customer.balance)}
-                  </td>
-                </tr>
-                <tr>
-                  <th>Status</th>
-                  <td>
-                    <Badge bg={
-                      customer.status === 'Active'
-                        ? 'success'
-                        : customer.status === 'Disqualified'
-                        ? 'danger'
-                        : 'warning'
-                    }>
-                      {safe(customer.status)}
-                    </Badge>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Documents</th>
-                  <td>
-                    {Array.isArray(customer.documents) && customer.documents.length > 0
-                      ? customer.documents.map((doc, idx) => (
-                          <Badge bg="light" text="dark" className="me-1" key={idx}>{doc}</Badge>
-                        ))
-                      : "-"}
-                  </td>
-                </tr>
-              </tbody>
-            </Table>
+          <div className="col-md-6">
+            <div className="p-3 bg-light rounded mb-3">
+              <h6 className="fw-bold mb-3">Basic Information</h6>
+              <p className="mb-2"><strong>Customer ID:</strong> {customer.id}</p>
+              <p className="mb-2"><strong>Name:</strong> {customer.name}</p>
+              <p className="mb-2"><strong>Company:</strong> {customer.company}</p>
+              <p className="mb-2"><strong>Email:</strong> {customer.email}</p>
+              <p className="mb-0"><strong>Phone:</strong> {customer.phone}</p>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="p-3 bg-light rounded mb-3">
+              <h6 className="fw-bold mb-3">Credit Information</h6>
+              <p className="mb-2"><strong>Approved Limit:</strong> {formatCurrency(customer.creditLine)}</p>
+              <p className="mb-2"><strong>Factor Rate:</strong> {customer.factorRate}</p>
+              <p className="mb-2"><strong>Term:</strong> {customer.term} months</p>
+              <p className="mb-2"><strong>Current Balance:</strong> {formatCurrency(customer.balance)}</p>
+              <p className="mb-0">
+                <strong>Status:</strong>{" "}
+                <Badge bg={
+                  customer.status === 'Active'
+                    ? 'success'
+                    : customer.status === 'Disqualified'
+                    ? 'danger'
+                    : 'warning'
+                }>
+                  {customer.status}
+                </Badge>
+              </p>
+            </div>
           </div>
         </div>
       </Modal.Body>

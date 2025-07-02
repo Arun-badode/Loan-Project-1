@@ -1,109 +1,181 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
+import { Modal, Button, Form, InputGroup, Row, Col } from 'react-bootstrap';
+import axios from 'axios';
+import BASE_URL from '../../../utils/baseURL';
 
 const AddCustomerModal = ({ show, handleClose }) => {
   const [form, setForm] = useState({
-    name: '',
-    company: '',
+    customerName: '',
+    companyName: '',
     email: '',
-    phone: '',
+    phoneNumber: '',
     address: '',
-    creditLine: ''
+    creditLine: '',
+    password: '',
   });
+
+  const [gstDoc, setGstDoc] = useState(null);
+  const [panDoc, setPanDoc] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // You can add your logic to add customer here
-    alert(`Customer "${form.name}" added!`);
-    handleClose();
+
+    const formData = new FormData();
+    Object.keys(form).forEach(key => {
+      formData.append(key, form[key]);
+    });
+
+    if (gstDoc) formData.append('gstDoc', gstDoc);
+    if (panDoc) formData.append('panDoc', panDoc);
+
+    try {
+      await axios.post(`${BASE_URL}/createcustomer`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+
+      alert("✅ Customer added successfully!");
+      handleClose();
+    } catch (error) {
+      console.error("❌ Error adding customer:", error);
+      alert("❌ Failed to add customer");
+    }
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered backdrop="static" className='modal-green'>
+    <Modal show={show} onHide={handleClose} size='lg'  centered backdrop="static" className='modal-green'>
       <Modal.Header closeButton>
         <Modal.Title>Add New Customer</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Customer Name</Form.Label>
-            <Form.Control
-              type="text"
-              name="name"
-              placeholder="Enter customer name"
-              value={form.name}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+          <Row>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Customer Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="customerName"
+                  placeholder="Enter customer name"
+                  value={form.customerName}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Company</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="company"
+                  placeholder="Enter company name"
+                  value={form.companyName}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Company</Form.Label>
-            <Form.Control
-              type="text"
-              name="company"
-              placeholder="Enter company name"
-              value={form.company}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Email</Form.Label>
+                <Form.Control
+                  type="email"
+                  name="email"
+                  placeholder="Enter email address"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+  <Form.Group className="mb-3">
+    <Form.Label>Password</Form.Label>
+    <Form.Control
+      type="password"
+      name="password"
+      placeholder="Enter password"
+      value={form.password}
+      onChange={handleChange}
+      required
+    />
+  </Form.Group>
+</Col>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              name="email"
-              placeholder="Enter email address"
-              value={form.email}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Phone Number</Form.Label>
+                <Form.Control
+                  type="tel"
+                  name="phoneNumber"
+                  placeholder="Enter phone number"
+                  value={form.phoneNumber}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control
-              type="tel"
-              name="phone"
-              placeholder="Enter phone number"
-              value={form.phone}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Address</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="address"
+                  placeholder="Enter address"
+                  value={form.address}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Credit Line</Form.Label>
+                <InputGroup>
+                  <InputGroup.Text>₹</InputGroup.Text>
+                  <Form.Control
+                    type="number"
+                    name="creditLine"
+                    placeholder="Enter credit line amount"
+                    value={form.creditLine}
+                    onChange={handleChange}
+                    required
+                  />
+                </InputGroup>
+              </Form.Group>
+            </Col>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Address</Form.Label>
-            <Form.Control
-              type="text"
-              name="address"
-              placeholder="Enter address"
-              value={form.address}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Upload GST Document</Form.Label>
+                <Form.Control
+                  type="file"
+                  accept=".jpg,.png,.pdf"
+                  onChange={(e) => setGstDoc(e.target.files[0])}
+                  required
+                />
+              </Form.Group>
+            </Col>
+            <Col md={6}>
+              <Form.Group className="mb-3">
+                <Form.Label>Upload PAN Document</Form.Label>
+                <Form.Control
+                  type="file"
+                  accept=".jpg,.png,.pdf"
+                  onChange={(e) => setPanDoc(e.target.files[0])}
+                  required
+                />
+              </Form.Group>
+            </Col>
+          </Row>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Credit Line</Form.Label>
-            <InputGroup>
-              <InputGroup.Text>$</InputGroup.Text>
-              <Form.Control
-                type="number"
-                name="creditLine"
-                placeholder="Enter credit line amount"
-                value={form.creditLine}
-                onChange={handleChange}
-                required
-              />
-            </InputGroup>
-          </Form.Group>
           <div className="d-flex justify-content-end">
             <Button variant="outline-secondary" onClick={handleClose} className="me-2">
               Cancel

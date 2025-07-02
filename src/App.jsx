@@ -51,10 +51,7 @@ function App() {
       {/* sidebar start */}
       <div className={`main-content${hideLayout ? "" : ""}`}>
         {!hideLayout && (
-          <Sidebar
-            collapsed={isSidebarCollapsed}
-            menuItemClick={menuItemClick}
-          />
+          <Sidebar  collapsed={isSidebarCollapsed}  menuItemClick={menuItemClick}/>
         )}
         {/* sidebar end */}
         {/* right side  */}

@@ -56,7 +56,7 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
     <div className={`sidebar-container ${collapsed ? "collapsed" : ""}`}>
       <div className="sidebar">
         <ul className="menu">
-          {(role === "Admin" ? adminMenuItems : customerMenuItems).map((item) => (
+          {(role === "admin" ? adminMenuItems : customerMenuItems).map((item) => (
             <li
               key={item.path}
               className={`menu-item ${isActive(item.path) ? "active" : ""}`}

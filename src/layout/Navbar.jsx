@@ -35,8 +35,8 @@ const Navbar = ({ toggleSidebar }) => {
   const handleLogout = () => {
     localStorage.removeItem("userRole");
     localStorage.removeItem("userEmail");
-    localStorage.removeItem("userName");
-    navigate("/");
+    localStorage.removeItem("userRole");
+      navigate("/");
   };
 
   return (

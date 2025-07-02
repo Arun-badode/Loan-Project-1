@@ -49,7 +49,8 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
     { path: "/requestfund", icon: "fa-wallet", text: "Request Funds" },
     { path: "/transactionhistory", icon: "fa-history", text: "History" },
     { path: "/discount", icon: "fa-percentage", text: "Discount" },
-    { path: "/notificationalert", icon: "fa-bell", text: "Notifications" }
+    { path: "/notificationalert", icon: "fa-bell", text: "Notifications" },
+    { path: "/refer", icon: "fa-user-friends", text: "Refer a Friend" }
   ];
 
   return (

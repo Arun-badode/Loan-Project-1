@@ -1,23 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import DashboardCharts from "./DashboardChart";
 import DashboardTable from "./DashboardTable";
 
 const DashboardCard = () => {
+  const [activeFilter, setActiveFilter] = useState(null);
+
+  const handleCardClick = (filterType) => {
+    setActiveFilter(activeFilter === filterType ? null : filterType);
+  };
+
   return (
     <div className="bg-success-subtle py-4 min-vh-100">
       <Container>
         {/* Heading */}
         <div className="mb-4 text-center text-md-start">
-          <h4 className="page-heading">Hello Admin</h4>
-          <p className="page-subheading text-muted">Welcome to the Admin Dashboard</p>
+          <h4 className="page-heading">Hello Ladybug</h4>
+          <p className="page-subheading text-muted">Welcome to the Ladybug Dashboard</p>
         </div>
 
         {/* Stats Cards */}
         <Row className="g-4">
           {/* Card 1 - Total Customers */}
-          <Col xs={12} sm={6} lg={3}>
-            <div className="p-4 rounded shadow-sm card-green h-100">
+          <Col xs={12} sm={6} lg={4}>
+            <div 
+              className={`p-4 rounded shadow-sm card-green h-100 ${activeFilter === 'all' ? 'border border-success border-2' : ''}`}
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleCardClick('all')}
+            >
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Total Customers</p>
@@ -30,8 +40,12 @@ const DashboardCard = () => {
           </Col>
 
           {/* Card 2 - Pending Funding Requests */}
-          <Col xs={12} sm={6} lg={3}>
-            <div className="p-4 rounded shadow-sm card-green h-100">
+          <Col xs={12} sm={6} lg={4}>
+            <div 
+              className={`p-4 rounded shadow-sm card-green h-100 ${activeFilter === 'pending' ? 'border border-success border-2' : ''}`}
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleCardClick('pending')}
+            >
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Pending Requests</p>
@@ -43,23 +57,13 @@ const DashboardCard = () => {
             </div>
           </Col>
 
-          {/* Card 3 - Total Disbursed */}
-          <Col xs={12} sm={6} lg={3}>
-            <div className="p-4 rounded shadow-sm card-green h-100">
-              <div className="d-flex justify-content-between align-items-start">
-                <div>
-                  <p className="mb-1 text-muted">Total Disbursed</p>
-                  <h5 className="fw-bold">$60,000,000</h5>
-                  <small className="text-success">+12% from last month</small>
-                </div>
-                <i className="fa-solid fa-money-bill-wave text-primary fs-4"></i>
-              </div>
-            </div>
-          </Col>
-
           {/* Card 4 - Payments Overdue */}
-          <Col xs={12} sm={6} lg={3}>
-            <div className="p-4 rounded shadow-sm card-green h-100">
+          <Col xs={12} sm={6} lg={4}>
+            <div 
+              className={`p-4 rounded shadow-sm card-green h-100 ${activeFilter === 'overdue' ? 'border border-success border-2' : ''}`}
+              style={{ cursor: 'pointer' }}
+              onClick={() => handleCardClick('overdue')}
+            >
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Payments Overdue</p>
@@ -73,11 +77,11 @@ const DashboardCard = () => {
         </Row>
 
         {/* Dashboard Charts and Table */}
-        <div className="mt-4">
+        {/* <div className="mt-4">
           <DashboardCharts />
-        </div>
+        </div> */}
         <div className="mt-4">
-          <DashboardTable />
+          <DashboardTable filter={activeFilter} />
         </div>
       </Container>
     </div>

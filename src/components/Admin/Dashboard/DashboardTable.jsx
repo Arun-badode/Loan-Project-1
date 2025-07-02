@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import DashboardViewModal from "./DashboardViewModal";
-import Button from 'react-bootstrap/Button';
 
 const requests = [
   {
@@ -24,7 +23,7 @@ const requests = [
     customer: "Global Traders Ltd",
     amount: "$750,000",
     date: "2025-06-25",
-    status: "Rejected",
+    status: "Overdue",
     factorRate: 1.15,
   },
   {
@@ -43,6 +42,22 @@ const requests = [
     status: "Pending",
     factorRate: 1.09,
   },
+  {
+    id: "REQ-2025-06-22-010",
+    customer: "Oceanic Shipping",
+    amount: "$600,000",
+    date: "2025-06-22",
+    status: "Overdue",
+    factorRate: 1.18,
+  },
+  {
+    id: "REQ-2025-06-21-015",
+    customer: "Mountain View Tech",
+    amount: "$350,000",
+    date: "2025-06-21",
+    status: "Overdue",
+    factorRate: 1.14,
+  },
 ];
 
 const statusBadge = (status) => {
@@ -52,14 +67,14 @@ const statusBadge = (status) => {
       return <span className={`badge-success-soft ${baseClasses}`}>Approved</span>;
     case "Pending":
       return <span className={`badge-warning-soft ${baseClasses}`}>Pending</span>;
-    case "Rejected":
-      return <span className={`badge-danger-soft ${baseClasses}`}>Rejected</span>;
+    case "Overdue":
+      return <span className={`badge-danger-soft ${baseClasses}`}>Overdue</span>;
     default:
       return <span className={`badge-warning-soft ${baseClasses}`}>Unknown</span>;
   }
 };
 
-const DashboardTable = () => {
+const DashboardTable = ({ filter }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
 
@@ -67,6 +82,16 @@ const DashboardTable = () => {
     setSelectedRequest(request);
     setShowModal(true);
   };
+
+  // Filter requests based on the active filter
+  const filteredRequests = filter 
+    ? requests.filter(request => {
+        if (filter === 'all') return true;
+        if (filter === 'pending') return request.status === 'Pending';
+        if (filter === 'overdue') return request.status === 'Overdue';
+        return true;
+      })
+    : requests;
 
   return (
     <div className="card border-0 shadow-sm rounded-4 p-3 card-green">
@@ -88,7 +113,7 @@ const DashboardTable = () => {
             </tr>
           </thead>
           <tbody>
-            {requests.map((item, index) => (
+            {filteredRequests.map((item, index) => (
               <tr key={index}>
                 <td>{item.id}</td>
                 <td>{item.customer}</td>
@@ -128,7 +153,7 @@ const DashboardTable = () => {
 
       {/* Footer */}
       <div className="d-flex justify-content-between align-items-center px-2 pt-2 small text-muted">
-        <span>Showing 5 of 25 requests</span>
+        <span>Showing {filteredRequests.length} of {requests.length} requests</span>
         <div>
           <button className="btn btn-outline-success btn-sm me-2">Previous</button>
           <button className="btn btn-outline-success btn-sm">Next</button>

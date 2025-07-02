@@ -3,7 +3,7 @@ import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import axiosInstance from '../../../utils/axiosInstance';
 import BASE_URL from '../../../utils/baseURL';
 
-const EditCreditModal = ({ show, handleClose, customer }) => {
+const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
   const [formData, setFormData] = useState({
     approvedAmount: '',
     factorRate: '',
@@ -71,7 +71,7 @@ const EditCreditModal = ({ show, handleClose, customer }) => {
       await axiosInstance.put(`${BASE_URL}/updateCustumer/${customer._id}`, formData);
       alert(`✅ Updated credit terms for ${customer.customerName}`);
       handleClose();
-   
+     if (refreshCustomers) refreshCustomers();
     } catch (error) {
       console.error("❌ Error updating credit terms:", error);
       alert("❌ Failed to update. Please try again.");

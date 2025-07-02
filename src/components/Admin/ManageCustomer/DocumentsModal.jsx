@@ -3,7 +3,7 @@ import { Modal, Button } from 'react-bootstrap';
 import axiosInstance from '../../../utils/axiosInstance';
 import BASE_URL from '../../../utils/baseURL';
 
-const VerifyCustomerModal = ({ show, handleClose, customer }) => {
+const VerifyCustomerModal = ({ show, handleClose, customer,refreshCustomers  }) => {
   if (!customer) return null;
 
   const handleVerify = async () => {
@@ -14,6 +14,7 @@ const VerifyCustomerModal = ({ show, handleClose, customer }) => {
       );
       alert(`✅ Customer "${customer.customerName}" has been verified.`);
       handleClose();
+        if (refreshCustomers) refreshCustomers();
     } catch (error) {
       console.error("❌ Error verifying customer:", error);
       alert("❌ Failed to verify customer.");

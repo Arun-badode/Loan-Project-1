@@ -76,32 +76,28 @@ const handleSubmit = async (e) => {
       customerId,
       payAmount
     });
-
+      
     if (res?.data?.success) {
-      const newRepayment = {
-        _id: res?.data?.repaymentId || Math.random().toString(),
-        createdAt: new Date().toISOString(),
-        payAmount,
-        payStatus: 'pending'
-      };
-
-      setRepaymentHistory(prev => [newRepayment, ...prev]); // Show instantly
       setPayAmount('');
       setShowModal(false); // ✅ Close modal
       setMessage({ type: 'success', text: 'Repayment submitted successfully!' });
 
-      // Optionally: remove message after a few seconds
+      // ✅ Refresh actual data from backend
+      fetchRepaymentHistory();
+
+      // ✅ Optionally show message for a few seconds
       setTimeout(() => setMessage({ type: '', text: '' }), 3000);
     } else {
       setMessage({ type: 'danger', text: res?.data?.message || 'Repayment failed.' });
     }
   } catch (error) {
     console.error(error);
-    setMessage({ type: 'danger', text: 'Something went wrong. Please try again.' });
+    setMessage({ type: 'danger', text: 'Customer has already made repayment this month.' });
   } finally {
     setLoading(false);
   }
 };
+
 
 
   return (
@@ -112,7 +108,7 @@ const handleSubmit = async (e) => {
           {customerData ? (
           <Row className="mb-3">
   <Col md={4} sm={12}>
-    <p className="mb-1"><strong>Total Repayment:</strong> ${customerData.totalRepayment}</p>
+    <p className="mb-1"><strong>Total Repayment:</strong> ${customerData.remainingRepayment}</p>
   </Col>
   <Col md={4} sm={12}>
     <p className="mb-1"><strong>Term (Months):</strong> {customerData.term_month}</p>

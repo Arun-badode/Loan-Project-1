@@ -165,13 +165,13 @@ const handleDelete = async (customerId) => {
         customer={selectedCustomer} />
 
       <EditCreditModal show={showEditModal} handleClose={() => setShowEditModal(false)}
-        customer={selectedCustomer}/>
+        customer={selectedCustomer} refreshCustomers={fetchCustomers}/>
 
       <DocumentsModal  show={showDocsModal}  handleClose={() => setShowDocsModal(false)}
-        customer={selectedCustomer} />
+        customer={selectedCustomer}  refreshCustomers={fetchCustomers}/>
 
-      <DisqualifyModal   show={showDisqualifyModal}    handleClose={() => setShowDisqualifyModal(false)}
-       customer={selectedCustomer} />
+     <DisqualifyModal  show={showDisqualifyModal} handleClose={() => setShowDisqualifyModal(false)} customer={selectedCustomer}
+ refreshCustomers={fetchCustomers}/>
     </div>
   );
 };

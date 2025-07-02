@@ -1,108 +1,128 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../../utils/axiosInstance";
 
 const PaymentTracking = () => {
-  const [payments, setPayments] = useState([
-    {
-      id: 1,
-      customer: "John Doe",
-      dueDate: "2025-07-01",
-      weeklyPayment: 500,
-      status: "Paid",
-    },
-    {
-      id: 2,
-      customer: "Jane Smith",
-      dueDate: "2025-07-02",
-      weeklyPayment: 750,
-      status: "Missed",
-    },
-    {
-      id: 3,
-      customer: "Alice Johnson",
-      dueDate: "2025-07-03",
-      weeklyPayment: 600,
-      status: "Paid",
-    },
-    {
-      id: 4,
-      customer: "Bob Brown",
-      dueDate: "2025-07-04",
-      weeklyPayment: 550,
-      status: "Missed",
-    },
-  ]);
+  const [payments, setPayments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleReminder = (id) => {
-    alert(`Reminder sent for Payment ID: ${id}`);
+  useEffect(() => {
+    fetchPayments();
+  }, []);
+
+  const fetchPayments = async () => {
+    setLoading(true);
+    try {
+      const res = await axiosInstance.get("/getrepayments");
+      if (res?.data?.result) {
+        setPayments(res.data.result);
+      }
+    } catch (error) {
+      console.error("❌ Error fetching repayments:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const markAsPaid = (id) => {
-    setPayments((prev) =>
-      prev.map((p) => (p.id === id ? { ...p, status: "Paid" } : p))
-    );
+  const handleReminder = (id) => {
+    alert(`📩 Reminder sent for Payment ID: ${id}`);
+    // Optional backend call can be added here
+  };
+
+  const markAsPaid = async (id) => {
+    try {
+      await axiosInstance.patch(`/paymentStatus/${id}`, {
+        payStatus: "paid",
+      });
+
+      // 🔁 Refetch latest payments after marking paid
+      fetchPayments();
+    } catch (error) {
+      console.error("❌ Failed to update status:", error);
+    }
   };
 
   return (
     <div className="container mt-3 p-3">
       <h2 className="page-heading">Payment Tracking</h2>
-      <p className="page-subheading">Monitor customer payments and take actions if needed.</p>
+      <p className="page-subheading">
+        Monitor customer payments and take actions if needed.
+      </p>
 
       <div className="card card-green shadow-sm border-0">
         <div className="card-body">
           <h5 className="card-title fw-semibold mb-3">Weekly Payment Status</h5>
-          <div className="table-responsive">
-            <table className="table table-hover align-middle">
-              <thead className="table-success">
-                <tr>
-                  <th>Customer</th>
-                  <th>Due Date</th>
-                  <th>Weekly Payment</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {payments.map((payment) => (
-                  <tr key={payment.id}>
-                    <td>{payment.customer}</td>
-                    <td>{payment.dueDate}</td>
-                    <td className="fw-bold text-success">${payment.weeklyPayment.toLocaleString()}</td>
-                    <td>
-                      <span
-                        className={`badge rounded-pill px-3 py-2 fw-semibold text-uppercase ${
-                          payment.status === "Paid"
-                            ? "bg-success text-white"
-                            : "bg-warning text-dark"
-                        }`}
-                      >
-                        {payment.status}
-                      </span>
-                    </td>
-                    <td>
-                      {payment.status === "Missed" ? (
-                        <>
-                          <button
-                            className="btn btn-sm btn-outline-success me-2 mb-1"
-                            onClick={() => handleReminder(payment.id)}
-                          >
-                            Send Reminder
-                          </button>
-                          <button
-                            className="btn btn-sm btn-success mb-1"
-                            onClick={() => markAsPaid(payment.id)}
-                          >
-                            Mark as Paid
-                          </button>
-                        </>
-                      ) : (
-                        <span className="text-muted small">No action needed</span>
-                      )}
-                    </td>
+
+          {loading ? (
+            <p>Loading payments...</p>
+          ) : (
+            <div className="table-responsive">
+              <table className="table table-hover align-middle">
+                <thead className="table-success">
+                  <tr>
+                    <th>#</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Payment</th>
+                    <th>Status</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {payments.length > 0 ? (
+                    payments.map((payment, index) => (
+                      <tr key={payment._id}>
+                        <td>{index + 1}</td>
+                        <td>{payment.customerId?.customerName || "N/A"}</td>
+                        <td>{new Date(payment.createdAt).toLocaleDateString()}</td>
+                        <td className="fw-bold text-success">
+                          ${payment.payAmount?.toLocaleString()}
+                        </td>
+                        <td>
+                          <span
+                            className={`badge rounded-pill px-3 py-2 fw-semibold text-uppercase ${
+                              payment.payStatus?.toLowerCase() === "paid"
+                                ? "bg-success text-white"
+                                : payment.payStatus?.toLowerCase() === "missed"
+                                ? "bg-danger"
+                                : "bg-warning text-dark"
+                            }`}
+                          >
+                            {payment.payStatus || "Pending"}
+                          </span>
+                        </td>
+                        <td>
+                          {payment.payStatus?.toLowerCase() !== "paid" ? (
+                            <>
+                              <button
+                                className="btn btn-sm btn-outline-success me-2 mb-1"
+                                onClick={() => handleReminder(payment._id)}
+                              >
+                                Send Reminder
+                              </button>
+                              <button
+                                className="btn btn-sm btn-success mb-1"
+                                onClick={() => markAsPaid(payment._id)}
+                              >
+                                Mark as Paid
+                              </button>
+                            </>
+                          ) : (
+                            <span className="text-muted small">No action needed</span>
+                          )}
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="text-center text-muted">
+                        No repayment data available.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </div>

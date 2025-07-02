@@ -4,7 +4,7 @@ import axios from 'axios';
 import BASE_URL from '../../../utils/baseURL';
 import axiosInstance from '../../../utils/axiosInstance';
 
-const DisqualifyModal = ({ show, handleClose, customer }) => {
+const DisqualifyModal = ({ show, handleClose, customer ,refreshCustomers }) => {
   if (!customer) return null; 
 
   const handleDisqualify = async () => {
@@ -16,7 +16,7 @@ const DisqualifyModal = ({ show, handleClose, customer }) => {
 
       alert(`✅ Customer "${customer.customerName}" has been disqualified.`);
       handleClose();
-      
+       if (refreshCustomers) refreshCustomers();
     } catch (error) {
       console.error("❌ Error disqualifying customer:", error);
       alert("❌ Failed to disqualify customer. Please try again.");
@@ -26,12 +26,12 @@ const DisqualifyModal = ({ show, handleClose, customer }) => {
   return (
     <Modal show={show} onHide={handleClose} centered backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Disqualify Customer - {customer.customerName}</Modal.Title>
+        <Modal.Title>Suspended Customer - {customer.customerName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="alert alert-danger">
           <i className="fas fa-exclamation-triangle me-2"></i>
-          Are you sure you want to disqualify this customer? This action cannot be undone.
+          Are you sure you want to Suspended this customer? This action cannot be undone.
         </div>
       </Modal.Body>
       <Modal.Footer>

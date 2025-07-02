@@ -11,7 +11,7 @@ const DisqualifyModal = ({ show, handleClose, customer }) => {
     try {
       const response = await axiosInstance.patch(
         `${BASE_URL}/updatecustomerstatus/${customer._id}`,
-        { customerStatus: "disqualified" }
+        { customerStatus: "Suspended" }
       );
 
       alert(`✅ Customer "${customer.customerName}" has been disqualified.`);

@@ -75,12 +75,12 @@ const handleApprove = async (id) => {
 const handleDecline = async (id) => {
   try {
     await axiosInstance.patch(`/withdrawstatusupdate/${id}`, {
-      withdrawStatus: "Declined"
+      withdrawStatus: "Rejected"
     });
-    alert(`❌ Request ${id} declined`);
+    alert(`❌ Request ${id} Rejected`);
     // Refresh list
     setRequests(prev =>
-      prev.map(r => (r._id === id ? { ...r, withdrawStatus: "declined" } : r))
+      prev.map(r => (r._id === id ? { ...r, withdrawStatus: "Rejected" } : r))
     );
   } catch (error) {
     console.error("❌ Error declining request:", error);
@@ -99,7 +99,7 @@ const handleDecline = async (id) => {
 
       {/* 🔵 Tabs */}
       <Nav variant="pills" className="mb-4 gap-2" activeKey={activeTab} onSelect={setActiveTab}>
-        {['all', 'pending', 'Approved', 'declined'].map((key) => (
+        {['all', 'pending', 'Approved', 'Rejected'].map((key) => (
           <Nav.Item key={key}>
             <Nav.Link
               eventKey={key}
@@ -155,7 +155,7 @@ const handleDecline = async (id) => {
                                 Approve
                               </Button>
                               <Button size="sm" variant="outline-danger" onClick={() => handleDecline(req._id)}>
-                                Decline
+                               Rejected
                               </Button>
                             </>
                           )}
@@ -198,7 +198,7 @@ const handleDecline = async (id) => {
           <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
           {selectedRequest?.withdrawStatus === 'pending' && (
             <>
-              <Button variant="danger" onClick={() => handleDecline(selectedRequest._id)}>Decline</Button>
+              <Button variant="danger" onClick={() => handleDecline(selectedRequest._id)}>Rejected</Button>
               <Button variant="success" onClick={() => handleApprove(selectedRequest._id)}>Approve</Button>
             </>
           )}

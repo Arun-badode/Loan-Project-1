@@ -1,11 +1,18 @@
 import React, { useState } from "react";
 
 const NotificationsAlerts = () => {
+  // Example: next payment date (should come from backend)
+  const nextPaymentDate = "June 30, 2025";
+  const missedPaymentDate = "June 15, 2025";
+
+  // Email opt-out state (simulate, in real app this would be saved in backend)
+  const [emailOptOut, setEmailOptOut] = useState(false);
+
   const [notifications, setNotifications] = useState([
     {
       id: 1,
       type: "reminder",
-      message: "💸 Payment Reminder: Your next payment is due on June 30, 2025.",
+      message: `💸 Payment Reminder: Your next payment will auto debit on ${nextPaymentDate}.`,
     },
     {
       id: 2,
@@ -15,12 +22,14 @@ const NotificationsAlerts = () => {
     {
       id: 3,
       type: "missed",
-      message: "⚠️ Payment Missed: You missed your payment due on June 15, 2025.",
+      message:
+        `⚠️ Payment Missed: Your payment on ${missedPaymentDate} was uncollectable. Your line of credit is currently suspended. Please contact Underwriting at (646) 886-9499 to restore your account.`,
     },
     {
       id: 4,
       type: "credit",
-      message: "📈 You may be eligible for a credit increase once 50% of your credit line has been paid.",
+      message:
+        "📈 You may be eligible for a credit increase once 50% of your credit line has been paid.",
     },
   ]);
 
@@ -28,10 +37,39 @@ const NotificationsAlerts = () => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
   };
 
+  // Email opt-out toggle
+  const handleEmailOptOut = () => {
+    setEmailOptOut((prev) => !prev);
+    // In real app, call API to update user preference
+  };
+
   return (
     <div className="container mt-3 p-3">
       <h2 className="page-heading">Notifications & Alerts</h2>
       <p className="page-subheading">Stay updated on your account activity</p>
+
+      {/* Email opt-out toggle */}
+      <div className="mb-3">
+        <div className="form-check form-switch">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id="emailOptOut"
+            checked={!emailOptOut}
+            onChange={handleEmailOptOut}
+          />
+          <label className="form-check-label" htmlFor="emailOptOut">
+            {emailOptOut
+              ? "You have opted out of email notifications."
+              : "Also send notifications to my email"}
+          </label>
+        </div>
+        <small className="text-muted">
+          {emailOptOut
+            ? "You will only receive notifications in the app."
+            : "You will receive notifications both in the app and by email."}
+        </small>
+      </div>
 
       <div className="row g-3">
         {notifications.length > 0 ? (

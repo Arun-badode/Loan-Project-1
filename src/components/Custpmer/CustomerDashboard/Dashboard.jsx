@@ -141,6 +141,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Doughnut } from "react-chartjs-2";
+import { useNavigate } from 'react-router-dom';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -148,10 +149,14 @@ import {
   Legend,
 } from "chart.js";
 import { Modal, Button, Alert } from "react-bootstrap";
+import logo from "../../../assets/logo.png"; // Adjust the path as needed
+
+
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const CustomerDashboard = () => {
+   const navigate = useNavigate(); 
   const userName = "John Doe";
   const approvedLimit = 10000;
 
@@ -220,6 +225,7 @@ const CustomerDashboard = () => {
       { amount: minimumDrawAmount, approved: true, date: new Date().toLocaleDateString() }
     ]);
     setShowPopup(false);
+    navigate('/requestfund'); 
   };
 
   return (
@@ -381,7 +387,7 @@ const CustomerDashboard = () => {
         </div>
 
         {/* Doughnut Chart */}
-        <div className="col-12 col-md-6 col-lg-4">
+        {/* <div className="col-12 col-md-6 col-lg-4">
           <div className="card shadow-sm border-0 card-green h-100">
             <div className="card-body">
               <h6 className="fw-semibold mb-3">Balance Usage</h6>
@@ -395,18 +401,41 @@ const CustomerDashboard = () => {
               </div>
             </div>
           </div>
+        </div> */}
+
+         <div className="col-12 d-flex justify-content-center align-items-center my-4">
+        <div
+          style={{
+            width: 200,
+            height: 200,
+            borderRadius: "50%",
+            background: "#f5f5f5",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.07)",
+            border: "2px solid #e0e0e0",
+          }}
+        >
+          {/* Replace src with your logo path */}
+          <img
+            src={logo}
+            alt="Ladybug Lending Logo"
+            style={{ width: 200, height: 200, objectFit: "contain" }}
+          />
         </div>
+      </div>
+   
 
         {/* Information Alert */}
-        <div className="col-12">
-          <Alert variant="success" className="mt-4">
+        <div className="col-12 my-1">
+          <Alert variant="success" className="mt-0">
             <Alert.Heading>
               <i className="fas fa-info-circle me-2"></i>
               Important Information
             </Alert.Heading>
             <p>
-              This is a <strong>draw-down</strong> line of credit, not revolving. Approval is handled by our underwriting team.
-              For credit increase requests (after 50% repayment), please submit updated business documents.
+              This is a <strong>draw-down</strong> line of credit, not revolving. For credit increase requests (after 50% repayment), please submit updated business documents.
             </p>
             {!hasMadeMinimumDraw && (
               <div className="mt-2">

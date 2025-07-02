@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import logo from "../assets/logo.png"; // Adjust the path as needed
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const ForgotPassword = () => {
     >
       <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow  text-center">
         <img
-          src="https://i.ibb.co/KxdfWFTv/3db2775f70a199b26bc47425ca16af18-1-removebg-preview.png"
+          src={logo}
           alt="Logo"
           className="mb-3"
           style={{ height: "100px", objectFit: "contain" }}

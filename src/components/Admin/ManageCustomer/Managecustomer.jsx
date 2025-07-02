@@ -126,29 +126,29 @@ const handleDelete = async (customerId) => {
                     <td>{customer?.companyName || "demo"}</td>
                     <td>{customer?.email}</td>
                     <td>{customer?.phoneNumber}</td>
-                    <td>{customer?.creditLine}</td>
+                    <td>${customer?.creditLine}</td>
                    <td>
                    <span className={`badge text-capitalize fw-semibold px-3 py-1 
                    ${customer.customerStatus === "active" ? "bg-success" :
-                    customer.customerStatus === "disqualified" ? "bg-danger" :  "bg-warning text-dark"}`}> {customer.customerStatus} </span></td>
+                    customer.customerStatus === "Suspended" ? "bg-danger" :  "bg-warning text-dark"}`}> {customer.customerStatus} </span></td>
 
                     <td>
-                      <Button variant="link" size="sm"className="text-success p-0 me-2"
+                      <Button variant="link" size="sm"className="text-success p-0 fs-5 me-2"
                         title="View Details" onClick={() => handleViewDetails(customer)}> <i className="fas fa-eye"></i>
                       </Button>
-                      <Button  variant="link"  size="sm"  className="text-primary p-0 me-2"  title="Update Limit / Factor Rate"
-                        onClick={() => handleEditCredit(customer)}  >
-                        <i className="fas fa-edit"></i> </Button>
-                      <Button   variant="link"   size="sm"   className="text-warning p-0 me-2"   title="Request More Documents"
+                     {customer.customerStatus === "active" && (
+                     <Button   variant="link"   size="sm"   className="text-primary p-0 fs-5 me-2"   title="Update Limit / Factor Rate"
+                      onClick={() => handleEditCredit(customer)} > <i className="fas fa-edit"></i></Button> )}
+                      <Button   variant="link"   size="sm"   className="text-warning p-0 fs-5 me-2"   title="Request More Documents"
                         onClick={() => handleViewDocuments(customer)} >
                         <i className="fas fa-file-alt"></i>
                       </Button>
-                      <Button  variant="link"  size="sm"  className="text-danger p-0 me-2"  title="Mark as Disqualified"
+                      <Button  variant="link"  size="sm"  className="text-danger p-0 me-2 fs-5"  title="Mark as Disqualified"
                         onClick={() => handleDisqualify(customer)} >
                         <i className="fas fa-user-slash"></i> </Button>
 
-                        <Button  variant="link"  size="sm"  className="text-danger p-0"  title="Delete Customer"
-                      onClick={() => handleDelete(customer._id)} ><i className="fas fa-trash-alt"></i></Button>
+                        <Button  variant="link"  size="sm"  className="text-danger p-0 fs-5"  title="Delete Customer"
+                       onClick={() => handleDelete(customer._id)} ><i className="fas fa-trash-alt"></i></Button>
                     </td>
                   </tr>
                 ))}

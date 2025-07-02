@@ -23,6 +23,8 @@ import CreditUpgradeRequests from "./components/Admin/CreditUpgradeRequests/Cred
 import ReportsDownload from "./components/Admin/ReportsDownload/ReportsDownload";
 import PayoffManagement from "./components/Admin/Message/PayoffManagement";
 import FundingBalanceTracker from "./components/Admin/FundingBalanceTracker/FundingBalanceTracker";
+import Refer from "./components/Custpmer/refer/Refer";
+import Repayment from "./components/Custpmer/Repayment/Repayment";
 
 
 function App() {
@@ -84,7 +86,9 @@ function App() {
                 <Route path="/requestfund" element={<Requestfund />} />
                 <Route path="/transactionhistory" element={<Transactionhistory />} />
                 <Route path="/discount" element={<EarlyPayoffDiscount />} />
+                <Route path="/Repayment" element={<Repayment />} />
                 <Route path="/notificationalert" element={<NotificationsAlerts />} />
+                 <Route path="/refer" element={<Refer/>} />
               </Routes>
             </div>
           )}

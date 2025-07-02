@@ -7,11 +7,20 @@ const Navbar = ({ toggleSidebar }) => {
   const [userName, setUserName] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   const notificationRef = useRef(null);
-
-  useEffect(() => {
-    const storedName = localStorage.getItem("userName") || "User";
-    setUserName(storedName);
-  }, []);
+useEffect(() => {
+  const storedDetail = localStorage.getItem("login-detail");
+  if (storedDetail) {
+    try {
+      const parsedDetail = JSON.parse(storedDetail);
+      setUserName(parsedDetail.customerName || "Admin");
+    } catch (err) {
+      console.error("Failed to parse login-detail:", err);
+      setUserName("User");
+    }
+  } else {
+    setUserName("User");
+  }
+}, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -26,17 +35,16 @@ const Navbar = ({ toggleSidebar }) => {
     if (showNotification) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showNotification]);
 
   const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("login-detail");
     localStorage.removeItem("userRole");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userName");
-    navigate("/");
+      navigate("/");
   };
 
   return (

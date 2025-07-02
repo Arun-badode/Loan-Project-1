@@ -154,7 +154,7 @@ const AddCustomerModal = ({ show, handleClose }) => {
 
             <Col md={6}>
               <Form.Group className="mb-3">
-                <Form.Label>Upload GST Document</Form.Label>
+                <Form.Label>Upload  Document</Form.Label>
                 <Form.Control
                   type="file"
                   accept=".jpg,.png,.pdf"
@@ -165,7 +165,7 @@ const AddCustomerModal = ({ show, handleClose }) => {
             </Col>
             <Col md={6}>
               <Form.Group className="mb-3">
-                <Form.Label>Upload PAN Document</Form.Label>
+                <Form.Label>Upload  Document</Form.Label>
                 <Form.Control
                   type="file"
                   accept=".jpg,.png,.pdf"

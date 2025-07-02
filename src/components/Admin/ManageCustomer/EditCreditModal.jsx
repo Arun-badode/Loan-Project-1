@@ -3,69 +3,75 @@ import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import axiosInstance from '../../../utils/axiosInstance';
 import BASE_URL from '../../../utils/baseURL';
 
-const EditCreditModal = ({ show, handleClose, customer, fetchCustomers }) => {
+const EditCreditModal = ({ show, handleClose, customer }) => {
   const [formData, setFormData] = useState({
     approvedAmount: '',
     factorRate: '',
     term_month: '',
     totalRepayment: 0,
-    monthlyInstallment: 0
+    monthlyInstallment: 0,
+    availBalance: 0, // ✅ added
   });
 
   useEffect(() => {
     if (customer) {
-      const approvedAmount = customer.approvedAmount || '';
-      const factorRate = customer.factorRate || '';
-      const term_month = customer.term_month || '';
-      const totalRepayment = approvedAmount && factorRate ? (approvedAmount * factorRate).toFixed(2) : 0;
-      const monthlyInstallment = totalRepayment && term_month ? (totalRepayment / term_month).toFixed(2) : 0;
+      const approvedAmount = parseFloat(customer.approvedAmount) || 0;
+      const factorRate = parseFloat(customer.factorRate) || 0;
+      const term_month = parseInt(customer.term_month) || 0;
+
+      const totalRepayment = (approvedAmount * (1 + factorRate / 100)).toFixed(2);
+      const monthlyInstallment = term_month > 0 ? (totalRepayment / term_month).toFixed(2) : 0;
 
       setFormData({
         approvedAmount,
         factorRate,
         term_month,
         totalRepayment,
-        monthlyInstallment
+        monthlyInstallment,
+        availBalance: approvedAmount, // ✅ synced
       });
     }
   }, [customer]);
 
   if (!customer) return null;
 
- const handleChange = (e) => {
-  const { name, value } = e.target;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const updated = {
-    ...formData,
-    [name]: value
-  };
+    const updated = {
+      ...formData,
+      [name]: value
+    };
 
-  const approvedAmount = parseFloat(name === 'approvedAmount' ? value : updated.approvedAmount);
-  const factorRate = parseFloat(name === 'factorRate' ? value : updated.factorRate);
-  const term = parseFloat(name === 'term_month' ? value : updated.term_month);
+    const approvedAmount = parseFloat(name === 'approvedAmount' ? value : updated.approvedAmount);
+    const factorRate = parseFloat(name === 'factorRate' ? value : updated.factorRate);
+    const term = parseFloat(name === 'term_month' ? value : updated.term_month);
 
-  if (!isNaN(approvedAmount) && !isNaN(factorRate)) {
-    const total = approvedAmount * factorRate;
-    updated.totalRepayment = total.toFixed(2);
-
-    if (!isNaN(term) && term > 0) {
-      updated.monthlyInstallment = (total / term).toFixed(2);
-    } else {
-      updated.monthlyInstallment = 0;
+    if (!isNaN(approvedAmount)) {
+      updated.availBalance = approvedAmount; // ✅ keep synced with approved amount
     }
-  }
 
-  setFormData(updated);
-};
+    if (!isNaN(approvedAmount) && !isNaN(factorRate)) {
+      const total = approvedAmount * (1 + factorRate / 100);
+      updated.totalRepayment = total.toFixed(2);
 
+      if (!isNaN(term) && term > 0) {
+        updated.monthlyInstallment = (total / term).toFixed(2);
+      } else {
+        updated.monthlyInstallment = 0;
+      }
+    }
+
+    setFormData(updated);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axiosInstance.patch(`${BASE_URL}/updatecustomer/${customer._id}`, formData);
+      await axiosInstance.put(`${BASE_URL}/updateCustumer/${customer._id}`, formData);
       alert(`✅ Updated credit terms for ${customer.customerName}`);
       handleClose();
-      fetchCustomers();
+   
     } catch (error) {
       console.error("❌ Error updating credit terms:", error);
       alert("❌ Failed to update. Please try again.");
@@ -80,7 +86,7 @@ const EditCreditModal = ({ show, handleClose, customer, fetchCustomers }) => {
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <p>Credit Line: ₹{customer.creditLine}</p>
+            <p><strong>Credit Line:</strong> ₹{customer.creditLine}</p>
             <Form.Label>Approved Amount</Form.Label>
             <InputGroup>
               <InputGroup.Text>₹</InputGroup.Text>
@@ -95,7 +101,7 @@ const EditCreditModal = ({ show, handleClose, customer, fetchCustomers }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Factor Rate</Form.Label>
+            <Form.Label>Factor Rate (%)</Form.Label>
             <Form.Control
               name="factorRate"
               type="number"
@@ -120,14 +126,13 @@ const EditCreditModal = ({ show, handleClose, customer, fetchCustomers }) => {
 
           <Form.Group className="mb-3">
             <Form.Label>Term (months)</Form.Label>
-           <Form.Control
-  name="term_month"
-  type="number"
-  value={formData.term_month}
-  onChange={handleChange}
-  required
-/>
-
+            <Form.Control
+              name="term_month"
+              type="number"
+              value={formData.term_month}
+              onChange={handleChange}
+              required
+            />
           </Form.Group>
 
           <Form.Group className="mb-3">
@@ -141,6 +146,8 @@ const EditCreditModal = ({ show, handleClose, customer, fetchCustomers }) => {
               />
             </InputGroup>
           </Form.Group>
+
+      
 
           <div className="d-flex justify-content-end">
             <Button variant="secondary" onClick={handleClose} className="me-2">

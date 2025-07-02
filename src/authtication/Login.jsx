@@ -17,10 +17,11 @@ const Login = () => {
         email,
         password,
       });
-    console.log("✅ Login response:", response.data.customer);
+       console.log("✅ Login response:", response.data.customer);
       const { role } = response.data.customer;
       // Store in localStorage
       localStorage.setItem("userRole", role);
+      localStorage.setItem("login_id", JSON.stringify(response.data.customer.id) );
       localStorage.setItem("token", response.data.customer.token);
       localStorage.setItem("login-detail", JSON.stringify(response.data.customer));
 

@@ -1,172 +1,120 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../../utils/axiosInstance";
 
 const Requestfund = () => {
-  // Example values, replace with real data from backend
-  const approvedLimit = 10000;
-  const [currentBalance, setCurrentBalance] = useState(5000); // e.g. 50% used
-  const [amount, setAmount] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [showUpload, setShowUpload] = useState(false);
-  const [drawError, setDrawError] = useState("");
-  const [drawSuccess, setDrawSuccess] = useState("");
-  const [showCreditIncrease, setShowCreditIncrease] = useState(
-    approvedLimit - currentBalance >= approvedLimit * 0.5
-  );
+  const [customer, setCustomer] = useState(null);
+  const [withdrawAmount, setWithdrawAmount] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+// Fetch customer data 
+  useEffect(() => {
+    const fetchCustomerData = async () => {
+      try {
+        const loginId = JSON.parse(localStorage.getItem("login_id"));
+        if (!loginId) return;
+        const response = await axiosInstance.get(`/custumers`, {
+          params: { customerId: loginId }
+        });
 
-  // Draw fee logic
-  const getDrawFee = (amt) => {
-    if (amt < currentBalance * 0.25) {
-      return amt * 0.02;
-    }
-    return 0;
-  };
+        if (response.data && Array.isArray(response.data.customers)) {
+          setCustomer(response.data.customers[0]);
+        }
+      } catch (error) {
+        console.error("❌ Error fetching customer data:", error);
+      }
+    };
 
-  const handleSubmit = (e) => {
+    fetchCustomerData();
+  }, []);
+
+  const handleWithdraw = async (e) => {
     e.preventDefault();
-    const amt = Number(amount);
-    if (!amt || amt <= 0) {
-      setDrawError("Please enter a valid amount.");
-      setDrawSuccess("");
+
+    const withdrawAmt = parseFloat(withdrawAmount);
+    const availableAmt = parseFloat(customer?.availBalance || 0);
+    if (!withdrawAmt || withdrawAmt <= 0) {
+      setError("⚠️ Enter a valid withdrawal amount.");
+      setSuccess("");
       return;
     }
-    if (amt > currentBalance) {
-      setDrawError("Amount exceeds available balance.");
-      setDrawSuccess("");
+
+    if (withdrawAmt > availableAmt) {
+      setError("❌ Withdrawal amount exceeds available balance.");
+      setSuccess("");
       return;
     }
-    setCurrentBalance(currentBalance - amt);
-    setDrawSuccess(
-      `Draw request successful! Amount: $${amt.toLocaleString()}${
-        getDrawFee(amt) > 0
-          ? `, Fee: $${getDrawFee(amt).toLocaleString()}`
-          : ", No fee applied."
-      } Funds will be credited in 24–48 hours.`
-    );
-    setDrawError("");
-    setSubmitted(true);
-    setAmount("");
-    // If after this draw, 50% is repaid, show credit increase notification
-    if (approvedLimit - (currentBalance - amt) >= approvedLimit * 0.5) {
-      setShowCreditIncrease(true);
+
+    try {
+      const payload = {
+        customerId: customer._id,
+        approvedCreditLine: customer.approvedAmount,
+        availableAmount: customer.availBalance,
+        withdrawAmount: withdrawAmount
+      };
+
+      const response = await axiosInstance.post("/withdrawpayment", payload);
+      setSuccess("✅ Withdrawal request submitted successfully!");
+      setError("");
+      setWithdrawAmount("");
+
+      // Optional: Refresh customer balance
+    } catch (err) {
+      console.error("❌ Error in withdrawal:", err);
+      setError("❌ Failed to submit withdrawal request.");
+      setSuccess("");
     }
   };
 
   return (
     <div className="mt-3 p-3">
-      <div className="col-12 col-md-12">
+      <div className="col-12">
         <h2 className="page-heading">Request Funds</h2>
         <p className="page-subheading">
           Withdraw funds from your approved limit. No need to provide a reason or
           documents unless specifically requested.
         </p>
 
- 
-
         <div className="card shadow-sm border-0 overflow-hidden">
           <div className="card-body card-green">
-            {/* Approved Limit and Factor Rate */}
             <div className="mb-4">
               <p className="mb-2">
-                <strong>Approved Limit:</strong> ${approvedLimit.toLocaleString()}
+                <strong>Approved Limit:</strong> ₹{customer?.approvedAmount || "0"}
               </p>
               <p className="mb-2">
-                <strong>Available Balance:</strong> ${currentBalance.toLocaleString()}
+                <strong>Available Balance:</strong> ₹{customer?.availBalance || "0"}
               </p>
             </div>
 
-            {submitted && drawSuccess ? (
-              <div className="alert alert-success">✅ {drawSuccess}</div>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="row g-4">
-                  {/* Amount to Withdraw */}
-                  <div className="col-12 col-md-6">
-                    <label className="form-label fw-medium">
-                      Amount to Withdraw
-                    </label>
-                    <div className="input-group">
-                      <span className="input-group-text">$</span>
-                      <input
-                        type="number"
-                        className="form-control input-green"
-                        placeholder="0.00"
-                        value={amount}
-                        min={1}
-                        max={currentBalance}
-                        onChange={(e) => setAmount(e.target.value)}
-                        required
-                      />
-                    </div>
-                    {amount && (
-                      <div className="mt-2">
-                        <strong>Draw Fee:</strong>{" "}
-                        ${getDrawFee(Number(amount)).toLocaleString()}
-                        <br />
-                        <small>
-                          {Number(amount) < currentBalance * 0.25
-                            ? "2% fee applies for drawing less than 25% of available balance."
-                            : "No fee for drawing 25% or more of available balance."}
-                        </small>
-                      </div>
-                    )}
-                    {drawError && (
-                      <div className="alert alert-danger mt-2">{drawError}</div>
-                    )}
-                  </div>
+            {error && <div className="alert alert-danger">{error}</div>}
+            {success && <div className="alert alert-success">{success}</div>}
 
-                  {/* Upload Toggle (only if admin requests) */}
-                  <div className="col-12 col-md-6 d-flex align-items-end">
-                    <div className="form-check">
-                      <input
-                        className="form-check-input"
-                        type="checkbox"
-                        id="toggleUpload"
-                        checked={showUpload}
-                        onChange={() => setShowUpload(!showUpload)}
-                      />
-                      <label className="form-check-label" htmlFor="toggleUpload">
-                        Upload Supporting Documents (if requested)
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Upload Field (conditionally shown) */}
-                  {showUpload && (
-                    <div className="col-12">
-                      <label className="form-label fw-medium">
-                        Supporting Documents
-                      </label>
-                      <div className="border border-2 border-secondary border-dashed p-4 rounded text-center bg-light-subtle">
-                        <i className="fas fa-cloud-upload-alt text-secondary fs-2 mb-2 d-block"></i>
-                        <label htmlFor="file-upload" className="form-label">
-                          <span className="text-success fw-semibold cursor-pointer">
-                            Upload files
-                          </span>{" "}
-                          or drag and drop
-                        </label>
-                        <input
-                          type="file"
-                          id="file-upload"
-                          multiple
-                          className="form-control d-none"
-                        />
-                        <p className="text-muted small">PDF, DOC up to 10MB</p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Submit Button */}
-                  <div className="col-12">
-                    <button type="submit" className="btn btn-success  py-2">
-                      Submit Request
-                    </button>
+            <form onSubmit={handleWithdraw}>
+              <div className="row g-4">
+                <div className="col-12 col-md-6">
+                  <label className="form-label fw-medium">Amount to Withdraw</label>
+                  <div className="input-group">
+                    <span className="input-group-text">₹</span>
+                    <input
+                      type="number"
+                      className="form-control input-green"
+                      placeholder="0.00"
+                      value={withdrawAmount}
+                      onChange={(e) => setWithdrawAmount(e.target.value)}
+                      required
+                    />
                   </div>
                 </div>
-              </form>
-            )}
+
+                <div className="col-12">
+                  <button type="submit" className="btn btn-success py-2 px-4">
+                    Submit Request
+                  </button>
+                </div>
+              </div>
+            </form>
+
           </div>
         </div>
-    
       </div>
     </div>
   );

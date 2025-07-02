@@ -1,67 +1,59 @@
-import React, { useState } from 'react';
-import { Modal, Button, Form, ListGroup } from 'react-bootstrap';
+import React from 'react';
+import { Modal, Button } from 'react-bootstrap';
+import axiosInstance from '../../../utils/axiosInstance';
+import BASE_URL from '../../../utils/baseURL';
 
-const DocumentsModal = ({ show, handleClose, customer }) => {
-  const [requestMessage, setRequestMessage] = useState('');
-
+const VerifyCustomerModal = ({ show, handleClose, customer }) => {
   if (!customer) return null;
 
-  const handleRequestDocuments = () => {
-    alert(`Document request sent to ${customer.name}: ${requestMessage}`);
-    handleClose();
+  const handleVerify = async () => {
+    try {
+      await axiosInstance.patch(
+        `${BASE_URL}/updatecustomerstatus/${customer._id}`,
+        { customerStatus: "active" }
+      );
+      alert(`✅ Customer "${customer.customerName}" has been verified.`);
+      handleClose();
+    } catch (error) {
+      console.error("❌ Error verifying customer:", error);
+      alert("❌ Failed to verify customer.");
+    }
   };
 
+  const renderDocument = (label, url) => (
+    <div className="mb-3">
+      <strong>{label}:</strong><br />
+      {url ? (
+        <img
+          src={url}
+          alt={`${label}`}
+          style={{ maxWidth: "100%", maxHeight: "250px", borderRadius: "8px", border: "1px solid #ccc" }}
+        />
+      ) : (
+        <div className="text-danger">No document available</div>
+      )}
+    </div>
+  );
+
   return (
-    <Modal show={show} onHide={handleClose} centered backdrop="static" className="modal-green">
+    <Modal show={show} onHide={handleClose} centered size="lg" backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Documents - {customer.name}</Modal.Title>
+        <Modal.Title>Verify Customer - {customer.customerName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {customer.documents.length > 0 ? (
-          <>
-            <h6 className="fw-bold mb-3">Uploaded Documents</h6>
-            <ListGroup className="mb-4">
-              {customer.documents.map((doc, index) => (
-                <ListGroup.Item key={index} className="d-flex justify-content-between align-items-center">
-                  <span>
-                    <i className="fas fa-file-pdf text-danger me-2"></i>
-                    {doc}
-                  </span>
-                  <Button variant="outline-success" size="sm">
-                    <i className="fas fa-download"></i>
-                  </Button>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </>
-        ) : (
-          <div className="alert alert-warning">
-            No documents uploaded for this customer.
-          </div>
-        )}
-
-        <h6 className="fw-bold mb-3">Request Additional Documents</h6>
-        <Form.Group>
-          <Form.Label>Request Message</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            value={requestMessage}
-            onChange={(e) => setRequestMessage(e.target.value)}
-            placeholder="Specify which documents you need from the customer..."
-          />
-        </Form.Group>
+        {renderDocument("GST Document", customer.gstDoc)}
+        {renderDocument("PAN Document", customer.panDoc)}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
-          Close
+          Cancel
         </Button>
-        <Button variant="success" onClick={handleRequestDocuments}>
-          Send Request
+        <Button variant="success" onClick={handleVerify}>
+          Verify
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
 
-export default DocumentsModal;
+export default VerifyCustomerModal;

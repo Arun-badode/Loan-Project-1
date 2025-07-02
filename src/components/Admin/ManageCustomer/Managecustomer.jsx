@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table, Badge, InputGroup, Form, Row, Col } from 'react-bootstrap';
 import AddCustomerModal from './AddCustomerModal';
 import CustomerDetailsModal from './CustomerDetailsModal';
 import EditCreditModal from './EditCreditModal';
 import DocumentsModal from './DocumentsModal';
 import DisqualifyModal from './DisqualifyModal';
+import BASE_URL from '../../../utils/baseURL';
+import axiosInstance from '../../../utils/axiosInstance';
 
 const ManageCustomer = () => {
   const [showAddModal, setShowAddModal] = useState(false);
@@ -15,71 +17,45 @@ const ManageCustomer = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const customers = [
-    {
-      id: 1,
-      name: "John Doe",
-      company: "ABC Corp",
-      email: "john@abc.com",
-      approvedLimit: 50000,
-      factorRate: 1.2,
-      term: "12 months",
-      documents: ["PAN.pdf", "GST.pdf"],
-      currentBalance: 20000,
-      status: "Active",
-      phone: "1234567890"
-    },
-    {
-      id: 2,
-      name: "Jane Smith",
-      company: "XYZ Ltd",
-      email: "jane@xyz.com",
-      approvedLimit: 75000,
-      factorRate: 1.1,
-      term: "18 months",
-      documents: ["PAN.pdf"],
-      currentBalance: 35000,
-      status: "Under Review",
-      phone: "9876543210"
-    },
-    {
-      id: 3,
-      name: "Bob Johnson",
-      company: "QWE Inc",
-      email: "bob@qwe.com",
-      approvedLimit: 100000,
-      factorRate: 1.3,
-      term: "24 months",
-      documents: ["PAN.pdf", "GST.pdf", "Address.pdf"],
-      currentBalance: 50000,
-      status: "Disqualified",
-      phone: "5555555555"
+   const [customers, setCustomers] = useState([]);
+// Fetch customers from the API
+  const fetchCustomers = async () => {
+    try {
+      const response = await axiosInstance.get(`/custumers`);
+      console.log((response.data.customers));
+      setCustomers(response.data.customers);
+    } catch (err) {
+      console.error("❌ Error fetching customers:", err);
     }
-  ];
+  };
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
 
-  const filteredCustomers = customers.filter(customer =>
-    customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    customer.email.toLowerCase().includes(searchTerm.toLowerCase())
+const handleDelete = async (customerId) => {
+  const confirmDelete = window.confirm("Are you sure you want to permanently delete this customer? This action cannot be undone.");
+
+  if (confirmDelete) {
+    try {
+      const response = await axiosInstance.delete(`/deleteCustomer/${customerId}`);
+      alert("✅ Customer deleted successfully.");
+      
+      // 🔁 Refresh customer list
+      fetchCustomers();
+    } catch (error) {
+      console.error("❌ Error deleting customer:", error);
+      alert("❌ Failed to delete customer. Please try again.");
+    }
+  }
+};
+
+
+// Filter customers based on search term
+  const filteredCustomers = customers?.filter(customer =>
+    customer?.name?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
+    customer?.company?.toLowerCase()?.includes(searchTerm.toLowerCase()) ||
+    customer?.email?.toLowerCase()?.includes(searchTerm.toLowerCase())
   );
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(amount);
-  };
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'Active': return <Badge bg="success">{status}</Badge>;
-      case 'Under Review': return <Badge bg="warning" text="dark">{status}</Badge>;
-      case 'Disqualified': return <Badge bg="danger">{status}</Badge>;
-      default: return <Badge bg="secondary">{status}</Badge>;
-    }
-  };
 
   const handleViewDetails = (customer) => {
     setSelectedCustomer(customer);
@@ -117,31 +93,12 @@ const ManageCustomer = () => {
         <Col xs={6} md="auto" className="ms-md-auto w-md-auto">
           <div className="d-flex flex-row align-items-center gap-2">
             <div className="input-group flex-grow-1">
-              <span className="input-group-text">
-                <i className="fas fa-search" />
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search customers..."
-                defaultValue=""
-                onchange="handleSearchChange(event)"
-              />
+              <span className="input-group-text">  <i className="fas fa-search" />  </span>
+              <input   type="text"   className="form-control"   placeholder="Search customers..." defaultValue="" onChange={(e)=> setSearchTerm(e.target.value)}   />
             </div>
-
-
-
-            <button
-              className="btn btn-success text-nowrap"
-              title="Add New Customer"
-              onClick={() => setShowAddModal(true)}
-            >
-              + Add Customer
-            </button>
-
+            <button  className="btn btn-success text-nowrap"  title="Add New Customer"  onClick={() => setShowAddModal(true)}>
+              + Add Customer </button>
           </div>
-
-
         </Col>
       </Row>
       {/* Customers Table */}
@@ -151,105 +108,70 @@ const ManageCustomer = () => {
             <Table hover className="mb-0 table-green">
               <thead>
                 <tr>
+                  <th>#</th>
                   <th>Name</th>
                   <th>Company</th>
                   <th>Email</th>
                   <th>Phone</th>
-                  <th>Approved Limit</th>
-                  <th>Factor Rate</th>
-                  <th>Term</th>
-                  <th>Documents</th>
-                  <th>Current Balance</th>
+                  <th>Credit Line</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredCustomers.map((customer) => (
+                {filteredCustomers?.map((customer,index) => (
                   <tr key={customer.id}>
-                    <td>{customer.name}</td>
-                    <td>{customer.company}</td>
-                    <td>{customer.email}</td>
-                    <td>{customer.phone}</td>
-                    <td>{formatCurrency(customer.approvedLimit)}</td>
-                    <td>{customer.factorRate}</td>
-                    <td>{customer.term}</td>
+                    <td>{index+1}</td>
+                    <td>{customer?.customerName}</td>
+                    <td>{customer?.companyName || "demo"}</td>
+                    <td>{customer?.email}</td>
+                    <td>{customer?.phoneNumber}</td>
+                    <td>{customer?.creditLine}</td>
+                   <td>
+                   <span className={`badge text-capitalize fw-semibold px-3 py-1 
+                   ${customer.customerStatus === "active" ? "bg-success" :
+                    customer.customerStatus === "disqualified" ? "bg-danger" :  "bg-warning text-dark"}`}> {customer.customerStatus} </span></td>
+
                     <td>
-                      {customer.documents.map((doc, idx) => (
-                        <Badge bg="light" text="dark" className="me-1" key={idx}>{doc}</Badge>
-                      ))}
-                    </td>
-                    <td>{formatCurrency(customer.currentBalance)}</td>
-                    <td>{getStatusBadge(customer.status)}</td>
-                    <td>
-                      <Button
-                        variant="link"
-                        size="sm"
-                        className="text-success p-0 me-2"
-                        title="View Details"
-                        onClick={() => handleViewDetails(customer)}
-                      >
-                        <i className="fas fa-eye"></i>
+                      <Button variant="link" size="sm"className="text-success p-0 me-2"
+                        title="View Details" onClick={() => handleViewDetails(customer)}> <i className="fas fa-eye"></i>
                       </Button>
-                      <Button
-                        variant="link"
-                        size="sm"
-                        className="text-primary p-0 me-2"
-                        title="Update Limit / Factor Rate"
-                        onClick={() => handleEditCredit(customer)}
-                      >
-                        <i className="fas fa-edit"></i>
-                      </Button>
-                      <Button
-                        variant="link"
-                        size="sm"
-                        className="text-warning p-0 me-2"
-                        title="Request More Documents"
-                        onClick={() => handleViewDocuments(customer)}
-                      >
+                      <Button  variant="link"  size="sm"  className="text-primary p-0 me-2"  title="Update Limit / Factor Rate"
+                        onClick={() => handleEditCredit(customer)}  >
+                        <i className="fas fa-edit"></i> </Button>
+                      <Button   variant="link"   size="sm"   className="text-warning p-0 me-2"   title="Request More Documents"
+                        onClick={() => handleViewDocuments(customer)} >
                         <i className="fas fa-file-alt"></i>
                       </Button>
-                      <Button
-                        variant="link"
-                        size="sm"
-                        className="text-danger p-0"
-                        title="Mark as Disqualified"
-                        onClick={() => handleDisqualify(customer)}
-                      >
-                        <i className="fas fa-user-slash"></i>
-                      </Button>
+                      <Button  variant="link"  size="sm"  className="text-danger p-0 me-2"  title="Mark as Disqualified"
+                        onClick={() => handleDisqualify(customer)} >
+                        <i className="fas fa-user-slash"></i> </Button>
+
+                        <Button  variant="link"  size="sm"  className="text-danger p-0"  title="Delete Customer"
+                      onClick={() => handleDelete(customer._id)} ><i className="fas fa-trash-alt"></i></Button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </Table>
           </div>
-          {/* Pagination - you can add your pagination logic here */}
         </div>
       </div>
 
       {/* Modal Components */}
       <AddCustomerModal show={showAddModal} handleClose={() => setShowAddModal(false)} />
-      <CustomerDetailsModal
-        show={showDetailsModal}
-        handleClose={() => setShowDetailsModal(false)}
-        customer={selectedCustomer}
-      />
-      <EditCreditModal
-        show={showEditModal}
-        handleClose={() => setShowEditModal(false)}
-        customer={selectedCustomer}
-      />
-      <DocumentsModal
-        show={showDocsModal}
-        handleClose={() => setShowDocsModal(false)}
-        customer={selectedCustomer}
-      />
-      <DisqualifyModal
-        show={showDisqualifyModal}
-        handleClose={() => setShowDisqualifyModal(false)}
-        customer={selectedCustomer}
-      />
+
+      <CustomerDetailsModal show={showDetailsModal}  handleClose={() => setShowDetailsModal(false)}
+        customer={selectedCustomer} />
+
+      <EditCreditModal show={showEditModal} handleClose={() => setShowEditModal(false)}
+        customer={selectedCustomer}/>
+
+      <DocumentsModal  show={showDocsModal}  handleClose={() => setShowDocsModal(false)}
+        customer={selectedCustomer} />
+
+      <DisqualifyModal   show={showDisqualifyModal}    handleClose={() => setShowDisqualifyModal(false)}
+       customer={selectedCustomer} />
     </div>
   );
 };

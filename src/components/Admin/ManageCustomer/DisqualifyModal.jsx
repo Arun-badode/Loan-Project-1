@@ -1,57 +1,38 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button } from 'react-bootstrap';
+import axios from 'axios';
+import BASE_URL from '../../../utils/baseURL';
+import axiosInstance from '../../../utils/axiosInstance';
 
 const DisqualifyModal = ({ show, handleClose, customer }) => {
-  const [reason, setReason] = useState('');
-  const [otherReason, setOtherReason] = useState('');
+  if (!customer) return null; 
 
-  if (!customer) return null;
+  const handleDisqualify = async () => {
+    try {
+      const response = await axiosInstance.patch(
+        `${BASE_URL}/updatecustomerstatus/${customer._id}`,
+        { customerStatus: "disqualified" }
+      );
 
-  const handleDisqualify = () => {
-    const finalReason = reason === 'other' ? otherReason : reason;
-    alert(`Customer ${customer.name} has been disqualified. Reason: ${finalReason}`);
-    handleClose();
+      alert(`✅ Customer "${customer.customerName}" has been disqualified.`);
+      handleClose();
+      
+    } catch (error) {
+      console.error("❌ Error disqualifying customer:", error);
+      alert("❌ Failed to disqualify customer. Please try again.");
+    }
   };
 
   return (
     <Modal show={show} onHide={handleClose} centered backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Disqualify Customer - {customer.name}</Modal.Title>
+        <Modal.Title>Disqualify Customer - {customer.customerName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="alert alert-danger">
           <i className="fas fa-exclamation-triangle me-2"></i>
-          This action will prevent this customer from accessing any credit facilities.
+          Are you sure you want to disqualify this customer? This action cannot be undone.
         </div>
-
-        <Form.Group>
-          <Form.Label>Reason for Disqualification</Form.Label>
-          <Form.Control
-            as="select"
-            value={reason}
-            onChange={(e) => setReason(e.target.value)}
-            required
-          >
-            <option value="">Select a reason</option>
-            <option value="poor_performance">Poor Payment Performance</option>
-            <option value="fraud">Suspected Fraud</option>
-            <option value="financial_distress">Financial Distress</option>
-            <option value="other">Other</option>
-          </Form.Control>
-        </Form.Group>
-
-        {reason === 'other' && (
-          <Form.Group className="mt-3">
-            <Form.Label>Please specify</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={2}
-              value={otherReason}
-              onChange={(e) => setOtherReason(e.target.value)}
-              required
-            />
-          </Form.Group>
-        )}
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>

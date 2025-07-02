@@ -149,6 +149,9 @@ import {
 } from "chart.js";
 import { Modal, Button, Alert } from "react-bootstrap";
 
+
+
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const CustomerDashboard = () => {

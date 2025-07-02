@@ -428,7 +428,7 @@ const CustomerDashboard = () => {
    
 
         {/* Information Alert */}
-        <div className="col-12">
+        <div className="col-12 my-1">
           <Alert variant="success" className="mt-0">
             <Alert.Heading>
               <i className="fas fa-info-circle me-2"></i>

@@ -1,13 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import DashboardCharts from "./DashboardChart";
 import DashboardTable from "./DashboardTable";
-
+import axiosInstance from "../../../utils/axiosInstance";
 const DashboardCard = () => {
   const [activeFilter, setActiveFilter] = useState(null);
-
   const handleCardClick = (filterType) => {
     setActiveFilter(activeFilter === filterType ? null : filterType);
+  };
+  const [installments, setInstallments] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchInstallments();
+  }, []);
+
+  const fetchInstallments = async () => {
+    try {
+      const res = await axiosInstance.get("/autoDeductInstallments");
+      console.log(res.data.logs)
+      setInstallments(res.data.data || []); 
+    } catch (error) {
+      console.error("❌ Failed to fetch installments:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -21,13 +37,11 @@ const DashboardCard = () => {
 
         {/* Stats Cards */}
         <Row className="g-4">
-          {/* Card 1 - Total Customers */}
           <Col xs={12} sm={6} lg={4}>
             <div 
               className={`p-4 rounded shadow-sm card-green h-100 ${activeFilter === 'all' ? 'border border-success border-2' : ''}`}
               style={{ cursor: 'pointer' }}
-              onClick={() => handleCardClick('all')}
-            >
+              onClick={() => handleCardClick('all')}>
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Total Customers</p>
@@ -41,11 +55,9 @@ const DashboardCard = () => {
 
           {/* Card 2 - Pending Funding Requests */}
           <Col xs={12} sm={6} lg={4}>
-            <div 
-              className={`p-4 rounded shadow-sm card-green h-100 ${activeFilter === 'pending' ? 'border border-success border-2' : ''}`}
+            <div  className={`p-4 rounded shadow-sm card-green h-100 ${activeFilter === 'pending' ? 'border border-success border-2' : ''}`}
               style={{ cursor: 'pointer' }}
-              onClick={() => handleCardClick('pending')}
-            >
+              onClick={() => handleCardClick('pending')}>
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Pending Requests</p>
@@ -76,10 +88,7 @@ const DashboardCard = () => {
           </Col>
         </Row>
 
-        {/* Dashboard Charts and Table */}
-        {/* <div className="mt-4">
-          <DashboardCharts />
-        </div> */}
+       
         <div className="mt-4">
           <DashboardTable filter={activeFilter} />
         </div>

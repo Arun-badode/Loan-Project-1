@@ -1,68 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
+import axiosInstance from '../../utils/axiosInstance';
 
 const Changepassword = () => {
-  const [currentPassword, setCurrentPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState('');
+  const [userId, setUserId] = useState('');
 
-  const isDisabled = !currentPassword || !newPassword || newPassword !== confirmPassword;
+  // Get user ID from localStorage
+  useEffect(() => {
+    const storedId = JSON.parse(localStorage.getItem('login_id'));
+    if (storedId) {
+      setUserId(storedId);
+    }
+  }, []);
+
+  const handleSubmit = async () => {
+    try {
+      const payload = { password };
+      await axiosInstance.patch(`/change-password/${userId}`, payload);
+      alert('✅ Password updated successfully');
+      setPassword('');
+    } catch (error) {
+      console.error('❌ Error updating password:', error);
+      alert('❌ Failed to update password');
+    }
+  };
 
   return (
     <div className="container py-5">
-      {/* Password Change */}
-      <Card className="mb-4 shadow-sm card-green">
+      <Card className="shadow-sm card-green">
         <Card.Body>
           <h3 className="mb-4">Change Password</h3>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Current Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={currentPassword}
-              onChange={(e) => setCurrentPassword(e.target.value)}
-              className='input-green'
-            />
-          </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>New Password</Form.Label>
             <Form.Control
               type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className='input-green'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input-green"
+              placeholder="Enter new password"
             />
           </Form.Group>
-
-          <Form.Group className="mb-3">
-            <Form.Label>Confirm New Password</Form.Label>
-            <Form.Control
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className='input-green'
-            />
-          </Form.Group>
-
-          <div className="bg-light p-3 rounded mb-3">
-            <p className="mb-1 fw-semibold">Password Requirements:</p>
-            <ul className="small ps-3 mb-0">
-              <li>Minimum 8 characters</li>
-              <li>At least one uppercase letter</li>
-              <li>At least one number</li>
-              <li>At least one special character</li>
-            </ul>
-          </div>
 
           <div className="text-end">
-            <Button variant="success" >Update Password</Button>
+            <Button
+              variant="success"
+              disabled={!password}
+              onClick={handleSubmit}
+            >
+              Update Password
+            </Button>
           </div>
         </Card.Body>
       </Card>
-
-      
-      
     </div>
   );
 };

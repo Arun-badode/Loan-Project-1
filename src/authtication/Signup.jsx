@@ -10,7 +10,7 @@ const Signup = () => {
 
   const [formData, setFormData] = useState({
     customerName: "",
-    company: "",
+    companyName: "",
     email: "",
     phoneNumber: "",
     address: "",
@@ -86,7 +86,7 @@ const Signup = () => {
               <input type="text" name="customerName" className="form-control input-green" placeholder="Full Name" value={formData.customerName} onChange={handleChange} required />
             </div>
             <div className="col-md-6 mb-3">
-              <input type="text" name="company" className="form-control input-green" placeholder="Company Name" value={formData.company} onChange={handleChange} required />
+              <input type="text" name="companyName" className="form-control input-green" placeholder="Company Name" value={formData.companyName} onChange={handleChange} required />
             </div>
             <div className="col-md-6 mb-3">
               <input type="email" name="email" className="form-control input-green" placeholder="Email" value={formData.email} onChange={handleChange} required />

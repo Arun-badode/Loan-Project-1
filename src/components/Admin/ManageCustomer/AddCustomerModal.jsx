@@ -72,7 +72,7 @@ const AddCustomerModal = ({ show, handleClose }) => {
                 <Form.Label>Company</Form.Label>
                 <Form.Control
                   type="text"
-                  name="company"
+                  name="companyName"
                   placeholder="Enter company name"
                   value={form.companyName}
                   onChange={handleChange}

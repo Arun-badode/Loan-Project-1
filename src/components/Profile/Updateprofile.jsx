@@ -1,74 +1,130 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Form, Button } from 'react-bootstrap';
+import axiosInstance from '../../utils/axiosInstance';
 
-const Updateprofile = () => {
-  const fileInputRef = useRef(null);
+const UpdateProfile = () => {
+  const [customerData, setCustomerData] = useState({
+    customerName: '',
+    email: '',
+    phoneNumber: '',
+    address: '',
+    companyName: '' // ✅ NEW FIELD
+  });
 
-  const handleImageClick = () => {
-    fileInputRef.current.click();
+  const [customerId, setCustomerId] = useState(null);
+
+  // Fetch ID from localStorage
+  useEffect(() => {
+    const storedId = JSON.parse(localStorage.getItem('login_id'));
+    if (storedId) {
+      setCustomerId(storedId);
+      fetchCustomerData(storedId);
+    }
+  }, []);
+
+  // Fetch customer data
+  const fetchCustomerData = async (id) => {
+    try {
+      const response = await axiosInstance.get(`/custumers?customerId=${id}`);
+      console.log('✅ API Response:', response.data);
+      const data = response.data.customers[0]; // ✅ Assuming array inside `customers`
+      if (data) {
+        setCustomerData({
+          customerName: data.customerName || '',
+          email: data.email || '',
+          phoneNumber: data.phoneNumber || '',
+          address: data.address || '',
+          companyName: data.companyName || '' // ✅ Populate companyName
+        });
+      }
+    } catch (error) {
+      console.error('❌ Error fetching customer data:', error);
+    }
+  };
+
+  // Handle form changes
+  const handleChange = (field, value) => {
+    setCustomerData((prev) => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  // Submit update
+  const handleSubmit = async () => {
+    try {
+      await axiosInstance.put(`/updateCustumer/${customerId}`, customerData);
+      alert('✅ Profile updated successfully!');
+    } catch (error) {
+      console.error('❌ Error updating profile:', error);
+      alert('❌ Failed to update profile.');
+    }
   };
 
   return (
     <div className="container py-5">
       <Card className="shadow-sm card-green">
         <Card.Body>
-          <h3 className="mb-4">Personal Information</h3>
+          <h3 className="mb-4">Update Profile</h3>
           <div className="d-flex flex-column flex-md-row gap-4 mb-4">
-            <div className="text-center">
-              <div className="position-relative mb-2" style={{ width: 130, height: 130 }}>
-                <img
-                  src="https://readdy.ai/api/search-image?query=Professional%20business%20person%20avatar%20placeholder%20with%20minimalist%20design%2C%20soft%20green%20background%2C%20suitable%20for%20admin%20dashboard%20profile%2C%20high%20quality%20professional%20appearance&width=300&height=300&seq=1&orientation=squarish"
-                  alt="Profile"
-                  className="img-fluid rounded-circle w-100 h-100 object-fit-cover"
-                />
-                
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  className="d-none"
-                  accept="image/*"
-                />
-              </div>
-              <Button
-                variant="link"
-                className="text-success p-0 d-flex align-items-center gap-1"
-                onClick={handleImageClick}
-              >
-                <i className="fas fa-camera"></i>
-                Change Photo
-              </Button>
-            </div>
-
             <div className="flex-grow-1">
               <Form.Group className="mb-3">
                 <Form.Label className="label-green">Full Name</Form.Label>
-                <Form.Control type="text" defaultValue="Admin User" className="input-green" />
+                <Form.Control
+                  type="text"
+                  value={customerData.customerName}
+                  onChange={(e) => handleChange('customerName', e.target.value)}
+                  className="input-green"
+                />
               </Form.Group>
 
               <Form.Group className="mb-3">
                 <Form.Label className="label-green">Email Address</Form.Label>
-                <Form.Control type="email" defaultValue="admin@company.com" className="input-green" />
+                <Form.Control
+                  type="email"
+                  value={customerData.email}
+                  onChange={(e) => handleChange('email', e.target.value)}
+                  className="input-green"
+                />
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Form.Label className="label-green">Role</Form.Label>
-                <Form.Control type="text" value="System Administrator" disabled className="input-green" />
+                <Form.Label className="label-green">Phone Number</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={customerData.phoneNumber}
+                  onChange={(e) => handleChange('phoneNumber', e.target.value)}
+                  className="input-green"
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label className="label-green">Address</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={customerData.address}
+                  onChange={(e) => handleChange('address', e.target.value)}
+                  className="input-green"
+                />
+              </Form.Group>
+
+              {/* ✅ Company Name Field */}
+              <Form.Group className="mb-3">
+                <Form.Label className="label-green">Company Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={customerData.companyName}
+                  onChange={(e) => handleChange('companyName', e.target.value)}
+                  className="input-green"
+                />
               </Form.Group>
             </div>
           </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label className="label-green">Bio</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              defaultValue="System administrator with full access to all platform features and settings."
-              className="input-green"
-            />
-          </Form.Group>
-
           <div className="text-end">
-            <Button variant="success">Save Changes</Button>
+            <Button variant="success" onClick={handleSubmit}>
+              Update Profile
+            </Button>
           </div>
         </Card.Body>
       </Card>
@@ -76,4 +132,4 @@ const Updateprofile = () => {
   );
 };
 
-export default Updateprofile;
+export default UpdateProfile;

@@ -3,14 +3,15 @@ import { Modal, Button, Form, InputGroup } from 'react-bootstrap';
 import axiosInstance from '../../../utils/axiosInstance';
 import BASE_URL from '../../../utils/baseURL';
 
-const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
+const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
   const [formData, setFormData] = useState({
     approvedAmount: '',
     factorRate: '',
     term_month: '',
+    term_type: 'monthly',
     totalRepayment: 0,
-    monthlyInstallment: 0,
-    availBalance: 0, // ✅ added
+    installment: 0,
+    availBalance: 0,
   });
 
   useEffect(() => {
@@ -19,16 +20,17 @@ const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
       const factorRate = parseFloat(customer.factorRate) || 0;
       const term_month = parseInt(customer.term_month) || 0;
 
-      const totalRepayment = (approvedAmount * (1 + factorRate / 100)).toFixed(2);
-      const monthlyInstallment = term_month > 0 ? (totalRepayment / term_month).toFixed(2) : 0;
+      const totalRepayment = (approvedAmount * factorRate).toFixed(2);
+      const installment = term_month > 0 ? (totalRepayment / term_month).toFixed(2) : 0;
 
       setFormData({
         approvedAmount,
         factorRate,
         term_month,
+        term_type: customer.term_type || 'monthly',
         totalRepayment,
-        monthlyInstallment,
-        availBalance: approvedAmount, // ✅ synced
+        installment,
+        availBalance: approvedAmount,
       });
     }
   }, [customer]);
@@ -48,17 +50,17 @@ const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
     const term = parseFloat(name === 'term_month' ? value : updated.term_month);
 
     if (!isNaN(approvedAmount)) {
-      updated.availBalance = approvedAmount; // ✅ keep synced with approved amount
+      updated.availBalance = approvedAmount;
     }
 
     if (!isNaN(approvedAmount) && !isNaN(factorRate)) {
-      const total = approvedAmount * (1 + factorRate / 100);
+      const total = approvedAmount * factorRate;
       updated.totalRepayment = total.toFixed(2);
 
       if (!isNaN(term) && term > 0) {
-        updated.monthlyInstallment = (total / term).toFixed(2);
+        updated.installment = (total / term).toFixed(2);
       } else {
-        updated.monthlyInstallment = 0;
+        updated.installment = 0;
       }
     }
 
@@ -71,7 +73,7 @@ const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
       await axiosInstance.put(`${BASE_URL}/updateCustumer/${customer._id}`, formData);
       alert(`✅ Updated credit terms for ${customer.customerName}`);
       handleClose();
-     if (refreshCustomers) refreshCustomers();
+      if (refreshCustomers) refreshCustomers();
     } catch (error) {
       console.error("❌ Error updating credit terms:", error);
       alert("❌ Failed to update. Please try again.");
@@ -86,10 +88,10 @@ const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <p><strong>Credit Line:</strong> ₹{customer.creditLine}</p>
+            <p><strong>Credit Line:</strong> ${customer.creditLine}</p>
             <Form.Label>Approved Amount</Form.Label>
             <InputGroup>
-              <InputGroup.Text>₹</InputGroup.Text>
+              <InputGroup.Text>$</InputGroup.Text>
               <Form.Control
                 name="approvedAmount"
                 type="number"
@@ -101,7 +103,7 @@ const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Factor Rate (%)</Form.Label>
+            <Form.Label>Factor Rate (multiplier)</Form.Label>
             <Form.Control
               name="factorRate"
               type="number"
@@ -115,7 +117,7 @@ const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
           <Form.Group className="mb-3">
             <Form.Label>Total Repayment</Form.Label>
             <InputGroup>
-              <InputGroup.Text>₹</InputGroup.Text>
+              <InputGroup.Text>$</InputGroup.Text>
               <Form.Control
                 type="number"
                 value={formData.totalRepayment}
@@ -125,7 +127,7 @@ const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Term (months)</Form.Label>
+            <Form.Label>Term (Months)</Form.Label>
             <Form.Control
               name="term_month"
               type="number"
@@ -136,18 +138,29 @@ const EditCreditModal = ({ show, handleClose, customer,refreshCustomers }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Monthly Installment</Form.Label>
+            <Form.Label>Installment Frequency</Form.Label>
+            <Form.Select
+              name="term_type"
+              value={formData.term_type}
+              onChange={handleChange}
+            >
+              <option value="monthly">Monthly</option>
+              <option value="weekly">Weekly</option>
+              <option value="biweekly">Biweekly</option>
+            </Form.Select>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Installment</Form.Label>
             <InputGroup>
-              <InputGroup.Text>₹</InputGroup.Text>
+              <InputGroup.Text>$</InputGroup.Text>
               <Form.Control
                 type="number"
-                value={formData.monthlyInstallment}
+                value={formData.installment}
                 readOnly
               />
             </InputGroup>
           </Form.Group>
-
-      
 
           <div className="d-flex justify-content-end">
             <Button variant="secondary" onClick={handleClose} className="me-2">

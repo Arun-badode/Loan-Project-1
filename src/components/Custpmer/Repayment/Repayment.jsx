@@ -114,7 +114,7 @@ const handleSubmit = async (e) => {
     <p className="mb-1"><strong>Term (Months):</strong> {customerData.term_month}</p>
   </Col>
   <Col md={4} sm={12}>
-    <p className="mb-1"><strong>Monthly Installment:</strong> ${customerData.monthlyInstallment}</p>
+    <p className="mb-1"><strong>Monthly Installment:</strong> ${customerData.installment}</p>
   </Col>
 </Row>
 

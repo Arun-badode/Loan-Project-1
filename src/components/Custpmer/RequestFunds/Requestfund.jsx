@@ -78,10 +78,10 @@ const Requestfund = () => {
           <div className="card-body card-green">
             <div className="mb-4">
               <p className="mb-2">
-                <strong>Approved Limit:</strong> ₹{customer?.approvedAmount || "0"}
+                <strong>Approved Limit:</strong> ${customer?.approvedAmount || "0"}
               </p>
               <p className="mb-2">
-                <strong>Available Balance:</strong> ₹{customer?.availBalance || "0"}
+                <strong>Available Balance:</strong> ${customer?.availBalance || "0"}
               </p>
             </div>
 
@@ -93,7 +93,7 @@ const Requestfund = () => {
                 <div className="col-12 col-md-6">
                   <label className="form-label fw-medium">Amount to Withdraw</label>
                   <div className="input-group">
-                    <span className="input-group-text">₹</span>
+                    <span className="input-group-text">$</span>
                     <input
                       type="number"
                       className="form-control input-green"

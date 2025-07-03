@@ -72,14 +72,14 @@ function App() {
                 <Route path="/managecustomer" element={<Managecustomer />} />
                 <Route path="/fundrequest" element={<FundRequest />} />
                 <Route path="/balancetracker" element={<FundingBalanceTracker />} />
-                {/* <Route path="/notification" element={<NotificationsCard />} /> */}
+           
                 <Route path="/updateprofile" element={<Updateprofile />} />
                 <Route path="/changepassword" element={<Changepassword />} />
                 <Route path="/paymenttracking" element={<PaymentTracking />} />
                 <Route path="/creditupgraderequests" element={<CreditUpgradeRequests />} />
                 <Route path="/reportdownload" element={<ReportsDownload />} />
                 <Route path="/payoff" element={<PayoffManagement />} />
-                {/* <Route path="/message" element={<MessagesUI />} /> */}
+       
 
                 {/* CustomerDashboard */}
                 <Route path="/customer-dashboard" element={<Customerdashboard />} />

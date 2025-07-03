@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance"; // Adjust path if needed
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import * as XLSX from "xlsx";
+import { saveAs } from "file-saver";
+
+import autoTable from "jspdf-autotable"; // ✅ correct import
 
 const TransactionHistory = () => {
-  const factorRate = 1.2;
-  const weeklyPaymentRate = 0.1;
 
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,11 +50,61 @@ const TransactionHistory = () => {
         return "badge-secondary";
     }
   };
+// Export to PDF
+const exportToPDF = () => {
+  const doc = new jsPDF();
 
+  doc.text("Transaction History", 14, 15);
+
+  const tableColumn = ["#", "Date", "Withdraw Amount", "Available Amount", "Status"];
+  const tableRows = transactions.map((txn, index) => [
+    index + 1,
+    new Date(txn.createdAt).toLocaleDateString(),
+    `$${txn.withdrawAmount?.toLocaleString()}`,
+    `$${txn.availableAmount?.toLocaleString()}`,
+    txn.withdrawStatus,
+  ]);
+
+  autoTable(doc, {
+    head: [tableColumn],
+    body: tableRows,
+    startY: 20,
+  });
+
+  doc.save("Transaction_History.pdf");
+};
+
+
+// Export to Excel
+const exportToExcel = () => {
+  const wsData = transactions.map((txn, index) => ({
+    "#": index + 1,
+    Date: new Date(txn.createdAt).toLocaleDateString(),
+    "Withdraw Amount": txn.withdrawAmount,
+    "Available Amount": txn.availableAmount,
+    Status: txn.withdrawStatus,
+  }));
+
+  const worksheet = XLSX.utils.json_to_sheet(wsData);
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, worksheet, "Transaction History");
+
+  const excelBuffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
+  const data = new Blob([excelBuffer], { type: "application/octet-stream" });
+  saveAs(data, "Transaction_History.xlsx");
+};
   return (
     <div className="container mt-3 p-3">
       <h2 className="page-heading">My Draws / History</h2>
       <p className="page-subheading">Complete breakdown of all fund draws and status</p>
+<div className="d-flex justify-content-end mb-3 gap-2">
+  <button className="btn btn-sm btn-danger" onClick={exportToPDF}>
+    <i className="fas fa-file-pdf me-1"></i> Export PDF
+  </button>
+  <button className="btn btn-sm btn-success" onClick={exportToExcel}>
+    <i className="fas fa-file-excel me-1"></i> Export Excel
+  </button>
+</div>
 
       <div className="card shadow-sm border-0 card-green">
         <div className="card-body">
@@ -65,7 +119,7 @@ const TransactionHistory = () => {
                   <tr>
                     <th>#</th>
                     <th>Date</th>
-                    <th className="text-end">withdraw Amount</th>
+                    <th className="text-end">Requested Amount </th>
                     <th className="text-end">available Amount</th>
                     <th>Status</th>
                   </tr>

@@ -136,7 +136,7 @@ const handleDecline = async (id) => {
                 {filteredRequests.length > 0 ? (
                   filteredRequests.map((req) => (
                     <tr key={req._id}>
-                      <td>{req.customerId}</td>
+                   <td>{req.customerId?.slice(-8).toUpperCase()}</td>
                       <td>{req.customerName}</td>
                       <td> ${req.withdrawAmount}</td>
                       <td>{formatDate(req.createdAt)}</td>

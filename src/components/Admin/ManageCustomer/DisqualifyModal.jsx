@@ -26,12 +26,12 @@ const DisqualifyModal = ({ show, handleClose, customer ,refreshCustomers }) => {
   return (
     <Modal show={show} onHide={handleClose} centered backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Suspended Customer - {customer.customerName}</Modal.Title>
+        <Modal.Title>Suspend Customer  - {customer.customerName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="alert alert-danger">
           <i className="fas fa-exclamation-triangle me-2"></i>
-          Are you sure you want to Suspended this customer? This action cannot be undone.
+          Are you sure you want to Suspend  this customer? 
         </div>
       </Modal.Body>
       <Modal.Footer>
@@ -39,7 +39,7 @@ const DisqualifyModal = ({ show, handleClose, customer ,refreshCustomers }) => {
           Cancel
         </Button>
         <Button variant="danger" onClick={handleDisqualify}>
-          Confirm Disqualification
+        Suspend Customer
         </Button>
       </Modal.Footer>
     </Modal>

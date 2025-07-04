@@ -1,128 +1,129 @@
-import React, { useState } from "react";
-
-const discountRequests = [
-  {
-    id: 1,
-    name: "Emma Thompson",
-    email: "emma.thompson@email.com",
-    requestDate: "2025-06-24",
-    status: "pending",
-    amountRequested: "$5,000",
-    note: "Requesting early payoff discount for draw #3",
-  },
-  {
-    id: 2,
-    name: "James Wilson",
-    email: "james.w@email.com",
-    requestDate: "2025-06-22",
-    status: "approved",
-    amountRequested: "$3,000",
-    note: "Requested early payoff on full balance.",
-  },
-  {
-    id: 3,
-    name: "Sarah Miller",
-    email: "sarah.m@email.com",
-    requestDate: "2025-06-20",
-    status: "denied",
-    amountRequested: "$2,500",
-    note: "Requested discount, documents pending.",
-  },
-];
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../../utils/axiosInstance";
 
 const PayoffManagement = () => {
-  const [selectedRequest, setSelectedRequest] = useState(discountRequests[0]);
+  const [requests, setRequests] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const handleAction = (action) => {
-    alert(`${action} request for ${selectedRequest.name}`);
-    // You can add API logic here to update backend
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const res = await axiosInstance.get("/getAllEarlyPayoffs");
+        console.log(res.data.data)
+        if (Array.isArray(res.data)) {
+          setRequests(res.data);
+          setSelected(res.data[0] || null);
+        } else {
+          setError("Invalid response format.");
+        }
+      } catch (err) {
+        console.error(err);
+        setError("Failed to fetch data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRequests();
+  }, []);
+
+  const handleAction = async (action) => {
+    if (!selected?._id) return;
+
+    try {
+      const res = await axiosInstance.patch(`/updateEarlyPayoffStatus/${selected._id}`, {
+        status: action.toLowerCase(), // "approved" or "rejected"
+      });
+
+      if (res.data.success) {
+        const updatedList = requests.map((req) =>
+          req._id === selected._id ? { ...req, status: action.toLowerCase() } : req
+        );
+        setRequests(updatedList);
+        setSelected({ ...selected, status: action.toLowerCase() });
+        alert(`✅ ${action} successful`);
+      } else {
+        alert("❌ Action failed.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("❌ Error while processing action.");
+    }
   };
 
+  if (loading) return <div className="p-4">Loading...</div>;
+  if (error) return <div className="p-4 text-danger">{error}</div>;
+
   return (
-    <div className="" style={{ minHeight: "100vh", padding: "2rem" }}>
-      <h3 className="page-heading mb-3"> Payoff Management</h3>
-      <div
-        className="row bg-white shadow rounded-3 overflow-hidden"
-        style={{ minHeight: "75vh" }}
-      >
-        {/* Left Panel: List of Requests */}
-        <div className="col-md-4 border-end p-3 card-green">
-          <h6 className="fw-bold mb-3">Early Discount Requests</h6>
-          {discountRequests.map((req) => (
+    <div className="p-4" style={{ minHeight: "100vh" }}>
+      <h3 className="mb-3">Payoff Management</h3>
+      <div className="row bg-white shadow rounded-3 overflow-hidden" style={{ minHeight: "75vh" }}>
+        {/* Left: List */}
+        <div className="col-md-4 border-end p-3">
+          <h6 className="fw-bold mb-3">Requests</h6>
+          {requests.map((req) => (
             <div
-              key={req.id}
-              className={`p-2 rounded mb-1 ${
-                selectedRequest.id === req.id ? "bg-white" : ""
-              }`}
+              key={req._id}
+              className={`p-2 rounded mb-1 ${selected?._id === req._id ? "bg-light" : ""}`}
               style={{ cursor: "pointer" }}
-              onClick={() => setSelectedRequest(req)}
+              onClick={() => setSelected(req)}
             >
               <div className="d-flex justify-content-between">
-                <span className="fw-semibold">{req.name}</span>
-                <small className="text-muted">{req.requestDate}</small>
+                <span className="fw-semibold">{req.customerName}</span>
+                <small>{new Date(req.createdAt).toLocaleDateString()}</small>
               </div>
-              <div className="text-muted small">{req.note}</div>
+              <small className="text-muted">₹{req.earlyPayAmount} | Status: {req.status}</small>
             </div>
           ))}
         </div>
 
-        {/* Right Panel: Request Details */}
-        <div className="col-md-8 d-flex flex-column p-4 card-green">
-          <div>
-            <h6 className="fw-bold">{selectedRequest.name}</h6>
-            <p className="text-muted mb-1 small">
-              {selectedRequest.email || "—"}
-            </p>
-            <p className="text-muted small">
-              Requested On: {selectedRequest.requestDate}
-            </p>
-            <div className="bg-light p-3 rounded mb-4">
-              <p className="mb-1">
-                <strong>Amount Requested:</strong> {selectedRequest.amountRequested}
-              </p>
-              <p className="mb-0">
-                <strong>Note:</strong> {selectedRequest.note}
-              </p>
-              <p className="mt-2 mb-0">
-                <strong>Status:</strong>{" "}
-                <span className={`badge ${
-                  selectedRequest.status === "approved"
-                    ? "bg-success"
-                    : selectedRequest.status === "denied"
-                    ? "bg-danger"
-                    : "bg-warning text-dark"
-                }`}>
-                  {selectedRequest.status.toUpperCase()}
-                </span>
-              </p>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="mt-auto">
-            {selectedRequest.status === "pending" && (
-              <div className="text-end">
-                <button
-                  className="btn btn-danger me-2"
-                  onClick={() => handleAction("Denied")}
-                >
-                  Deny
-                </button>
-                <button
-                  className="btn btn-success"
-                  onClick={() => handleAction("Approved")}
-                >
-                  Approve
-                </button>
+        {/* Right: Detail */}
+        <div className="col-md-8 d-flex flex-column p-4">
+          {selected ? (
+            <>
+              <h5 className="fw-bold">{selected.customerName}</h5>
+              <div className="bg-light p-3 rounded mb-3">
+                <p><strong>Early Pay Amount:</strong> ₹{selected.earlyPayAmount}</p>
+                <p><strong>Discount:</strong> ₹{selected.discount}</p>
+                <p><strong>Status:</strong> 
+                  <span className={`badge ms-2 ${
+                    selected.status === "approved"
+                      ? "bg-success"
+                      : selected.status === "rejected"
+                      ? "bg-danger"
+                      : "bg-warning text-dark"
+                  }`}>
+                    {selected.status.toUpperCase()}
+                  </span>
+                </p>
               </div>
-            )}
 
-            {(selectedRequest.status === "approved") && (
-              <div className="alert alert-success mt-3 mb-0">
-                Approval done. Please manually initiate ACH or wire transfer.
-              </div>
-            )}
-          </div>
+              {selected.status === "pending" && (
+                <div className="text-end mt-auto">
+                  <button className="btn btn-danger me-2" onClick={() => handleAction("Rejected")}>
+                    Reject
+                  </button>
+                  <button className="btn btn-success" onClick={() => handleAction("Approved")}>
+                    Approve
+                  </button>
+                </div>
+              )}
+
+              {selected.status === "approved" && (
+                <div className="alert alert-success mt-3">
+                  Approved. Proceed with payment processing.
+                </div>
+              )}
+              {selected.status === "rejected" && (
+                <div className="alert alert-danger mt-3">
+                  This request has been rejected.
+                </div>
+              )}
+            </>
+          ) : (
+            <p>Select a request to see details.</p>
+          )}
         </div>
       </div>
     </div>

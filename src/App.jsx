@@ -24,7 +24,8 @@ import ReportsDownload from "./components/Admin/ReportsDownload/ReportsDownload"
 import PayoffManagement from "./components/Admin/Message/PayoffManagement";
 import FundingBalanceTracker from "./components/Admin/FundingBalanceTracker/FundingBalanceTracker";
 import Refer from "./components/Custpmer/refer/Refer";
-import Repayment from "./components/Custpmer/Repayment/Repayment";
+
+import EarlyPay from "./components/Custpmer/EarlyPay/EarlyPay";
 
 
 function App() {
@@ -86,7 +87,7 @@ function App() {
                 <Route path="/requestfund" element={<Requestfund />} />
                 <Route path="/transactionhistory" element={<Transactionhistory />} />
                 <Route path="/discount" element={<EarlyPayoffDiscount />} />
-                <Route path="/Repayment" element={<Repayment />} />
+                <Route path="/EarlyPay" element={<EarlyPay />} />
                 <Route path="/notificationalert" element={<NotificationsAlerts />} />
                  <Route path="/refer" element={<Refer/>} />
               </Routes>

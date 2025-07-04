@@ -48,7 +48,7 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
     { path: "/customer-dashboard", icon: "fa-home", text: "Dashboard" },
     { path: "/requestfund", icon: "fa-wallet", text: "Request Funds" },
     { path: "/transactionhistory", icon: "fa-history", text: "History" },
-    { path: "/Repayment", icon: "fa-wallet", text: "Repayment" },
+    { path: "/EarlyPay", icon: "fa-wallet", text: "Early Pay" },
     { path: "/discount", icon: "fa-percentage", text: "Discount" },
     { path: "/notificationalert", icon: "fa-bell", text: "Notifications" },
     { path: "/refer", icon: "fa-user-friends", text: "Refer a Friend" }

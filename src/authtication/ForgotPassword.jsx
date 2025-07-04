@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import logo from "../assets/logo.png"; // Adjust the path as needed
+import axios from "axios";
+import logo from "../assets/logo.png"; // Adjust path as needed
+import axiosInstance from "../utils/axiosInstance";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (!email) {
       Swal.fire({
         icon: "error",
@@ -19,18 +22,40 @@ const ForgotPassword = () => {
       return;
     }
 
-    setIsSubmitted(true);
-    Swal.fire({
-      icon: "success",
-      title: "Password Reset Sent",
-      text: "If an account exists with this email, you'll receive a password reset link.",
-      timer: 3000,
-      timerProgressBar: true,
-    });
+    try {
+      // 🔗 POST to backend
+      const response = await axiosInstance.post(`/forgot-password`, {
+        email,
+      });
 
-    setTimeout(() => {
-      navigate("/");
-    }, 3000);
+      // ✅ Success Message
+      Swal.fire({
+        icon: "success",
+        title: "Password Reset Sent",
+        text:
+          response?.data?.message ||
+          "If an account exists with this email, you'll receive a password reset link.",
+        timer: 3000,
+        timerProgressBar: true,
+      });
+
+      setIsSubmitted(true);
+
+      // Redirect after delay
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    } catch (error) {
+      console.error("❌ Forgot password error:", error);
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text:
+          error?.response?.data?.message ||
+          "Something went wrong. Please try again later.",
+      });
+    }
   };
 
   return (
@@ -38,7 +63,7 @@ const ForgotPassword = () => {
       className="container-fluid min-vh-100 d-flex justify-content-center align-items-center"
       style={{ backgroundColor: "#ccf8db" }}
     >
-      <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow  text-center">
+      <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow text-center">
         <img
           src={logo}
           alt="Logo"

@@ -33,60 +33,13 @@ const DashboardViewModal = ({ show, handleClose, request }) => {
           {/* Applicant Information */}
           <div className="col-md-6">
             <h6 className="fw-bold">Applicant Information</h6>
-            <p className="mb-1"><strong>Company Type:</strong> Corporation</p>
-            <p className="mb-1"><strong>Industry:</strong> Technology</p>
-            <p className="mb-1"><strong>Annual Revenue:</strong> $20M - $50M</p>
+            <p className="mb-1"><strong>Total Credit Allowed:</strong> $100</p>
+            <p className="mb-1"><strong>Remaining Balance:</strong> $100</p>
+            <p className="mb-1"><strong>Previously Distributed Funds :</strong> $100</p>
             <p className="mb-1"><strong>Years in Business:</strong> 6 years</p>
           </div>
         </div>
-
-        {/* Request Purpose */}
-        <div className="mb-3">
-          <h6 className="fw-bold">Request Purpose</h6>
-          <p className="text-muted small">
-            Working capital for expansion into new markets and inventory
-            management. The funds will be used to support operations in the Asia-Pacific
-            region and strengthen the supply chain infrastructure.
-          </p>
-        </div>
-
-        {/* Supporting Documents */}
-        <div className="mb-3">
-          <h6 className="fw-bold">Supporting Documents</h6>
-          <div className="row g-2">
-            {[
-              { label: "Financial Statements.pdf", icon: "fas fa-file-pdf text-danger" },
-              { label: "Business Plan.xlsx", icon: "fas fa-file-excel text-success" },
-              { label: "Company Profile.docx", icon: "fas fa-file-word text-primary" },
-            ].map((doc, idx) => (
-              <div className="col-md-6" key={idx}>
-                <div className="border rounded p-2 bg-light d-flex align-items-center">
-                  <i className={`${doc.icon} me-2`}></i>
-                  <span className="text-truncate small">{doc.label}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Approval History */}
-        <div>
-          <h6 className="fw-bold">Approval History</h6>
-          <ul className="list-unstyled small mb-2">
-            {request.status === "Pending" ? (
-              <li>No approval actions yet</li>
-            ) : (
-              <>
-                <li className="mb-1">
-                  <strong>Jun 25, 2025:</strong> Initial Review by John Smith
-                </li>
-                <li>
-                  <strong>Final Decision:</strong> {request.status} by Admin User
-                </li>
-              </>
-            )}
-          </ul>
-        </div>
       </Modal.Body>
 
       {/* Footer Buttons */}

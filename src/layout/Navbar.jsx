@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { RiMenuUnfold2Line } from "react-icons/ri";
-
+import logo from "../assets/logo.png"; // Adjust the path as needed
 const Navbar = ({ toggleSidebar }) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
@@ -54,15 +54,10 @@ useEffect(() => {
           {/* Left side */}
           <div className="d-flex align-items-center">
             <div className="nav-bran me-3">
-              <a className="nav-brand fw-bold" href="#">
-                Hi, {userName}
-              </a>
+              {/* <a className="nav-brand fw-bold" href="#"> Hi, {userName}</a> */}
+              <img src={logo} className="w-100 h-25" alt="" />
             </div>
-            <div
-              className="nav-toggle-icon ms-4 mt-2"
-              onClick={toggleSidebar}
-              style={{ cursor: "pointer" }}
-            >
+            <div className="nav-toggle-icon ms-4 mt-2" onClick={toggleSidebar} style={{ cursor: "pointer" }}>
               <div>
                 <RiMenuUnfold2Line size={28} />
               </div>

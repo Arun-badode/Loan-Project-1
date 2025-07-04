@@ -48,16 +48,26 @@ useEffect(() => {
   };
 
   return (
-    <nav className="navbar navbar-light p-2">
+    <nav className="navbar navbar-light p-1">
       <div className="container-fluid">
         <div className="d-flex justify-content-between w-100 align-items-center">
           {/* Left side */}
-          <div className="d-flex align-items-center">
-            <div className="nav-bran me-3">
-              <a className="nav-brand fw-bold" href="#"> Hi, {userName}</a>
-              {/* <img src={logo} className="w-100 h-25" alt="" /> */}
-            </div>
-            <div className="nav-toggle-icon ms-4 mt-2" onClick={toggleSidebar} style={{ cursor: "pointer" }}>
+          <div className="d-flex align-items-center justify-content-center ms-3">
+            {/* Logo */}
+            <Link to="/" className="d-flex align-items-center ">
+              <img
+                src={logo}
+                alt="Ladybug Lending Logo"
+                style={{ height: 80, width: "auto", objectFit: "contain" }}
+                className="me-3"
+              />
+            </Link>
+            {/* Sidebar Toggle */}
+            <div
+              className="nav-toggle-icon ms-5 mt-2 " 
+              onClick={toggleSidebar}
+              style={{ cursor: "pointer" }}
+            >
               <div>
                 <RiMenuUnfold2Line size={28} />
               </div>

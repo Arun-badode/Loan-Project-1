@@ -1,62 +1,62 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import axios from "axios";
-import logo from "../assets/logo.png"; // Adjust path as needed
 import axiosInstance from "../utils/axiosInstance";
+import emailjs from "emailjs-com";
+import logo from "../assets/logo.png";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (!email) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Please enter your email address",
-      });
-      return;
+  if (!email) {
+    Swal.fire("Error", "Please enter your email address", "error");
+    return;
+  }
+
+  try {
+    const response = await axiosInstance.post("/forgot-password", { email });
+    const resetToken = response?.data?.resetToken;
+
+    if (!resetToken) {
+      throw new Error("Reset token not provided by API.");
     }
 
-    try {
-      // 🔗 POST to backend
-      const response = await axiosInstance.post(`/forgot-password`, {
-        email,
-      });
+    // 👇 Construct the full reset link manually
 
-      // ✅ Success Message
-      Swal.fire({
-        icon: "success",
-        title: "Password Reset Sent",
-        text:
-          response?.data?.message ||
-          "If an account exists with this email, you'll receive a password reset link.",
-        timer: 3000,
-        timerProgressBar: true,
-      });
+    const emailParams = {
+      email: email,
+      token: resetToken,
+    };
 
-      setIsSubmitted(true);
+    await emailjs.send(
+      "service_vvp6mfh",
+      "template_kk0mrob",
+      emailParams,
+      "B78PsxsVYoIyekT6g"
+    );
 
-      // Redirect after delay
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-    } catch (error) {
-      console.error("❌ Forgot password error:", error);
+    Swal.fire("Success", "Reset link sent. Please check your email.", "success");
+    setIsSubmitted(true);
+    setTimeout(() => navigate("/"), 3000);
+  } catch (error) {
+    console.error("❌ Forgot password error:", error);
 
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text:
-          error?.response?.data?.message ||
-          "Something went wrong. Please try again later.",
-      });
-    }
-  };
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text:
+        error?.response?.data?.message ||
+        error.message ||
+        "Something went wrong. Please try again later.",
+    });
+  }
+};
+
 
   return (
     <div
@@ -86,11 +86,6 @@ const ForgotPassword = () => {
                 placeholder="Email Address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                style={{
-                  borderColor: "#4d4d4d",
-                  color: "#4d4d4d",
-                  fontWeight: "500",
-                }}
                 required
               />
             </div>

@@ -26,6 +26,8 @@ import FundingBalanceTracker from "./components/Admin/FundingBalanceTracker/Fund
 import Refer from "./components/Custpmer/refer/Refer";
 
 import EarlyPay from "./components/Custpmer/EarlyPay/EarlyPay";
+import CustomerSupport from "./components/Custpmer/CustomerSupport/CustomerSupport";
+import ResetPassword from "./authtication/ResetPassword";
 
 
 function App() {
@@ -43,9 +45,16 @@ function App() {
   const location = useLocation();
   // Inside component
   const noLayoutRoutes = ["/", "/signup", "/forgotpassword"];
-  const isNoLayoutPage = noLayoutRoutes.includes(location.pathname);
-  // Hide layout (navbar/sidebar) only on login page
-  const hideLayout = location.pathname === "/" || location.pathname === "/forgotpassword" || location.pathname === "/signup";
+const isNoLayoutPage =
+  noLayoutRoutes.includes(location.pathname) ||
+  location.pathname.startsWith("/reset-password");
+
+const hideLayout =
+  location.pathname === "/" ||
+  location.pathname === "/forgotpassword" ||
+  location.pathname === "/signup" ||
+  location.pathname.startsWith("/reset-password");
+
   return (
     <>
       {/* navbar */}
@@ -64,6 +73,7 @@ function App() {
               <Route path="/" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
             </Routes>
           ) : (
             <div className={`right-side-content${isSidebarCollapsed ? " collapsed" : ""}`}>
@@ -90,6 +100,7 @@ function App() {
                 <Route path="/EarlyPay" element={<EarlyPay />} />
                 <Route path="/notificationalert" element={<NotificationsAlerts />} />
                  <Route path="/refer" element={<Refer/>} />
+                 <Route path="/CustomerSupport" element={<CustomerSupport/>} />
               </Routes>
             </div>
           )}

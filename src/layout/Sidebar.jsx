@@ -51,7 +51,8 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
     { path: "/EarlyPay", icon: "fa-wallet", text: "Early Pay" },
     { path: "/discount", icon: "fa-percentage", text: "Discount" },
     { path: "/notificationalert", icon: "fa-bell", text: "Notifications" },
-    { path: "/refer", icon: "fa-user-friends", text: "Refer a Friend" }
+    { path: "/refer", icon: "fa-user-friends", text: "Refer a Friend" },
+    { path: "/CustomerSupport", icon: "fa-user-friends", text: "Customer Support" }
   ];
 
   return (

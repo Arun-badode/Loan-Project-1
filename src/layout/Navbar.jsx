@@ -54,8 +54,8 @@ useEffect(() => {
           {/* Left side */}
           <div className="d-flex align-items-center">
             <div className="nav-bran me-3">
-              {/* <a className="nav-brand fw-bold" href="#"> Hi, {userName}</a> */}
-              <img src={logo} className="w-100 h-25" alt="" />
+              <a className="nav-brand fw-bold" href="#"> Hi, {userName}</a>
+              {/* <img src={logo} className="w-100 h-25" alt="" /> */}
             </div>
             <div className="nav-toggle-icon ms-4 mt-2" onClick={toggleSidebar} style={{ cursor: "pointer" }}>
               <div>

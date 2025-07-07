@@ -78,15 +78,12 @@ const PaymentTracking = () => {
                           ${payment.payAmount?.toLocaleString()}
                         </td>
                         <td>
-                          <span
-                            className={`badge rounded-pill px-3 py-2 fw-semibold text-uppercase ${
+                          <span className={`badge rounded-pill px-3 py-2 fw-semibold text-uppercase ${
                               payment.payStatus?.toLowerCase() === "paid"
                                 ? "bg-success text-white"
                                 : payment.payStatus?.toLowerCase() === "missed"
                                 ? "bg-danger"
-                                : "bg-warning text-dark"
-                            }`}
-                          >
+                                : "bg-warning text-dark" }`}>
                             {payment.payStatus || "Pending"}
                           </span>
                         </td>

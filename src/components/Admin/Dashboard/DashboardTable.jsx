@@ -1,165 +1,124 @@
-import React, { useState } from "react";
-import DashboardViewModal from "./DashboardViewModal";
+import React, { useEffect, useState } from 'react';
+import { Container, Card, Button, Table, Modal } from 'react-bootstrap';
+import axiosInstance from '../../../utils/axiosInstance';
 
-const requests = [
-  {
-    id: "REQ-2025-06-26-001",
-    customer: "Acme Corp",
-    amount: "$250,000",
-    date: "2025-06-26",
-    status: "Pending",
-    factorRate: 1.12,
-  },
-  {
-    id: "REQ-2025-06-25-003",
-    customer: "TechSolutions Inc",
-    amount: "$500,000",
-    date: "2025-06-25",
-    status: "Approved",
-    factorRate: 1.08,
-  },
-  {
-    id: "REQ-2025-06-25-002",
-    customer: "Global Traders Ltd",
-    amount: "$750,000",
-    date: "2025-06-25",
-    status: "Overdue",
-    factorRate: 1.15,
-  },
-  {
-    id: "REQ-2025-06-24-005",
-    customer: "Innovate Partners",
-    amount: "$300,000",
-    date: "2025-06-24",
-    status: "Approved",
-    factorRate: 1.10,
-  },
-  {
-    id: "REQ-2025-06-23-008",
-    customer: "Sunrise Enterprises",
-    amount: "$425,000",
-    date: "2025-06-23",
-    status: "Pending",
-    factorRate: 1.09,
-  },
-  {
-    id: "REQ-2025-06-22-010",
-    customer: "Oceanic Shipping",
-    amount: "$600,000",
-    date: "2025-06-22",
-    status: "Overdue",
-    factorRate: 1.18,
-  },
-  {
-    id: "REQ-2025-06-21-015",
-    customer: "Mountain View Tech",
-    amount: "$350,000",
-    date: "2025-06-21",
-    status: "Overdue",
-    factorRate: 1.14,
-  },
-];
-
-const statusBadge = (status) => {
-  const baseClasses = "px-2 py-1 rounded-pill fw-medium";
-  switch (status) {
-    case "Approved":
-      return <span className={`badge-success-soft ${baseClasses}`}>Approved</span>;
-    case "Pending":
-      return <span className={`badge-warning-soft ${baseClasses}`}>Pending</span>;
-    case "Overdue":
-      return <span className={`badge-danger-soft ${baseClasses}`}>Overdue</span>;
-    default:
-      return <span className={`badge-warning-soft ${baseClasses}`}>Unknown</span>;
-  }
-};
-
-const DashboardTable = ({ filter }) => {
+const DashboardTable = () => {
+  const [requests, setRequests] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedRequest, setSelectedRequest] = useState(null);
 
-  const handleView = (request) => {
-    setSelectedRequest(request);
-    setShowModal(true);
+  // 🟢 Fetch withdrawal requests on mount
+  useEffect(() => {
+    const fetchWithdrawals = async () => {
+      try {
+        const response = await axiosInstance.get("/getallwithdrawpayment");
+        const data = response.data?.result || [];
+        setRequests(data.reverse()); // ✅ Reverse for latest first
+      } catch (err) {
+        console.error("❌ Error fetching withdrawals:", err);
+      }
+    };
+    fetchWithdrawals();
+  }, []);
+
+  // 🟡 Format date
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString('en-IN', {
+      day: '2-digit', month: 'short', year: 'numeric'
+    });
+
+  // 🔘 Badge UI
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case 'pending':
+        return <span className="badge bg-warning text-dark">Pending</span>;
+      case 'Approved':
+        return <span className="badge bg-success">Approved</span>;
+      case 'declined':
+        return <span className="badge bg-danger">Declined</span>;
+      default:
+        return <span className="badge bg-secondary">{status}</span>;
+    }
   };
 
-  // Filter requests based on the active filter
-  const filteredRequests = filter 
-    ? requests.filter(request => {
-        if (filter === 'all') return true;
-        if (filter === 'pending') return request.status === 'Pending';
-        if (filter === 'overdue') return request.status === 'Overdue';
-        return true;
-      })
-    : requests;
-
   return (
-    <div className="card border-0 shadow-sm rounded-4 p-3 card-green">
-      <div className="d-flex justify-content-between align-items-center px-2 pb-2">
-        <h5 className="fw-semibold mb-0">Latest Funding Requests</h5>
-      </div>
+    <Container className="py-4 min-vh-100">
+      <h5 className="mb-4">Latest Funding Requests</h5>
 
-      <div className="table-responsive">
-        <table className="table table-hover align-middle table-green">
-          <thead>
-            <tr className="text-muted small">
-              <th>Request ID</th>
-              <th>Customer</th>
-              <th>Amount</th>
-              <th>Factor Rate</th>
-              <th>Date</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredRequests.map((item, index) => (
-              <tr key={index}>
-                <td>{item.id}</td>
-                <td>{item.customer}</td>
-                <td className="fw-bold">{item.amount}</td>
-                <td>{item.factorRate}</td>
-                <td>{item.date}</td>
-                <td>{statusBadge(item.status)}</td>
-                <td>
-                  <button
-                    className="btn btn-sm btn-link text-success me-2"
-                    onClick={() => handleView(item)}
-                    title="View"
-                  >
-                    <i className="fas fa-eye me-1"></i>
-                  </button>
-                  <button className="btn btn-sm btn-link text-success me-2" title="Approve">
-                    <i className="fas fa-check"></i>
-                  </button>
-                  <button className="btn btn-sm btn-link text-danger" title="Reject">
-                    <i className="fas fa-times"></i>
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {/* 🟢 Requests Table */}
+      <Card className="shadow-sm border-0">
+        <Card.Body className="p-0">
+          <div className="table-responsive">
+            <Table hover className="mb-0">
+              <thead className="table-light">
+                <tr>
+                  <th>Customer ID</th>
+                  <th>Name</th>
+                  <th>Requested</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {requests.length > 0 ? (
+                  requests.map((req) => (
+                    <tr key={req._id}>
+                      <td>{req.customerId?.slice(-9).toUpperCase()}</td>
+                      <td>{req.customerName}</td>
+                      <td>${Number(req.withdrawAmount).toLocaleString()}</td>
+                      <td>{formatDate(req.createdAt)}</td>
+                      <td>{getStatusBadge(req.withdrawStatus)}</td>
+                      <td>
+                        <Button
+                          size="sm"
+                          variant="outline-success"
+                          onClick={() => {
+                            setSelectedRequest(req);
+                            setShowModal(true);
+                          }}
+                        >
+                          View
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="6" className="text-center py-4 text-muted">
+                      No records found
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+          </div>
+        </Card.Body>
+      </Card>
 
-      {/* Modal */}
-      {selectedRequest && (
-        <DashboardViewModal
-          show={showModal}
-          handleClose={() => setShowModal(false)}
-          request={selectedRequest}
-        />
-      )}
-
-      {/* Footer */}
-      <div className="d-flex justify-content-between align-items-center px-2 pt-2 small text-muted">
-        <span>Showing {filteredRequests.length} of {requests.length} requests</span>
-        <div>
-          <button className="btn btn-outline-success btn-sm me-2">Previous</button>
-          <button className="btn btn-outline-success btn-sm">Next</button>
-        </div>
-      </div>
-    </div>
+      {/* 🔍 Modal for Request Details */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg">
+        <Modal.Header closeButton>
+          <Modal.Title>Request Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {selectedRequest && (
+            <>
+              <p><strong>Customer ID:</strong> {selectedRequest.customerId?.slice(-9).toUpperCase()}</p>
+              <p><strong>Name:</strong> {selectedRequest.customerName}</p>
+              <p><strong>Approved Credit Line:</strong> ${selectedRequest.approvedCreditLine}</p>
+              <p><strong>Available Amount:</strong> ${selectedRequest.availableAmount}</p>
+              <p><strong>Requested Amount:</strong> ${selectedRequest.withdrawAmount}</p>
+              <p><strong>Status:</strong> {getStatusBadge(selectedRequest.withdrawStatus)}</p>
+              <p><strong>Date:</strong> {formatDate(selectedRequest.createdAt)}</p>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 };
 

@@ -2,6 +2,9 @@ body{
     background-color: #e7f7ed!important;
     overflow-x: hidden;
 }
+body {
+  font-family: 'Poppins', sans-serif;
+}
 
 .page-heading {
   font-weight: 600;

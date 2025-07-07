@@ -122,11 +122,11 @@ const handleDecline = async (id) => {
         <Card.Body className="p-0">
           <div className="table-responsive">
             <Table hover className="mb-0">
-              <thead className="table-light">
+              <thead className="table-success">
                 <tr>
                   <th>Customer ID</th>
                   <th>Customer Name</th>
-                  <th>withdraw Amount</th>
+                  <th>Requested Amount </th>
                   <th>Date</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -136,7 +136,7 @@ const handleDecline = async (id) => {
                 {filteredRequests.length > 0 ? (
                   filteredRequests.map((req) => (
                     <tr key={req._id}>
-                   <td>{req.customerId?.slice(-8).toUpperCase()}</td>
+                   <td>{req.customerId?.slice(-9).toUpperCase()}</td>
                       <td>{req.customerName}</td>
                       <td> ${req.withdrawAmount}</td>
                       <td>{formatDate(req.createdAt)}</td>
@@ -155,7 +155,7 @@ const handleDecline = async (id) => {
                                 Approve
                               </Button>
                               <Button size="sm" variant="outline-danger" onClick={() => handleDecline(req._id)}>
-                               Rejected
+                               Reject
                               </Button>
                             </>
                           )}
@@ -184,11 +184,11 @@ const handleDecline = async (id) => {
         <Modal.Body>
           {selectedRequest && (
             <>
-              <p><strong>Customer ID:</strong> {selectedRequest.customerId}</p>
+             <p> <strong>Customer ID:</strong>{" "} {selectedRequest.customerId?.slice(-9).toUpperCase()}</p>
               <p><strong>Name:</strong> {selectedRequest.customerName}</p>
               <p><strong>Approved Amount:</strong> ${selectedRequest.approvedCreditLine}</p>
               <p><strong>Available Amount:</strong> ${selectedRequest.availableAmount}</p>
-              <p><strong>withdrawAmount:</strong> ${selectedRequest.withdrawAmount}</p>
+              <p><strong>Requested Amount:</strong> ${selectedRequest.withdrawAmount}</p>
               <p><strong>Status:</strong> {getStatusBadge(selectedRequest.withdrawStatus)}</p>
               <p><strong>Date:</strong> {formatDate(selectedRequest.createdAt)}</p>
             </>
@@ -198,7 +198,7 @@ const handleDecline = async (id) => {
           <Button variant="secondary" onClick={() => setShowModal(false)}>Close</Button>
           {selectedRequest?.withdrawStatus === 'pending' && (
             <>
-              <Button variant="danger" onClick={() => handleDecline(selectedRequest._id)}>Rejected</Button>
+              <Button variant="danger" onClick={() => handleDecline(selectedRequest._id)}>Reject</Button>
               <Button variant="success" onClick={() => handleApprove(selectedRequest._id)}>Approve</Button>
             </>
           )}

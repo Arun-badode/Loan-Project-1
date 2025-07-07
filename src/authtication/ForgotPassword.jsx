@@ -59,17 +59,11 @@ const handleSubmit = async (e) => {
 
 
   return (
-    <div
-      className="container-fluid min-vh-100 d-flex justify-content-center align-items-center"
-      style={{ backgroundColor: "#ccf8db" }}
-    >
+    <div  className="container-fluid min-vh-100 d-flex justify-content-center align-items-center"
+      style={{ backgroundColor: "#ccf8db" }}>
       <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow text-center">
-        <img
-          src={logo}
-          alt="Logo"
-          className="mb-3"
-          style={{ height: "100px", objectFit: "contain" }}
-        />
+        <img src={logo}  alt="Logo"  className="mb-3"
+          style={{ height: "100px", objectFit: "contain" }}/>
         <h4 className="mb-4 fw-bold" style={{ color: "#4d4d4d" }}>
           Reset Your Password
         </h4>

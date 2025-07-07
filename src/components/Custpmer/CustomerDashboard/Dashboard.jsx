@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Alert } from "react-bootstrap";
-import {Link} from 'react-router-dom'
+import { Modal, Button, Alert, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import axiosInstance from "../../../utils/axiosInstance";
+import LastedTrans from "./LastedTrans";
+
 const CustomerDashboard = () => {
-  const approvedLimit = 10000;
-  const remainingBalance = 5000;
-  const weeklyPayment = 240;
-  const nextPaymentDate = "1-7-2025";
-  const termEndDate = "15-10-2025";
-  const businessName = "Acme Corp";
-  const maskedAccount = "XXXXX6789";
-  const factorRate = 1.2;
-  const totalOwed = 12000;
-  const showCreditIncrease = true;
 
   const [showPopup, setShowPopup] = useState(false);
+  const [showCreditModal, setShowCreditModal] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [dashboardData, setdashboardData] = useState(null);
+  console.log(dashboardData)
+  const [creditAmount, setCreditAmount] = useState("");
+  const [documentFile, setDocumentFile] = useState(null);
 
   useEffect(() => {
     const loginData = JSON.parse(localStorage.getItem("login-detail"));
@@ -25,10 +23,178 @@ const CustomerDashboard = () => {
       }
     }
   }, []);
+// ✅ Second useEffect to fetch latest customer data from backend
+useEffect(() => {
+  const loginData = JSON.parse(localStorage.getItem("login-detail"));
+  const customerId = loginData?.id;
+
+  if (customerId) {
+    axiosInstance.get(`/custumers?customerId=${customerId}`)
+      .then((res) => {
+        setdashboardData(res.data.customers[0]);
+      })
+      .catch((err) => {
+        console.error("❌ Error fetching customer data from API:", err);
+      });
+  }
+}, []);
+const handleCreditSubmit = async (e) => { 
+  e.preventDefault();
+
+  if (!creditAmount || !documentFile) {
+    alert("❌ Please provide amount and upload a document.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("customerId", userData?.id);
+  formData.append("requestedAmount", creditAmount);
+  formData.append("document", documentFile);
+
+  try {
+    const response = await axiosInstance.post(
+      "/CreditUpgardeRequest",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log("✅ Response:", response.data);
+    alert("✅ Credit upgrade request submitted successfully!");
+    setCreditAmount("");
+    setDocumentFile(null);
+    setShowCreditModal(false);
+  } catch (error) {
+    console.error("❌ Error submitting credit upgrade request:", error);
+    alert("❌ Failed to submit request. Please try again.");
+  }
+};
 
   return (
     <div className="container p-3 mt-4">
-      {/* 🔔 Modal - Minimum Draw Requirement */}
+      {/* Welcome Section */}
+      <div className="mb-4">
+        <h2 className="page-heading">Welcome, {userData?.customerName || "Customer"}</h2>
+        <p className="page-subheading">Here's your line of credit summary</p>
+      </div>
+
+    
+      {/* ✅ Credit Increase Alert */}
+      {userData?.creditIncrease && (
+        <Alert className="mb-4" variant="success">
+          <Alert.Heading>
+            <i className="fas fa-trophy me-2"></i> Credit Increase Eligible!
+          </Alert.Heading>
+          <p>
+            Congratulations! You may qualify for a credit limit increase. Please submit your most recent business bank statements to be considered.
+          </p>
+          <div className="text-end">
+            <Button variant="success" onClick={() => setShowCreditModal(true)}>
+              Apply for Credit Increase
+            </Button>
+          </div>
+        </Alert>
+      )}  
+
+      {/* Cards Section */}
+      <div className="row g-4">
+        {/* Approved Limit */}
+      <div className="col-12 col-md-6 col-lg-4">
+  <div className="card shadow-sm border-0 card-green h-100">
+    <div className="card-body">
+      <h6 className="text-muted">Approved Limit</h6>
+      <h3 className="text-success fw-bold">
+        ${dashboardData?.approvedAmount || "0.00"}
+      </h3>
+      {userData?.minimumWithdrawl === false && (
+        <div className="mt-2">
+          <small className="text-danger">
+            <i className="fas fa-exclamation-circle me-1"></i>
+            Minimum draw required
+          </small>
+        </div>
+      )}
+    </div>
+  </div>
+    </div>
+
+{/* Remaining Balance */}
+<div className="col-12 col-md-6 col-lg-4">
+  <div className="card shadow-sm border-0 card-green h-100">
+    <div className="card-body">
+      <h6 className="text-muted">Remaining Balance</h6>
+      <h3 className="text-success fw-bold">
+        ${dashboardData?.availBalance || "0.00"}
+      </h3>
+      <div className="mt-2">
+        <small className={
+            userData?.minimumWithdrawl ? "text-success" : "text-danger"}>
+          <i className={`fas fa-${
+              userData?.minimumWithdrawl ? "check" : "times"
+            }-circle me-1`}></i>
+          {userData?.minimumWithdrawl
+            ? "Minimum draw met"
+            : "Minimum draw pending"}
+        </small>
+      </div>
+    </div>
+  </div>
+</div>
+
+{/* Term Type */}
+<div className="col-12 col-md-6 col-lg-4">
+  <div className="card shadow-sm border-0 card-green h-100">
+    <div className="card-body">
+      <h6 className="text-muted">Term Type</h6>
+      <h5 className="fw-bold text-success">
+        {dashboardData?.term_type || "N/A"}
+      </h5>
+    </div>
+  </div>
+</div>
+
+{/* Weekly Payment */}
+<div className="col-12 col-md-6 col-lg-4">
+  <div className="card shadow-sm border-0 card-green h-100">
+    <div className="card-body">
+      <h6 className="text-muted">Installment</h6>
+      <h3 className="text-success fw-bold">
+        ${dashboardData?.installment || "0.00"}
+      </h3>
+    </div>
+  </div>
+</div>
+
+{/* Term Month */}
+<div className="col-12 col-md-6 col-lg-4">
+  <div className="card shadow-sm border-0 card-green h-100">
+    <div className="card-body">
+      <h6 className="text-muted"> Remaining Repayment</h6>
+      <h5 className="fw-bold text-success">
+        ${dashboardData?.remainingRepayment || "0.00"}
+      </h5>
+    </div>
+  </div>
+</div>
+
+{/* Factor Rate */}
+<div className="col-12 col-md-6 col-lg-4">
+  <div className="card shadow-sm border-0 card-green h-100">
+    <div className="card-body">
+      <h6 className="text-muted">Factor Rate</h6>
+      <h4 className="fw-bold text-success">
+        {dashboardData?.factorRate || "0.00"}
+      </h4>
+    </div>
+  </div>
+</div>
+<LastedTrans/>
+      </div>
+
+         {/* 🔔 Minimum Draw Modal */}
       <Modal show={showPopup} onHide={() => setShowPopup(false)} centered backdrop="static">
         <Modal.Header closeButton className="card-green">
           <Modal.Title>
@@ -39,8 +205,8 @@ const CustomerDashboard = () => {
           <div className="alert alert-warning">
             <h5 className="fw-bold">Minimum Draw Requirement Not Met</h5>
             <p className="mb-0">
-         To keep your credit line active, please withdraw at least 10% of your available credit within the next 7 days.
-Based on your current credit limit, your required minimum withdrawal amount is ${userData?.requiredMinimumAmount}.
+              To keep your credit line active, please withdraw at least 10% of your available credit within the next 7 days.
+              Based on your current credit limit, your required minimum withdrawal amount is ${userData?.requiredMinimumAmount}.
             </p>
           </div>
         </Modal.Body>
@@ -48,135 +214,42 @@ Based on your current credit limit, your required minimum withdrawal amount is $
           <Button variant="secondary" onClick={() => setShowPopup(false)}>
             Remind Me Later
           </Button>
-         <Link to="/requestfund"> <Button className="btn-green">
-            Request Minimum Draw Now
-          </Button></Link>
+          <Link to="/requestfund">
+            <Button className="btn-green">Request Minimum Draw Now</Button>
+          </Link>
         </Modal.Footer>
       </Modal>
 
-      {/* Welcome Section */}
-      <div className="mb-4">
-        <h2 className="page-heading">Welcome, {userData?.customerName || "Customer"}</h2>
-        <p className="page-subheading">Here's your line of credit summary</p>
-      </div>
+      {/* 💳 Credit Increase Modal */}
+      <Modal show={showCreditModal} onHide={() => setShowCreditModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Request Credit Increase</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleCreditSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Requested Amount</Form.Label>
+              <Form.Control type="number"
+                placeholder="Enter amount"
+                value={creditAmount}
+                onChange={(e) => setCreditAmount(e.target.value)}  required  />
+            </Form.Group>
 
-      {/* Business Info */}
-      <div className="mb-3">
-        <h5 className="fw-semibold">Business: {businessName}</h5>
-        <p className="text-muted">Account #: {maskedAccount}</p>
-      </div>
+            <Form.Group className="mb-3">
+              <Form.Label>Upload Bank Statement</Form.Label>
+              <Form.Control type="file"
+                accept=".pdf,.jpg,.jpeg,.png"
+                onChange={(e) => setDocumentFile(e.target.files[0])}
+                required />
+            </Form.Group>
 
-      {/* Credit Increase Notification */}
-      {showCreditIncrease && (
-        <Alert className="mb-4" variant="success">
-          <Alert.Heading>
-            <i className="fas fa-trophy me-2"></i> Credit Increase Eligible!
-          </Alert.Heading>
-          <p>
-            Congratulations! You may qualify for a credit limit increase.
-            Please submit your most recent business bank statements to be considered.
-          </p>
-        </Alert>
-      )}
+            <Button variant="success" type="submit" className="w-100">
+              Submit Request
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
 
-      {/* Stats Cards */}
-      <div className="row g-4">
-        {/* Approved Limit */}
-        <div className="col-12 col-md-6 col-lg-4">
-          <div className="card shadow-sm border-0 card-green h-100">
-            <div className="card-body">
-              <h6 className="text-muted">Approved Limit</h6>
-              <h3 className="text-success fw-bold">${approvedLimit.toLocaleString()}</h3>
-              {userData?.minimumWithdrawl === false && (
-                <div className="mt-2">
-                  <small className="text-danger">
-                    <i className="fas fa-exclamation-circle me-1"></i>
-                    Minimum draw required
-                  </small>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Remaining Balance */}
-        <div className="col-12 col-md-6 col-lg-4">
-          <div className="card shadow-sm border-0 card-green h-100">
-            <div className="card-body">
-              <h6 className="text-muted">Remaining Balance</h6>
-              <h3 className="text-success fw-bold">${remainingBalance.toLocaleString()} available</h3>
-              <div className="mt-2">
-                <small className={userData?.minimumWithdrawl ? "text-success" : "text-danger"}>
-                  <i className={`fas fa-${userData?.minimumWithdrawl ? "check" : "times"}-circle me-1`}></i>
-                  {userData?.minimumWithdrawl ? "Minimum draw met" : "Minimum draw pending"}
-                </small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Weekly Payment */}
-        <div className="col-12 col-md-6 col-lg-4">
-          <div className="card shadow-sm border-0 card-green h-100">
-            <div className="card-body">
-              <h6 className="text-muted">Weekly Payment</h6>
-              <h3 className="text-success fw-bold">${weeklyPayment.toLocaleString()}</h3>
-              <div className="mt-2">
-                <small className="text-muted">
-                  <i className="fas fa-calendar me-1"></i>
-                  Starts {nextPaymentDate}
-                </small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Next Payment Date */}
-        <div className="col-12 col-md-6 col-lg-4">
-          <div className="card shadow-sm border-0 card-green h-100">
-            <div className="card-body">
-              <h6 className="text-muted">Next Payment Date</h6>
-              <h5 className="fw-bold text-dark">{nextPaymentDate}</h5>
-              <div className="mt-2">
-                <small className="text-muted">
-                  <i className="fas fa-money-bill-wave me-1"></i>
-                  ${weeklyPayment.toLocaleString()} due
-                </small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Term End Date */}
-        <div className="col-12 col-md-6 col-lg-4">
-          <div className="card shadow-sm border-0 card-green h-100">
-            <div className="card-body">
-              <h6 className="text-muted">Term End Date</h6>
-              <h5 className="fw-bold text-dark">{termEndDate}</h5>
-              <p className="text-warning small mt-2 mb-0">
-                <i className="fas fa-exclamation-triangle me-1"></i>
-                Withdraw all funds before {termEndDate}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Factor Rate */}
-        <div className="col-12 col-md-6 col-lg-4">
-          <div className="card shadow-sm border-0 card-green h-100">
-            <div className="card-body">
-              <h6 className="text-muted">Factor Rate</h6>
-              <h4 className="fw-bold text-dark">{factorRate}x</h4>
-              <div className="mt-2">
-                <small className="text-muted">
-                  <i className="fas fa-percentage me-1"></i>
-                  Total repayment: ${totalOwed.toLocaleString()}
-                </small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

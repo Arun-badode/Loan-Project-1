@@ -94,7 +94,7 @@ const handleDelete = async (customerId) => {
           <div className="d-flex flex-row align-items-center gap-2">
             <div className="input-group flex-grow-1">
               <span className="input-group-text">  <i className="fas fa-search" />  </span>
-              <input   type="text"   className="form-control"   placeholder="Search customers..." defaultValue="" onChange={(e)=> setSearchTerm(e.target.value)}   />
+              <input type="text"  className="form-control"   placeholder="Search customers..." defaultValue="" onChange={(e)=> setSearchTerm(e.target.value)}   />
             </div>
             <button  className="btn btn-success text-nowrap"  title="Add New Customer"  onClick={() => setShowAddModal(true)}>
               + Add Customer </button>
@@ -105,8 +105,8 @@ const handleDelete = async (customerId) => {
       <div className="card shadow-sm">
         <div className="card-body card-green">
           <div className="table-responsive">
-            <Table hover className="mb-0 table-green">
-              <thead>
+            <Table hover className="mb-0">
+              <thead className='table-success'>
                 <tr>
                   <th>#</th>
                   <th>Name</th>
@@ -131,19 +131,18 @@ const handleDelete = async (customerId) => {
                    <span className={`badge text-capitalize fw-semibold px-3 py-1 
                    ${customer.customerStatus === "active" ? "bg-success" :
                     customer.customerStatus === "Suspended" ? "bg-danger" :  "bg-warning text-dark"}`}> {customer.customerStatus} </span></td>
-
                     <td>
                       <Button variant="link" size="sm"className="text-success p-0 fs-5 me-2"
                         title="View Details" onClick={() => handleViewDetails(customer)}> <i className="fas fa-eye"></i>
                       </Button>
                      {customer.customerStatus === "active" && (
-                     <Button   variant="link"   size="sm"   className="text-primary p-0 fs-5 me-2"   title="Update Limit / Factor Rate"
-                      onClick={() => handleEditCredit(customer)} > <i className="fas fa-edit"></i></Button> )}
-                      <Button   variant="link"   size="sm"   className="text-warning p-0 fs-5 me-2"   title="Request More Documents"
+                     <Button  variant="link" size="sm" className="text-primary p-0 fs-5 me-2"   title="Update Limit / Factor Rate"
+                      onClick={() => handleEditCredit(customer)}> <i className="fas fa-edit"></i></Button> )}
+                      <Button  variant="link" size="sm" className="text-warning p-0 fs-5 me-2"   title="Request More Documents"
                         onClick={() => handleViewDocuments(customer)} >
                         <i className="fas fa-file-alt"></i>
                       </Button>
-                      <Button  variant="link"  size="sm"  className="text-danger p-0 me-2 fs-5"  title="Mark as Disqualified"
+                      <Button  variant="link" size="sm" className="text-danger p-0 me-2 fs-5"  title="Mark as Disqualified"
                         onClick={() => handleDisqualify(customer)} >
                         <i className="fas fa-user-slash"></i> </Button>
 
@@ -171,7 +170,7 @@ const handleDelete = async (customerId) => {
         customer={selectedCustomer}  refreshCustomers={fetchCustomers}/>
 
      <DisqualifyModal  show={showDisqualifyModal} handleClose={() => setShowDisqualifyModal(false)} customer={selectedCustomer}
- refreshCustomers={fetchCustomers}/>
+        refreshCustomers={fetchCustomers}/>
     </div>
   );
 };

@@ -83,7 +83,7 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
   return (
     <Modal show={show} onHide={handleClose} centered backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Update Credit Terms - {customer.customerName}</Modal.Title>
+        <Modal.Title>Add Credit Terms - {customer.customerName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
@@ -126,18 +126,7 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
             </InputGroup>
           </Form.Group>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Term (Months)</Form.Label>
-            <Form.Control
-              name="term_month"
-              type="number"
-              value={formData.term_month}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
-
-          <Form.Group className="mb-3">
+        <Form.Group className="mb-3">
             <Form.Label>Installment Frequency</Form.Label>
             <Form.Select
               name="term_type"
@@ -149,7 +138,18 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
               <option value="biweekly">Biweekly</option>
             </Form.Select>
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Term (Months)</Form.Label>
+            <Form.Control
+              name="term_month"
+              type="number"
+              value={formData.term_month}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
+      
           <Form.Group className="mb-3">
             <Form.Label>Installment</Form.Label>
             <InputGroup>

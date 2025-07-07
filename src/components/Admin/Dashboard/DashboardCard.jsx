@@ -2,23 +2,35 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import DashboardTable from "./DashboardTable";
 import axiosInstance from "../../../utils/axiosInstance";
+
 const DashboardCard = () => {
-  const [activeFilter, setActiveFilter] = useState(null);
-  const handleCardClick = (filterType) => {
-    setActiveFilter(activeFilter === filterType ? null : filterType);
-  };
   const [installments, setInstallments] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // 🟢 Dashboard data from localStorage
+  const [dashboardStats, setDashboardStats] = useState({
+    totalCustomers: 0,
+    approvedRequest: 0,
+    pendingRequest: 0,
+  });
+
   useEffect(() => {
+    const storedLogin = JSON.parse(localStorage.getItem("login-detail"));
+    if (storedLogin) {
+      setDashboardStats({
+        totalCustomers: storedLogin.totalCustomers || 0,
+        approvedRequest: storedLogin.approvedRequest || 0,
+        pendingRequest: storedLogin.pendingRequest || 0,
+      });
+    }
+
     fetchInstallments();
   }, []);
 
   const fetchInstallments = async () => {
     try {
       const res = await axiosInstance.get("/autoDeductInstallments");
-      console.log(res.data.logs)
-      setInstallments(res.data.data || []); 
+      setInstallments(res.data.data || []);
     } catch (error) {
       console.error("❌ Failed to fetch installments:", error);
     } finally {
@@ -35,17 +47,15 @@ const DashboardCard = () => {
           <p className="page-subheading text-muted">Welcome to the Ladybug Dashboard</p>
         </div>
 
-        {/* Stats Cards */}
+        {/* Cards */}
         <Row className="g-4">
+          {/* Total Customers */}
           <Col xs={12} sm={6} lg={4}>
-            <div 
-              className={`p-4 rounded shadow-sm card-green h-100 ${activeFilter === 'all' ? 'border border-success border-2' : ''}`}
-              style={{ cursor: 'pointer' }}
-              onClick={() => handleCardClick('all')}>
+            <div className="p-4 rounded shadow-sm card-green h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Total Customers</p>
-                  <h5 className="fw-bold">1,250</h5>
+                  <h5 className="fw-bold">{dashboardStats.totalCustomers}</h5>
                   <small className="text-success">+15% from last month</small>
                 </div>
                 <i className="fa-solid fa-users text-success fs-4"></i>
@@ -53,44 +63,38 @@ const DashboardCard = () => {
             </div>
           </Col>
 
-          {/* Card 2 - Pending Funding Requests */}
+          {/* Approved Requests */}
           <Col xs={12} sm={6} lg={4}>
-            <div  className={`p-4 rounded shadow-sm card-green h-100 ${activeFilter === 'pending' ? 'border border-success border-2' : ''}`}
-              style={{ cursor: 'pointer' }}
-              onClick={() => handleCardClick('pending')}>
+            <div className="p-4 rounded shadow-sm card-green h-100">
+              <div className="d-flex justify-content-between align-items-start">
+                <div>
+                  <p className="mb-1 text-muted">Approved Requests</p>
+                  <h5 className="fw-bold">{dashboardStats.approvedRequest}</h5>
+                  <small className="text-success">Processed successfully</small>
+                </div>
+                <i className="fa-solid fa-check-circle text-success fs-4"></i>
+              </div>
+            </div>
+          </Col>
+
+          {/* Pending Requests */}
+          <Col xs={12} sm={6} lg={4}>
+            <div className="p-4 rounded shadow-sm card-green h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
                   <p className="mb-1 text-muted">Pending Requests</p>
-                  <h5 className="fw-bold">42</h5>
-                  <small className="text-warning">5 new today</small>
+                  <h5 className="fw-bold">{dashboardStats.pendingRequest}</h5>
+                  <small className="text-warning">Awaiting review</small>
                 </div>
                 <i className="fa-solid fa-clock text-warning fs-4"></i>
               </div>
             </div>
           </Col>
-
-          {/* Card 4 - Payments Overdue */}
-          <Col xs={12} sm={6} lg={4}>
-            <div 
-              className={`p-4 rounded shadow-sm card-green h-100 ${activeFilter === 'overdue' ? 'border border-success border-2' : ''}`}
-              style={{ cursor: 'pointer' }}
-              onClick={() => handleCardClick('overdue')}
-            >
-              <div className="d-flex justify-content-between align-items-start">
-                <div>
-                  <p className="mb-1 text-muted">Payments Overdue</p>
-                  <h5 className="fw-bold">$1,250,000</h5>
-                  <small className="text-danger">3% of portfolio</small>
-                </div>
-                <i className="fa-solid fa-exclamation-circle text-danger fs-4"></i>
-              </div>
-            </div>
-          </Col>
         </Row>
 
-       
+        {/* Table */}
         <div className="mt-4">
-          <DashboardTable filter={activeFilter} />
+          <DashboardTable />
         </div>
       </Container>
     </div>

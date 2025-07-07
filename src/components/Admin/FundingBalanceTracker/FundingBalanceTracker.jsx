@@ -1,22 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../../utils/axiosInstance";
+import Loader from "../../../utils/Loader";
 
 const FundingBalanceTracker = () => {
-  const [transactions] = useState([
-    { id: 1, date: "2025-06-01", amount: 5000, type: "Draw" },
-    { id: 2, date: "2025-06-10", amount: 2000, type: "Repayment" },
-    { id: 3, date: "2025-06-15", amount: 3000, type: "Draw" },
-    { id: 4, date: "2025-06-20", amount: 1500, type: "Repayment" },
-  ]);
+  const [balanceData, setBalanceData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const totalDraws = transactions
-    .filter((t) => t.type === "Draw")
-    .reduce((sum, t) => sum + t.amount, 0);
+  useEffect(() => {
+    const fetchFundingBalance = async () => {
+      try {
+        const response = await axiosInstance.get("/getfundingbalance");
+        if (response?.data?.success) {
+          setBalanceData(response.data);
+        } else {
+          setError("No balance data available.");
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        setError("Failed to fetch funding balance.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const totalRepayments = transactions
-    .filter((t) => t.type === "Repayment")
-    .reduce((sum, t) => sum + t.amount, 0);
+    fetchFundingBalance();
+  }, []);
 
-  const remainingBalance = totalDraws - totalRepayments;
+  if (loading) return <Loader/>;
+  if (error) return <p className="p-3 text-danger">{error}</p>;
+
+  // Default fallbacks if any data is missing
+  const {
+    totalDrawn = 0,
+    totalRepayments = 0,
+    remainingBalance = 0,
+    transactionLog = [],
+  } = balanceData || {};
 
   return (
     <div className="container mt-3 p-3">
@@ -26,12 +46,11 @@ const FundingBalanceTracker = () => {
       </p>
 
       <div className="row g-4">
-        {/* Summary Cards */}
         <div className="col-12 col-md-4">
           <div className="card card-green shadow-sm border-0">
             <div className="card-body">
               <h6 className="text-muted">Total Amount Drawn</h6>
-              <h3 className="fw-bold text-success">${totalDraws.toLocaleString()}</h3>
+              <h3 className="fw-bold text-success">${totalDrawn.toLocaleString()}</h3>
             </div>
           </div>
         </div>
@@ -55,38 +74,44 @@ const FundingBalanceTracker = () => {
         </div>
       </div>
 
-      {/* Transaction History */}
+      {/* Transaction History Table */}
       <div className="card card-green shadow-sm border-0 mt-4">
         <div className="card-body">
           <h5 className="card-title fw-semibold mb-3">Transaction Log</h5>
-          <div className="table-responsive">
-            <table className="table table-hover align-middle">
-              <thead className="table-success">
-                <tr>
-                  <th>Date</th>
-                  <th>Type</th>
-                  <th>Amount</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transactions.map((txn) => (
-                  <tr key={txn.id}>
-                    <td>{txn.date}</td>
-                    <td>
-                      <span className={`badge rounded-pill px-3 py-1 fw-semibold ${
-                        txn.type === "Draw"
-                          ? "bg-success text-white"
-                          : "bg-light text-success border border-success"
-                      }`}>
-                        {txn.type}
-                      </span>
-                    </td>
-                    <td className="fw-bold text-success">${txn.amount.toLocaleString()}</td>
+          {transactionLog.length === 0 ? (
+            <p>No transactions available.</p>
+          ) : (
+            <div className="table-responsive">
+              <table className="table table-hover align-middle">
+                <thead className="table-success">
+                  <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Amount</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody>
+                  {transactionLog.map((txn, idx) => (
+                    <tr key={idx}>
+                      <td>{new Date(txn.date).toLocaleDateString()}</td>
+                      <td>
+                        <span
+                          className={`badge rounded-pill px-3 py-1 fw-semibold ${
+                            txn.type === "Draw"
+                              ? "bg-success text-white"
+                              : "bg-light text-success border border-success"
+                          }`}
+                        >
+                          {txn.type}
+                        </span>
+                      </td>
+                      <td className="fw-bold text-success">${txn.amount.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </div>
       </div>
     </div>

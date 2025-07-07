@@ -37,10 +37,10 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
     { path: "/dashboard", icon: "fa-tachometer-alt", text: "Dashboard" },
     { path: "/managecustomer", icon: "fa-users", text: "Manage_Customers" },
     { path: "/fundrequest", icon: "fa-hand-holding-usd", text: "Fund Requests" },
-    { path: "/paymenttracking", icon: "fa-bell", text: "Payment Tracking" },
-    { path: "/balancetracker", icon: "fa-receipt", text: "Funding Balance Tracker" },
+    // { path: "/paymenttracking", icon: "fa-bell", text: "Payment Tracking" },
     { path: "/payoff", icon: "fa-comments-dollar", text: "Payoff Management" },
     { path: "/creditupgraderequests", icon: "fa-arrow-up", text: "Credit Upgrade Requests" },
+     { path: "/balancetracker", icon: "fa-receipt", text: "Funding Balance Tracker" },
     { path: "/reportdownload", icon: "fa-file-download", text: "Reports & Download" }
   ];
 
@@ -49,10 +49,11 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
     { path: "/requestfund", icon: "fa-wallet", text: "Request Funds" },
     { path: "/transactionhistory", icon: "fa-history", text: "History" },
     { path: "/EarlyPay", icon: "fa-wallet", text: "Early Pay" },
-    { path: "/discount", icon: "fa-percentage", text: "Discount" },
+    // { path: "/discount", icon: "fa-percentage", text: "Discount" },
     { path: "/notificationalert", icon: "fa-bell", text: "Notifications" },
-    { path: "/refer", icon: "fa-user-friends", text: "Refer a Friend" },
-    { path: "/CustomerSupport", icon: "fa-user-friends", text: "Customer Support" }
+  { path: "/CustomerSupport", icon: "fa-headset", text: "Customer Support" },
+  { path: "/CreditUpgradeCustomer", icon: "fa-chart-line", text: "Credit Upgrade" },
+  { path: "/refer", icon: "fa-user-plus", text: "Refer a Friend" }
   ];
 
   return (
@@ -68,22 +69,19 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
               <div
                 className="menu-link d-flex align-items-center"
                 style={{
-                  padding: "12px 16px",
+                  padding: "10px 12px",
                   cursor: "pointer",
                   justifyContent: collapsed ? "center" : "flex-start",
                   width: "100%",
                 }}
-                onClick={() => handleNavigation(item.path)}
-              >
+                onClick={() => handleNavigation(item.path)}>
                 <i
                   className={`fas ${item.icon}`}
                   style={{
-                    fontSize: "1.25rem",
+                    fontSize: "1.2rem",
                     minWidth: "24px",
                     textAlign: "center",
-                    color: isActive(item.path) ? "white" : "#222",
-                  }}
-                ></i>
+                    color: isActive(item.path) ? "white" : "#222",}}></i>
                 {!collapsed && (
                   <span className="menu-text ms-2" style={{ fontSize: "1rem" }}>
                     {item.text.replace("_", " ")}

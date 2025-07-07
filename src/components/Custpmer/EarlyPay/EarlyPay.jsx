@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, Button, Alert, Card, Modal, Table, Row, Col } from 'react-bootstrap';
+import { Container, Form, Button, Alert, Card } from 'react-bootstrap';
 import axiosInstance from '../../../utils/axiosInstance';
 
 const EarlyPay = () => {
   const [earlyPayAmount, setEarlyPayAmount] = useState('');
-  const [discount, setDiscount] = useState('');
   const [customerId, setCustomerId] = useState('');
-  const [customerData, setCustomerData] = useState(null);
   const [message, setMessage] = useState({ type: '', text: '' });
   const [loading, setLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
-  // Fetch Customer ID
+  // ✅ Get customerId from localStorage only
   useEffect(() => {
     const storedId = JSON.parse(localStorage.getItem("login_id"));
     if (storedId) {
@@ -19,27 +16,6 @@ const EarlyPay = () => {
     }
   }, []);
 
-  // Fetch Customer Info
-  useEffect(() => {
-    const fetchCustomerData = async () => {
-      try {
-        const response = await axiosInstance.get(`/custumers`, {
-          params: { customerId }
-        });
-        if (response.data?.customers?.length) {
-          setCustomerData(response.data.customers[0]);
-        }
-      } catch (error) {
-        console.error("❌ Error fetching customer data:", error);
-      }
-    };
-
-    if (customerId) {
-      fetchCustomerData();
-    }
-  }, [customerId]);
-
-  // Handle Submit
   const handleEarlyPayoff = async (e) => {
     e.preventDefault();
     setMessage({ type: '', text: '' });
@@ -47,21 +23,16 @@ const EarlyPay = () => {
     if (!earlyPayAmount || isNaN(earlyPayAmount)) {
       return setMessage({ type: 'danger', text: 'Enter a valid payoff amount.' });
     }
-
     try {
       setLoading(true);
-      const res = await axiosInstance.post('/earlyPayoff', {
+      const res = await axiosInstance.post(`/earlyPayoff`, {
         customerId,
-        earlyPayAmount: Number(earlyPayAmount),
-        discount: Number(discount) || 0
+        earlyPayAmount: Number(earlyPayAmount)
       });
 
       if (res?.data?.success) {
         setMessage({ type: 'success', text: '✅ Early payoff submitted successfully!' });
         setEarlyPayAmount('');
-        setDiscount('');
-        setShowModal(false);
-        setTimeout(() => setMessage({ type: '', text: '' }), 3000);
       } else {
         setMessage({ type: 'danger', text: res?.data?.message || 'Early payoff failed.' });
       }
@@ -70,60 +41,37 @@ const EarlyPay = () => {
       setMessage({ type: 'danger', text: 'Something went wrong while submitting payoff.' });
     } finally {
       setLoading(false);
+      setTimeout(() => setMessage({ type: '', text: '' }), 3000);
     }
   };
 
   return (
     <Container className="py-4">
-      <Card className="shadow-sm border-0 mb-4">
+      <Card className="shadow-sm border-0">
         <Card.Body>
-          <h4 className="text-success mb-3">Early Payoff Summary</h4>
-          {customerData ? (
-            <Row className="mb-3">
-              <Col md={4}><strong>Remaining Repayment:</strong> ${customerData.remainingRepayment}</Col>
-              <Col md={4}><strong>Term:</strong> {customerData.term_month} months</Col>
-              <Col md={4}><strong>Monthly Installment:</strong> ${customerData.installment}</Col>
-            </Row>
-          ) : (
-            <p className="text-muted">Loading customer info...</p>
-          )}
-          <Button variant="success" onClick={() => setShowModal(true)}>Early Pay Now</Button>
-        </Card.Body>
-      </Card>
-
-      {/* Early Pay Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Early Payoff</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+         <h4 className="page-heading mb-2">Early Payoff Discount</h4>
+              {/* Discount Term Notice */}
+              <Card className="mb-5 card-green border-0">
+                <Card.Body>
+                  <h5 className="fw-bold mb-2">Early Payback Discount Offers</h5>
+                  <ul className="mb-0">
+                       Access 100% of your funds within 10 days and pay back full within 30 days - Get $5% discount
+                  </ul>
+                </Card.Body>
+              </Card>
           {message.text && <Alert variant={message.type}>{message.text}</Alert>}
           <Form onSubmit={handleEarlyPayoff}>
             <Form.Group className="mb-3">
-              <Form.Label>Early Payoff Amount (₹)</Form.Label>
-              <Form.Control
-                type="number"
-                value={earlyPayAmount}
-                onChange={(e) => setEarlyPayAmount(e.target.value)}
-                placeholder="Enter full payoff amount"
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Discount (₹)</Form.Label>
-              <Form.Control
-                type="number"
-                value={discount}
-                onChange={(e) => setDiscount(e.target.value)}
-                placeholder="Enter discount if any"
-              />
+              <Form.Label>Early Payoff Amount ($)</Form.Label>
+              <Form.Control type="number"  value={earlyPayAmount}
+                onChange={(e) => setEarlyPayAmount(e.target.value)}   placeholder="Enter payoff amount"   required />
             </Form.Group>
             <Button variant="success" type="submit" disabled={loading}>
-              {loading ? 'Processing...' : 'Submit Payoff'}
+              {loading ? 'Processing...' : 'Submit Early Payoff'}
             </Button>
           </Form>
-        </Modal.Body>
-      </Modal>
+        </Card.Body>
+      </Card>
     </Container>
   );
 };

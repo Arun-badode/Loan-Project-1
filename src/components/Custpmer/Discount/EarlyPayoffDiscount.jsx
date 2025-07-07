@@ -38,21 +38,10 @@ const EarlyPayoffDiscount = () => {
         <Card.Body>
           <h5 className="fw-bold mb-4">Early Payback Discount Offers</h5>
           <ul className="mb-0">
-            {discountTerms.map((term, index) => (
-              <li key={index}>{term}</li>
-            ))}
+               Access 100% of your funds within 10 days and pay back full within 30 days - Get ${(discountRate * 100).toFixed(0)}% discount
           </ul>
         </Card.Body>
       </Card>
-
-      {/* Credit Increase Notification */}
-      {isEligibleForCreditIncrease && (
-        <div className="alert alert-info">
-          <strong>Congratulations, you may be eligible for a credit increase.</strong>
-          <br />
-          Submit your most recent business bank statements and AR/PO if you have any.
-        </div>
-      )}
 
       <div className="card shadow-sm border-0 card-green">
         <div className="card-body">

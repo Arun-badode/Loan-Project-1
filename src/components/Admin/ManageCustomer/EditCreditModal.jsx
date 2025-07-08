@@ -103,7 +103,7 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Factor Rate (multiplier)</Form.Label>
+            <Form.Label>Factor Rate </Form.Label>
             <Form.Control
               name="factorRate"
               type="number"
@@ -115,7 +115,7 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Total Repayment</Form.Label>
+            <Form.Label>Total  Payback</Form.Label>
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
               <Form.Control
@@ -133,21 +133,27 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
               value={formData.term_type}
               onChange={handleChange}
             >
-              <option value="monthly">Monthly</option>
-              <option value="weekly">Weekly</option>
-              <option value="biweekly">Biweekly</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Bi-Weekly">Bi-Weekly</option>
             </Form.Select>
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Term (Months)</Form.Label>
-            <Form.Control
-              name="term_month"
-              type="number"
-              value={formData.term_month}
-              onChange={handleChange}
-              required
-            />
-          </Form.Group>
+       <Form.Group className="mb-3">
+  <Form.Label>
+    {formData.term_type === "Weekly"
+      ? "Term (Weeks)"
+      : formData.term_type === "Bi-Weekly"
+      ? "Term (Bi-Weeks)"
+      : "Term (Months)"}
+  </Form.Label>
+  <Form.Control
+    name="term_month"
+    type="number"
+    value={formData.term_month}
+    onChange={handleChange}
+    required
+  />
+</Form.Group>
 
       
           <Form.Group className="mb-3">

@@ -28,7 +28,7 @@ const ResetPassword = () => {
       setLoading(true);
 
       const res = await axiosInstance.post(`/reset-password/${token}`, {
-        newPassword: password, // ✅ KEY MUST BE `newPassword`
+        newPassword: password, 
       });
 
       if (

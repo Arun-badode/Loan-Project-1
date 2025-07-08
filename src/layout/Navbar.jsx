@@ -85,7 +85,7 @@ useEffect(() => {
                 className="btn btn-sm p-0 border-0 bg-transparent"
                 onClick={() => setShowNotification(!showNotification)}
               >
-                <i className="fa-regular fa-bell fs-4 text-success"></i>
+                {/* <i className="fa-regular fa-bell fs-4 text-success"></i> */}
               </button>
 
               {/* Notification Card */}

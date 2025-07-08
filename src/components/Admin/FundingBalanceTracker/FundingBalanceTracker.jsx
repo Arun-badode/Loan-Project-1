@@ -11,8 +11,9 @@ const FundingBalanceTracker = () => {
     const fetchFundingBalance = async () => {
       try {
         const response = await axiosInstance.get("/getfundingbalance");
+      // console.log(response.data.data)
         if (response?.data?.success) {
-          setBalanceData(response.data);
+          setBalanceData(response.data.data);
         } else {
           setError("No balance data available.");
         }
@@ -35,7 +36,6 @@ const FundingBalanceTracker = () => {
     totalDrawn = 0,
     totalRepayments = 0,
     remainingBalance = 0,
-    transactionLog = [],
   } = balanceData || {};
 
   return (
@@ -74,46 +74,7 @@ const FundingBalanceTracker = () => {
         </div>
       </div>
 
-      {/* Transaction History Table */}
-      <div className="card card-green shadow-sm border-0 mt-4">
-        <div className="card-body">
-          <h5 className="card-title fw-semibold mb-3">Transaction Log</h5>
-          {transactionLog.length === 0 ? (
-            <p>No transactions available.</p>
-          ) : (
-            <div className="table-responsive">
-              <table className="table table-hover align-middle">
-                <thead className="table-success">
-                  <tr>
-                    <th>Date</th>
-                    <th>Type</th>
-                    <th>Amount</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactionLog.map((txn, idx) => (
-                    <tr key={idx}>
-                      <td>{new Date(txn.date).toLocaleDateString()}</td>
-                      <td>
-                        <span
-                          className={`badge rounded-pill px-3 py-1 fw-semibold ${
-                            txn.type === "Draw"
-                              ? "bg-success text-white"
-                              : "bg-light text-success border border-success"
-                          }`}
-                        >
-                          {txn.type}
-                        </span>
-                      </td>
-                      <td className="fw-bold text-success">${txn.amount.toLocaleString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
-      </div>
+    
     </div>
   );
 };

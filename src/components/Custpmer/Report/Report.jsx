@@ -3,27 +3,13 @@ import axiosInstance from "../../../utils/axiosInstance";
 import autoTable from "jspdf-autotable"; 
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import ReactSelect from "react-select";
-const ReportsDownload = () => {
+const Report = () => {
   const [reportType, setReportType] = useState("draw");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [customer, setCustomer] = useState("");
-  const [customersList, setCustomersList] = useState([]);
   const [reportData, setReportData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchCustomers = async () => {
-      try {
-        const res = await axiosInstance.get("/custumers");
-        setCustomersList(res.data.customers || []);
-      } catch (error) {
-        console.error("Failed to fetch customers", error);
-      }
-    };
-    fetchCustomers();
-  }, []);
 
   const handleDownload = async () => {
     if (!startDate || !endDate) {
@@ -36,7 +22,9 @@ const ReportsDownload = () => {
       repayment: "RepaymentLogs",
       funding: "FundingRequest",
     };
-
+  // ✅ Get customer ID from localStorage
+  const storedUser = JSON.parse(localStorage.getItem("login-detail"));
+  const customerId = storedUser?.id;
     setLoading(true);
     try {
       const response = await axiosInstance.get("/report", {
@@ -44,7 +32,7 @@ const ReportsDownload = () => {
           reportType: reportTypeMap[reportType],
           startDate,
           endDate,
-          customerId: customer || undefined,
+          customerId: customerId || undefined,
         },
       });
 
@@ -86,14 +74,7 @@ const exportPDF = () => {
   doc.save("Generate_Report.pdf");
 };
 
-const customerOptions = customersList.map((cust) => ({
-    value: cust._id,
-    label: `${cust.customerName} (${cust._id.slice(-9).toUpperCase()})`,
-  }));
 
-  const handleCustomerChange = (selectedOption) => {
-    setCustomer(selectedOption?.value || "");
-  };
   return (
     <div className="container mt-3 p-3">
       <h2 className="page-heading">Reports & Downloads</h2>
@@ -134,19 +115,7 @@ const customerOptions = customersList.map((cust) => ({
               />
             </div>
 
-           <div className="col-md-4">
-      <label className="form-label">Customer</label>
-      <ReactSelect
-        options={[{ value: "", label: "All Customers" }, ...customerOptions]}
-        onChange={handleCustomerChange}
-        isSearchable
-        placeholder="Select or search customer"
-        value={
-          customerOptions.find((opt) => opt.value === customer) ||
-          { value: "", label: "All Customers" }
-        }
-      />
-    </div>
+      
           </div>
 
           <div className="text-end d-flex justify-content-end gap-2">
@@ -207,4 +176,4 @@ const customerOptions = customersList.map((cust) => ({
   );
 };
 
-export default ReportsDownload;
+export default Report;

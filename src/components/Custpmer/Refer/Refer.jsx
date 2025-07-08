@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Button, InputGroup, FormControl } from "react-bootstrap";
 
 const Refer = () => {
-  // Example: In a real app, this would come from backend/user profile
-  const userName = "John Doe";
-  const userId = "12345"; // Unique user/customer ID
-  const referralUrl = `https://ladybuglending.com/apply?ref=${userId}`;
+  const [user, setUser] = useState({ id: "", customerName: "" });
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("login-detail")); // Adjust key if different
+    if (storedUser) {
+      setUser({
+        id: storedUser.id,
+        customerName: storedUser.customerName,
+      });
+    }
+  }, []);
+
+const referralUrl = `https://ladybuglending.com/apply?ref=${user.id.slice(-9).toUpperCase()}`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(referralUrl);
@@ -21,7 +30,7 @@ const Refer = () => {
             Refer a friend and earn up to $1000!
           </h5>
           <p>
-            Simply have your friend enter your name (<strong>{userName}</strong>) in the <strong>Referral Partner</strong> field on their application.<br />
+            Simply have your friend enter your name (<strong>{user.customerName}</strong>) in the <strong>Referral Partner</strong> field on their application.<br />
             If we fund them, you will receive up to <strong>$1000</strong> (5% of the upsell amount to be determined upon approval).
           </p>
           <hr />

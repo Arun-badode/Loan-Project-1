@@ -64,34 +64,22 @@ const Login = () => {
         </h4>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <input
-              type="text"
-              className="form-control rounded-pill py-2 px-3"
-              placeholder="Username"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{ borderColor: "#4d4d4d", color: "#4d4d4d", fontWeight: "500" }}
-            />
+            <input  type="text"  className="form-control rounded-pill py-2 px-3"  placeholder="Username"
+              value={email}  onChange={(e) => setEmail(e.target.value)}
+              style={{ borderColor: "#4d4d4d", color: "#4d4d4d", fontWeight: "500" }}/>
           </div>
           <div className="mb-3">
-            <input
-              type="password"
-              className="form-control rounded-pill py-2 px-3"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{ borderColor: "#4d4d4d", color: "#4d4d4d", fontWeight: "500" }}
-            />
+            <input  type="password"  className="form-control rounded-pill py-2 px-3"
+              placeholder="Password"  value={password}  onChange={(e) => setPassword(e.target.value)}
+              style={{ borderColor: "#4d4d4d", color: "#4d4d4d", fontWeight: "500" }} />
           </div>
           <div className="text-end mb-3">
             <Link to="/forgotpassword" className="text-decoration-none text-secondary">
               Forgot Password?
             </Link>
           </div>
-          <button
-            type="submit"
-            className="btn btn-success rounded-pill w-100 py-2 fw-semibold"
-          >
+          <button type="submit"
+            className="btn btn-success rounded-pill w-100 py-2 fw-semibold">
             Sign in
           </button>
           <p className="mt-3" style={{ color: "#4d4d4d" }}>

@@ -82,22 +82,32 @@ const handleCreditSubmit = async (e) => {
       </div>
 
     
-      {/* ✅ Credit Increase Alert */}
-      {userData?.creditIncrease && (
-        <Alert className="mb-4" variant="success">
-          <Alert.Heading>
-            <i className="fas fa-trophy me-2"></i> Credit Increase Eligible!
-          </Alert.Heading>
-          <p>
-            Congratulations! You may qualify for a credit limit increase. Please submit your most recent business bank statements to be considered.
-          </p>
-          <div className="text-end">
-            <Button variant="success" onClick={() => setShowCreditModal(true)}>
-              Apply for Credit Increase
-            </Button>
-          </div>
-        </Alert>
-      )}  
+    {/* ✅ Credit Increase Alert */}
+{userData?.creditIncrease ? (
+  <Alert className="mb-4" variant="success">
+    <Alert.Heading>
+      <i className="fas fa-trophy me-2"></i> Credit Increase Eligible!
+    </Alert.Heading>
+    <p>
+      Congratulations! You may qualify for a credit limit increase. Please submit your most recent business bank statements to be considered.
+    </p>
+    <div className="text-end">
+      <Button variant="success" onClick={() => setShowCreditModal(true)}>
+        Apply for Credit Increase
+      </Button>
+    </div>
+  </Alert>
+) : (
+  <Alert className="mb-4" variant="danger">
+    <Alert.Heading>
+      <i className="fas fa-ban me-2"></i> Not Eligible
+    </Alert.Heading>
+    <p>
+      You are currently not eligible for a credit increase.
+    </p>
+  </Alert>
+)}
+
 
       {/* Cards Section */}
       <div className="row g-4">
@@ -172,7 +182,7 @@ const handleCreditSubmit = async (e) => {
 <div className="col-12 col-md-6 col-lg-4">
   <div className="card shadow-sm border-0 card-green h-100">
     <div className="card-body">
-      <h6 className="text-muted"> Remaining Repayment</h6>
+      <h6 className="text-muted"> Remaining Payback</h6>
       <h5 className="fw-bold text-success">
         ${dashboardData?.remainingRepayment || "0.00"}
       </h5>

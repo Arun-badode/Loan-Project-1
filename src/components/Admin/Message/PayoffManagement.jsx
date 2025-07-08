@@ -27,23 +27,26 @@ const PayoffManagement = () => {
   }, []);
 
   // Update early payoff status
-  const handleAction = async (id, action) => {
-    try {
-      const res = await axiosInstance.patch(`/updateEarlyPayoffStatus/${id}`, {
-        earlyPayoffStatus: action.toLowerCase(),
-      });
+ const handleAction = async (id, action) => {
+  try {
+    const res = await axiosInstance.patch(`/updateEarlyPayoffStatus/${id}`, {
+      earlyPayoffStatus: action.toLowerCase(),
+    });
 
-      if (res.data.success) {
-        alert(`✅ ${action} successful`);
-        fetchRequests(); // re-fetch updated data
-      } else {
-        alert("❌ Action failed.");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("❌ Error while processing action.");
+    console.log(res);
+
+    if (res.data && res.data.message) {
+      alert(`✅ ${res.data.message}`);
+      fetchRequests(); // re-fetch updated data 
+    } else {
+      alert("❌ Action failed.");
     }
-  };
+  } catch (err) {
+    console.error(err);
+    alert("❌ Error while processing action.");
+  }
+};
+
 
   if (loading) return <Loader/>;
   if (error) return <div className="p-4 text-danger">{error}</div>;

@@ -14,9 +14,7 @@ import Updateprofile from "./components/Profile/Updateprofile";
 import Changepassword from "./components/Profile/Changepassword";
 import ForgotPassword from "./authtication/ForgotPassword";
 import Signup from "./authtication/Signup";
-import EarlyPayoffDiscount from "./components/Custpmer/Discount/EarlyPayoffDiscount";
 import NotificationsAlerts from "./components/Custpmer/Notification/NotificationsAlerts";
-import PaymentTracking from "./components/Admin/PaymentTracker/Paymenttracking";
 import CreditUpgradeRequests from "./components/Admin/CreditUpgradeRequests/CreditUpgradeRequests";
 import ReportsDownload from "./components/Admin/ReportsDownload/ReportsDownload";
 import PayoffManagement from "./components/Admin/Message/PayoffManagement";
@@ -28,6 +26,9 @@ import CustomerSupport from "./components/Custpmer/CustomerSupport/CustomerSuppo
 import ResetPassword from "./authtication/ResetPassword";
 import CreditUpgradeCustomer from "./components/Custpmer/CreditUpgradeCustomer/CreditUpgradeCustomer";
 import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
+import Notifications from "./components/Admin/Notifications/Notifications";
+import Report from "./components/Custpmer/Report/Report";
+import Discount from "./components/Admin/Discount/Discount";
 
 
 function App() {
@@ -85,21 +86,22 @@ const hideLayout =
   <Route path="/balancetracker" element={<ProtectedRoute><FundingBalanceTracker /></ProtectedRoute>} />
   <Route path="/updateprofile" element={<ProtectedRoute><Updateprofile /></ProtectedRoute>} />
   <Route path="/changepassword" element={<ProtectedRoute><Changepassword /></ProtectedRoute>} />
-  <Route path="/paymenttracking" element={<ProtectedRoute><PaymentTracking /></ProtectedRoute>} />
   <Route path="/creditupgraderequests" element={<ProtectedRoute><CreditUpgradeRequests /></ProtectedRoute>} />
   <Route path="/reportdownload" element={<ProtectedRoute><ReportsDownload /></ProtectedRoute>} />
   <Route path="/payoff" element={<ProtectedRoute><PayoffManagement /></ProtectedRoute>} />
+  <Route path="/Notification" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
+  <Route path="/discount" element={<ProtectedRoute><Discount /></ProtectedRoute>} />
 
   {/* Protected Customer Routes */}
   <Route path="/customer-dashboard" element={<ProtectedRoute><Customerdashboard /></ProtectedRoute>} />
   <Route path="/requestfund" element={<ProtectedRoute><Requestfund /></ProtectedRoute>} />
   <Route path="/transactionhistory" element={<ProtectedRoute><Transactionhistory /></ProtectedRoute>} />
-  <Route path="/discount" element={<ProtectedRoute><EarlyPayoffDiscount /></ProtectedRoute>} />
   <Route path="/EarlyPay" element={<ProtectedRoute><EarlyPay /></ProtectedRoute>} />
   <Route path="/notificationalert" element={<ProtectedRoute><NotificationsAlerts /></ProtectedRoute>} />
   <Route path="/refer" element={<ProtectedRoute><Refer /></ProtectedRoute>} />
   <Route path="/CustomerSupport" element={<ProtectedRoute><CustomerSupport /></ProtectedRoute>} />
   <Route path="/CreditUpgradeCustomer" element={<ProtectedRoute><CreditUpgradeCustomer /></ProtectedRoute>} />
+  <Route path="/report" element={<ProtectedRoute><Report /></ProtectedRoute>} />
               </Routes>
             </div>
           )}

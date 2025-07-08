@@ -7,6 +7,7 @@ import DocumentsModal from './DocumentsModal';
 import DisqualifyModal from './DisqualifyModal';
 import BASE_URL from '../../../utils/baseURL';
 import axiosInstance from '../../../utils/axiosInstance';
+import RestoreModal from './RestoreModal';
 
 const ManageCustomer = () => {
   const [showAddModal, setShowAddModal] = useState(false);
@@ -14,6 +15,7 @@ const ManageCustomer = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDocsModal, setShowDocsModal] = useState(false);
   const [showDisqualifyModal, setShowDisqualifyModal] = useState(false);
+  const [showrestoremodal, setShowRestoreModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -77,6 +79,10 @@ const handleDelete = async (customerId) => {
     setShowDisqualifyModal(true);
   };
 
+  const handleRestore=(customer)=>{
+   setSelectedCustomer(customer);
+   setShowRestoreModal(true)
+  }
   return (
     <div className="container mt-4">
       {/* Page Header and Search */}
@@ -93,10 +99,10 @@ const handleDelete = async (customerId) => {
         <Col xs={6} md="auto" className="ms-md-auto w-md-auto">
           <div className="d-flex flex-row align-items-center gap-2">
             <div className="input-group flex-grow-1">
-              <span className="input-group-text">  <i className="fas fa-search" />  </span>
-              <input type="text"  className="form-control"   placeholder="Search customers..." defaultValue="" onChange={(e)=> setSearchTerm(e.target.value)}   />
+              <span className="input-group-text">  <i className="fas fa-search" /></span>
+              <input type="text"  className="form-control" placeholder="Search customers..." defaultValue="" onChange={(e)=> setSearchTerm(e.target.value)}   />
             </div>
-            <button  className="btn btn-success text-nowrap"  title="Add New Customer"  onClick={() => setShowAddModal(true)}>
+             <button className="btn btn-success text-nowrap"  title="Add New Customer"  onClick={() => setShowAddModal(true)}>
               + Add Customer </button>
           </div>
         </Col>
@@ -145,9 +151,13 @@ const handleDelete = async (customerId) => {
                       <Button  variant="link" size="sm" className="text-danger p-0 me-2 fs-5"  title="Mark as Disqualified"
                         onClick={() => handleDisqualify(customer)} >
                         <i className="fas fa-user-slash"></i> </Button>
-
                         <Button  variant="link"  size="sm"  className="text-danger p-0 fs-5"  title="Delete Customer"
-                       onClick={() => handleDelete(customer._id)} ><i className="fas fa-trash-alt"></i></Button>
+                         onClick={() => handleDelete(customer._id)} ><i className="fas fa-trash-alt"></i></Button>
+                        {customer.customerStatus === "Suspended" && (
+                            <Button variant="link" size="sm" className="text-info p-0 fs-5 ms-2"  title="Restore Access" onClick={() => handleRestore(customer)}>
+                       <i className="fas fa-user-check"></i>
+                     </Button>
+  )}
                     </td>
                   </tr>
                 ))}
@@ -170,6 +180,9 @@ const handleDelete = async (customerId) => {
         customer={selectedCustomer}  refreshCustomers={fetchCustomers}/>
 
      <DisqualifyModal  show={showDisqualifyModal} handleClose={() => setShowDisqualifyModal(false)} customer={selectedCustomer}
+        refreshCustomers={fetchCustomers}/>
+
+          <RestoreModal  show={showrestoremodal} handleClose={() => setShowRestoreModal(false)} customer={selectedCustomer}
         refreshCustomers={fetchCustomers}/>
     </div>
   );

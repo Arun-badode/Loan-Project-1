@@ -61,7 +61,7 @@ const handleApprove = async (id) => {
     await axiosInstance.patch(`/withdrawstatusupdate/${id}`, {
       withdrawStatus: "Approved"
     });
-    alert(`✅ Request ${id} approved`);
+    alert(`✅ Request ${id} Approved`);
     // Refresh list
     setRequests(prev =>
       prev.map(r => (r._id === id ? { ...r, withdrawStatus: "approved" } : r))
@@ -106,8 +106,7 @@ const handleDecline = async (id) => {
               className={`rounded-pill px-4 fw-semibold ${activeTab === key
                 ? 'bg-success text-white'
                 : 'text-success border border-success'
-              }`}
-            >
+              }`}>
               {key.charAt(0).toUpperCase() + key.slice(1)}
               <span className="badge bg-white text-success ms-2">
                 {key === 'all' ? requests.length : requests.filter(r => r.withdrawStatus === key).length}
@@ -145,8 +144,7 @@ const handleDecline = async (id) => {
                         <div className="d-flex gap-2">
                           <Button size="sm" variant="outline-success" onClick={() => {
                             setSelectedRequest(req);
-                            setShowModal(true);
-                          }}>
+                            setShowModal(true);}}>
                             View
                           </Button>
                           {req.withdrawStatus === 'pending' && (

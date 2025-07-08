@@ -41,7 +41,7 @@ const CreditUpgradeCustomer = () => {
           <h5 className="mb-3">Credit Upgrade Requests</h5>
 
           {previousRequests.length === 0 ? (
-            <p className="text-muted">No credit upgrade requests found.</p>
+            <p className="text-muted">You are currently not eligible for a credit increase.</p>
           ) : (
             <Table bordered hover responsive>
               <thead>

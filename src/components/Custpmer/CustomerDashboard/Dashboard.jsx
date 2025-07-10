@@ -3,6 +3,7 @@ import { Modal, Button, Alert, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import LastedTrans from "./LastedTrans";
+import Ladyimage from "../../../assets/Ladyimage.png"; // Update with your actual image path1
 
 const CustomerDashboard = () => {
 
@@ -80,6 +81,42 @@ const handleCreditSubmit = async (e) => {
         <h2 className="page-heading">Welcome, {userData?.customerName || "Customer"}</h2>
         <p className="page-subheading">Here's your line of credit summary</p>
       </div>
+
+
+{/* Welcome msg  */}
+<div
+  className="d-flex justify-content-between align-items-center "
+  style={{
+    background: "linear-gradient(90deg, #d1f7e8, #e6ffee)",
+    borderRadius: "0.75rem",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
+    marginBottom: "1rem",
+    height: "80px", // ⬅ fixed height to avoid extra vertical space
+    overflow: "hidden",
+    paddingLeft: "1rem",
+    paddingRight: "1rem",
+  }}
+>
+  <p className="mb-0 fw-semibold text-success fs-5" >
+    “Ladybugs bring good fortune.”
+  </p>
+
+  <img
+    src={Ladyimage} // update the path
+    alt="Ladybug"
+    style={{
+      width: "60px",
+      height: "60px",
+      borderRadius: "50%",
+      border: "2px solid #28a745",
+      objectFit: "cover",
+    }}
+  />
+</div>
+
+
+
+
 
     
     {/* ✅ Credit Increase Alert */}

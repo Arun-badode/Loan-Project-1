@@ -43,6 +43,8 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
     { path: "/balancetracker", icon: "fa-receipt", text: "Funding Balance Tracker" },
     { path: "/reportdownload", icon: "fa-file-download", text: "Reports & Download" },
     { path: "/Notification", icon: "fa-bell", text: "Notification" },
+    { path: "/SupportRequest", icon: "fa-headset", text: "Support Request" },
+
   ];
 
   const customerMenuItems = [
@@ -51,11 +53,10 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
     { path: "/transactionhistory", icon: "fa-history", text: "History" },
     { path: "/EarlyPay", icon: "fa-wallet", text: "Early Pay" },
     { path: "/notificationalert", icon: "fa-bell", text: "Notifications" },
-  { path: "/CustomerSupport", icon: "fa-headset", text: "Customer Support" },
-  { path: "/CreditUpgradeCustomer", icon: "fa-chart-line", text: "Credit Upgrade" },
-   { path: "/report", icon: "fa-file-download", text: "Reports" },
-
-  { path: "/refer", icon: "fa-user-plus", text: "Refer a Friend" }
+    { path: "/CustomerSupport", icon: "fa-headset", text: "Customer Support" },
+    { path: "/CreditUpgradeCustomer", icon: "fa-chart-line", text: "Credit Upgrade" },
+    { path: "/report", icon: "fa-file-download", text: "Reports" },
+   { path: "/refer", icon: "fa-user-plus", text: "Refer a Friend" }
   ];
 
   return (

@@ -70,8 +70,7 @@ const Requestfund = () => {
       <div className="col-12">
         <h2 className="page-heading">Request Funds</h2>
         <p className="page-subheading">
-          Withdraw funds from your approved limit. No need to provide a reason or
-          documents unless specifically requested.
+        Please allow 1-2 business days to receive funds.
         </p>
 
         <div className="card shadow-sm border-0 overflow-hidden">
@@ -88,30 +87,46 @@ const Requestfund = () => {
             {error && <div className="alert alert-danger">{error}</div>}
             {success && <div className="alert alert-success">{success}</div>}
 
-            <form onSubmit={handleWithdraw}>
-              <div className="row g-4">
-                <div className="col-12 col-md-6">
-                  <label className="form-label fw-medium">Amount to Withdraw</label>
-                  <div className="input-group">
-                    <span className="input-group-text">$</span>
-                    <input
-                      type="number"
-                      className="form-control input-green"
-                      placeholder="0.00"
-                      value={withdrawAmount}
-                      onChange={(e) => setWithdrawAmount(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
+         <form onSubmit={handleWithdraw}>
+  <div className="row g-4">
+    <div className="col-12 col-md-6">
+      <label className="form-label fw-medium">Amount to Withdraw</label>
+      <div className="input-group">
+        <span className="input-group-text">$</span>
+        <input
+          type="number"
+          className="form-control input-green"
+          placeholder="0.00"
+          value={withdrawAmount}
+          onChange={(e) => setWithdrawAmount(e.target.value)}
+          required
+        />
+      </div>
+    </div>
 
-                <div className="col-12">
-                  <button type="submit" className="btn btn-success py-2 px-4">
-                    Submit Request
-                  </button>
-                </div>
-              </div>
-            </form>
+    {/* Show remaining balance calculation */}
+    {withdrawAmount && (
+      <div className="col-12 mt-3">
+        <div className="bg-light p-3 rounded">
+          {/* <p><strong>Withdraw Amount:</strong> ${parseFloat(withdrawAmount).toFixed(2)}</p> */}
+          <p><strong>Remaining Balance:</strong> $
+            {(
+              (parseFloat(customer?.availBalance || 0) - parseFloat(withdrawAmount || 0)) >= 0
+                ? (parseFloat(customer?.availBalance || 0) - parseFloat(withdrawAmount || 0)).toFixed(2)
+                : 0
+            )}
+          </p>
+        </div>
+      </div>
+    )}
+
+    <div className="col-12">
+      <button type="submit" className="btn btn-success py-2 px-4">
+        Submit Request
+      </button>
+    </div>
+  </div>
+</form>
 
           </div>
         </div>

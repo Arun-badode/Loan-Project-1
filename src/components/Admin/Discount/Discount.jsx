@@ -6,10 +6,10 @@ const Discount = () => {
   const [discounts, setDiscounts] = useState([]);
   const [formData, setFormData] = useState({
     customerId: '',
-    discountTen: '',
+    discountTen: '10',
     startDateTen: '',
     endDateTen: '',
-    discountFive: '',
+    discountFive: '5',
     startDateFive: '',
     endDateFive: '',
   });
@@ -205,42 +205,54 @@ const formatDate = (dateString) => {
         </button>
       </form>
 
-      {/* List All Discounts */}
+      {/* List All Discounts */}    
       <hr className="my-4" />
       <h5>Existing Discounts</h5>
+       <div className="table-responsive">
       <table className="table table-bordered">
-        <thead>
-          <tr>
-            <th>Customer</th>
-            <th>10% (Start-End)</th>
-            <th>5% (Start-End)</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {discounts.map((d) => (
-            <tr key={d._id}>
-              <td>{customers.find(c => c._id === d.customerId)?.customerName || d.customerId}</td>
-           <td>{d.discountTen}% ({formatDate(d.startDateTen)} to {formatDate(d.endDateTen)})</td>
-<td>{d.discountFive}% ({formatDate(d.startDateFive)} to {formatDate(d.endDateFive)})</td>
+     <thead>
+  <tr>
+    <th>Customer</th>
+    <th>10% (Start-End)</th>
+    <th>10% Amount</th>
+    <th>5% (Start-End)</th>
+    <th>5% Amount</th>
+    <th>Status</th>
+    <th>Actions</th>
+  </tr>
+</thead>
+<tbody>
+  {discounts.map((d) => (
+    <tr key={d._id}>
+      <td>{customers.find(c => c._id === d.customerId)?.customerName || d.customerId}</td>
+      <td>{d.discountTen}% ({formatDate(d.startDateTen)} to {formatDate(d.endDateTen)})</td>
+      <td>${parseFloat(d.TenDicountAmount || 0).toFixed(2)}</td>
+      <td>{d.discountFive}% ({formatDate(d.startDateFive)} to {formatDate(d.endDateFive)})</td>
+      <td>${parseFloat(d.FiveDicountAmount || 0).toFixed(2)}</td>
+      <td>
+        <span className={`badge bg-${d.discountStatus === 'Active' ? 'success' : 'secondary'}`}>
+          {d.discountStatus}
+        </span>
+      </td>
+      <td>
+        <button className="btn btn-sm btn-warning me-2" onClick={() => handleEdit(d)}>
+          Edit
+        </button>
+        <button className="btn btn-sm btn-danger" onClick={() => handleDelete(d._id)}>
+          Delete
+        </button>
+      </td>
+    </tr>
+  ))}
+  {discounts.length === 0 && (
+    <tr>
+      <td colSpan="7" className="text-center">No discounts found.</td>
+    </tr>
+  )}
+</tbody>
 
-              <td>
-                <button className="btn btn-sm btn-warning me-2" onClick={() => handleEdit(d)}>
-                  Edit
-                </button>
-                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(d._id)}>
-                  Delete
-                </button>
-              </td>
-            </tr>
-          ))}
-          {discounts.length === 0 && (
-            <tr>
-              <td colSpan="4" className="text-center">No discounts found.</td>
-            </tr>
-          )}
-        </tbody>
       </table>
+      </div>
     </div>
   );
 };

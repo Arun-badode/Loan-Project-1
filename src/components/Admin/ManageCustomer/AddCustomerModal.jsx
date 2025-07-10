@@ -34,7 +34,7 @@ const AddCustomerModal = ({ show, handleClose }) => {
     if (panDoc) formData.append('panDoc', panDoc);
 
     try {
-      await axios.post(`${BASE_URL}/createcustomer`, formData, {
+      await axios.post(`${BASE_URL}/createcustumer`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 

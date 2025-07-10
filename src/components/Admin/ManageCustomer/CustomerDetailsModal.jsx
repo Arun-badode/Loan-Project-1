@@ -3,7 +3,7 @@ import { Modal, Button, Badge } from 'react-bootstrap';
 
 const CustomerDetailsModal = ({ show, handleClose, customer }) => {
   if (!customer) return null;
-//  console.log(customer)
+ console.log(customer)
 
   return (
     <Modal show={show} onHide={handleClose} size="lg" centered backdrop="static" className="modal-green">
@@ -27,9 +27,9 @@ const CustomerDetailsModal = ({ show, handleClose, customer }) => {
               <p className="mb-2"><strong>Approved Limit:</strong> ${customer.approvedAmount}</p>
               <p className="mb-2"><strong>Factor Rate:</strong> {customer.factorRate} </p>
               <p className="mb-2"><strong>Term type:</strong> {customer.term_type} </p>
-              <p className="mb-2"><strong>Term:</strong> {customer.term_month} months</p>
+              <p className="mb-2"><strong>Installment:</strong> ${customer.installment} </p>
               <p className="mb-2"><strong>Current Balance:</strong>$ {customer.availBalance}</p>
-              <p className="mb-2"><strong>total Repayment :</strong> ${customer.totalRepayment}</p>
+              <p className="mb-2"><strong>total Payback :</strong> ${customer.remainingRepayment}</p>
               <p className="mb-0">
                 <strong>Status:</strong>{" "}
                 <span className={`badge text-capitalize fw-semibold px-3 py-1 

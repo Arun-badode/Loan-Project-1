@@ -15,7 +15,7 @@ const RestoreModal = ({ show, handleClose, customer ,refreshCustomers }) => {
         { customerStatus: "InReview" }
       );
 
-      alert(`✅ Customer "${customer.customerName}" has been disqualified.`);
+      alert(`✅ Customer "${customer.customerName}" has been Restore.`);
       handleClose();
        if (refreshCustomers) refreshCustomers();
     } catch (error) {
@@ -40,7 +40,7 @@ const RestoreModal = ({ show, handleClose, customer ,refreshCustomers }) => {
           Cancel
         </Button>
         <Button variant="success" onClick={handleDisqualify}>
-        Suspend Customer
+        Restore Customer
         </Button>
       </Modal.Footer>
     </Modal>

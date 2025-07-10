@@ -98,12 +98,9 @@ const handleCreditSubmit = async (e) => {
     </div>
   </Alert>
 ) : (
-  <Alert className="mb-4" variant="danger">
-    <Alert.Heading>
-      <i className="fas fa-ban me-2"></i> Not Eligible
-    </Alert.Heading>
+  <Alert className="mb-4" variant="success">
     <p>
-      You are currently not eligible for a credit increase.
+  Pay back 50% of your total credit limit with 100% on-time payments and you may be eligible for a credit increase and rate deduction.
     </p>
   </Alert>
 )}
@@ -205,7 +202,7 @@ const handleCreditSubmit = async (e) => {
       </div>
 
          {/* 🔔 Minimum Draw Modal */}
-      <Modal show={showPopup} onHide={() => setShowPopup(false)} centered backdrop="static">
+      <Modal show={showPopup} onHide={() => setShowPopup(false)} centered >
         <Modal.Header closeButton className="card-green">
           <Modal.Title>
             <i className="fas fa-exclamation-triangle me-2"></i> Action Required
@@ -237,13 +234,20 @@ const handleCreditSubmit = async (e) => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={handleCreditSubmit}>
-            <Form.Group className="mb-3">
-              <Form.Label>Requested Amount</Form.Label>
-              <Form.Control type="number"
-                placeholder="Enter amount"
-                value={creditAmount}
-                onChange={(e) => setCreditAmount(e.target.value)}  required  />
-            </Form.Group>
+           <Form.Group className="mb-3">
+  <Form.Label>Requested Amount</Form.Label>
+  <div className="input-group">
+    <span className="input-group-text">$</span>
+    <Form.Control
+      type="number"
+      placeholder="Enter amount"
+      value={creditAmount}
+      onChange={(e) => setCreditAmount(e.target.value)}
+      required
+    />
+  </div>
+</Form.Group>
+
 
             <Form.Group className="mb-3">
               <Form.Label>Upload Bank Statement</Form.Label>

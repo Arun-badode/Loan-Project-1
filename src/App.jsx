@@ -29,6 +29,7 @@ import ProtectedRoute from "./ProtectedRoute/ProtectedRoute";
 import Notifications from "./components/Admin/Notifications/Notifications";
 import Report from "./components/Custpmer/Report/Report";
 import Discount from "./components/Admin/Discount/Discount";
+import SupportRequest from "./components/Admin/SupportRequest/SupportRequest";
 
 
 function App() {
@@ -91,6 +92,7 @@ const hideLayout =
   <Route path="/payoff" element={<ProtectedRoute><PayoffManagement /></ProtectedRoute>} />
   <Route path="/Notification" element={<ProtectedRoute><Notifications /></ProtectedRoute>} />
   <Route path="/discount" element={<ProtectedRoute><Discount /></ProtectedRoute>} />
+  <Route path="/SupportRequest" element={<ProtectedRoute><SupportRequest /></ProtectedRoute>} />
 
   {/* Protected Customer Routes */}
   <Route path="/customer-dashboard" element={<ProtectedRoute><Customerdashboard /></ProtectedRoute>} />

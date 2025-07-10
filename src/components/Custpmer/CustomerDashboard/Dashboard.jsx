@@ -167,7 +167,7 @@ const handleCreditSubmit = async (e) => {
 <div className="col-12 col-md-6 col-lg-4">
   <div className="card shadow-sm border-0 card-green h-100">
     <div className="card-body">
-      <h6 className="text-muted">Installment</h6>
+      <h6 className="text-muted">Payment</h6>
       <h3 className="text-success fw-bold">
         ${dashboardData?.installment || "0.00"}
       </h3>

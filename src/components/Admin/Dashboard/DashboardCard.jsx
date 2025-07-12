@@ -54,7 +54,7 @@ const DashboardCard = () => {
             <div className="p-4 rounded shadow-sm card-green h-100">
               <div className="d-flex justify-content-between align-items-start">
                 <div>
-                  <p className="mb-1 text-muted">Total Customers</p>
+                  <p className="mb-1 text-muted">Total Merchant </p>
                   <h5 className="fw-bold">{dashboardStats.totalCustomers}</h5>
                   <small className="text-success">+15% from last month</small>
                 </div>

@@ -5,9 +5,14 @@ import moment from "moment";
 const Notifications = () => {
   const [emailOptOut, setEmailOptOut] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [customers, setCustomers] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [customMessage, setCustomMessage] = useState("");
 
   useEffect(() => {
     fetchNotifications();
+    fetchCustomers();
   }, []);
 
   const fetchNotifications = async () => {
@@ -19,6 +24,16 @@ const Notifications = () => {
     }
   };
 
+  const fetchCustomers = async () => {
+    try {
+      const res = await axiosInstance.get("/custumers");
+      // console.log(res.data.customers)
+      setCustomers(res.data?.customers || []);
+    } catch (error) {
+      console.error("❌ Failed to fetch customers:", error);
+    }
+  };
+
   const handleDismiss = (id) => {
     setNotifications((prev) => prev.filter((n) => n._id !== id));
   };
@@ -27,12 +42,41 @@ const Notifications = () => {
     setEmailOptOut((prev) => !prev);
   };
 
+  const handleCustomNotificationSubmit = async () => {
+    if (!selectedCustomer || !customMessage.trim()) {
+      alert("Please select a customer and write a message.");
+      return;
+    }
+
+    try {
+      await axiosInstance.post("/notification", {
+        customerId: selectedCustomer,
+        message: customMessage,
+      });
+
+      setShowModal(false);
+      setSelectedCustomer("");
+      setCustomMessage("");
+      fetchNotifications(); // Refresh list
+    } catch (error) {
+      console.error("❌ Failed to send notification:", error);
+      alert("Failed to send notification.");
+    }
+  };
+
   return (
     <div className="container mt-3 p-3">
-      <h2 className="page-heading">Notifications & Alerts</h2>
-      <p className="page-subheading">Stay updated on system announcements and updates.</p>
+     <h2 className="page-heading">Notifications & Alerts</h2>
+<p className="page-subheading">Stay updated on system announcements and updates.</p>
 
-      {/* ✅ Email opt-out toggle */}
+<div className="mb-3">
+  <button className="btn btn-success" onClick={() => setShowModal(true)}>
+    ➕ Add Custom Message
+  </button>
+</div>
+
+
+      {/* Email Opt-Out Toggle */}
       <div className="mb-3">
         <div className="form-check form-switch">
           <input
@@ -55,7 +99,7 @@ const Notifications = () => {
         </small>
       </div>
 
-      {/* ✅ Notification List */}
+      {/* Notifications List */}
       <div className="row g-3">
         {notifications.length > 0 ? (
           notifications.map((note) => (
@@ -66,10 +110,10 @@ const Notifications = () => {
                     <p className="mb-1">{note.message}</p>
                     <small className="text-muted">
                       🕒 {moment(note.createdAt).format("MMM DD, YYYY - hh:mm A")}
-                      {(note.customerName && note.customerName !== "N/A") && (
+                      {note.customerName && note.customerName !== "N/A" && (
                         <> | 👤 <strong>{note.customerName}</strong></>
                       )}
-                      {(note.customerId && note.customerId !== "N/A") && (
+                      {note.customerId && note.customerId !== "N/A" && (
                         <> (ID: <strong>{note.customerId.slice(-9).toUpperCase()}</strong>)</>
                       )}
                     </small>
@@ -92,6 +136,58 @@ const Notifications = () => {
           </div>
         )}
       </div>
+
+      {/* Modal for Custom Message */}
+      {showModal && (
+        <div className="modal fade show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Send Custom Notification</h5>
+                <button type="button" className="btn-close" onClick={() => setShowModal(false)}></button>
+              </div>
+              <div className="modal-body">
+                {/* Customer Select */}
+                <div className="mb-3">
+                  <label className="form-label">Select Merchant </label>
+                  <select
+                    className="form-select"
+                    value={selectedCustomer}
+                    onChange={(e) => setSelectedCustomer(e.target.value)}
+                  >
+                    <option value="">-- Select --</option>
+                    {customers.map((cust) => (
+                      <option key={cust._id} value={cust._id}>
+                        {cust.customerName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Message Input */}
+                <div className="mb-3">
+                  <label className="form-label">Message</label>
+                  <textarea
+                    className="form-control"
+                    rows="3"
+                    value={customMessage}
+                    onChange={(e) => setCustomMessage(e.target.value)}
+                    placeholder="Type your custom message here..."
+                  ></textarea>
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button className="btn btn-secondary" onClick={() => setShowModal(false)}>
+                  Cancel
+                </button>
+                <button className="btn btn-success" onClick={handleCustomNotificationSubmit}>
+                  Send Notification
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

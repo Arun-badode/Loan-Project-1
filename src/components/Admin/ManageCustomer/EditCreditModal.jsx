@@ -127,7 +127,7 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
           </Form.Group>
 
         <Form.Group className="mb-3">
-            <Form.Label>Installment Frequency</Form.Label>
+            <Form.Label>Payment Frequency</Form.Label>
             <Form.Select
               name="term_type"
               value={formData.term_type}
@@ -157,7 +157,7 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
 
       
           <Form.Group className="mb-3">
-            <Form.Label>Installment</Form.Label>
+            <Form.Label>Payment</Form.Label>
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
               <Form.Control

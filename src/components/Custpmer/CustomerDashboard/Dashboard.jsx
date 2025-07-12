@@ -3,7 +3,8 @@ import { Modal, Button, Alert, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../../utils/axiosInstance";
 import LastedTrans from "./LastedTrans";
-import Ladyimage from "../../../assets/Ladyimage.png"; // Update with your actual image path1
+import Ladyimage from "../../../assets/Ladyimage.png"; 
+import logo from "../../../assets/logo.png"; 
 
 const CustomerDashboard = () => {
 
@@ -75,50 +76,29 @@ const handleCreditSubmit = async (e) => {
 };
 
   return (
-    <div className="container p-3 mt-4">
+    <div className="container p-3 mt-2">
       {/* Welcome Section */}
-      <div className="mb-4">
+      <div className="mb-2">
         <h2 className="page-heading">Welcome, {userData?.customerName || "Customer"}</h2>
         <p className="page-subheading">Here's your line of credit summary</p>
       </div>
 
 
 {/* Welcome msg  */}
-<div
-  className="d-flex justify-content-between align-items-center "
-  style={{
-    background: "linear-gradient(90deg, #d1f7e8, #e6ffee)",
-    borderRadius: "0.75rem",
-    boxShadow: "0 2px 6px rgba(0,0,0,0.08)",
-    marginBottom: "1rem",
-    height: "80px", // ⬅ fixed height to avoid extra vertical space
-    overflow: "hidden",
-    paddingLeft: "1rem",
-    paddingRight: "1rem",
-  }}
->
-  <p className="mb-0 fw-semibold text-success fs-5" >
-    “Ladybugs bring good fortune.”
-  </p>
+<div className="d-flex justify-content-between align-items-center py-5"
+  style={{ background: "linear-gradient(90deg, #d1f7e8, #e6ffee)",  borderRadius: "0.75rem",
+    boxShadow: "0 2px 6px rgba(0,0,0,0.08)",  marginBottom: "1rem",  height: "80px",   overflow: "hidden",  paddingLeft: "1rem",  paddingRight: "1rem", }}>
+ {/* Left side: Logo + Quote */}
+  <div className="d-flex align-items-center gap-3">
+    <img src={logo} alt="Logo" style={{ height: "70px", width: "auto" }} />
+    <p className="mb-0 fw-semibold text-success fs-5">
+      “Ladybugs bring good fortune.”
+    </p>
+  </div>
 
-  <img
-    src={Ladyimage} // update the path
-    alt="Ladybug"
-    style={{
-      width: "60px",
-      height: "60px",
-      borderRadius: "50%",
-      border: "2px solid #28a745",
-      objectFit: "cover",
-    }}
-  />
+  <img  src={Ladyimage}  alt="Ladybug"
+    style={{  width: "auto",  height: "70px",  borderRadius: "50%",  border: "2px solid #28a745",    objectFit: "cover", }}/>
 </div>
-
-
-
-
-
-    
     {/* ✅ Credit Increase Alert */}
 {userData?.creditIncrease ? (
   <Alert className="mb-4" variant="success">
@@ -137,7 +117,7 @@ const handleCreditSubmit = async (e) => {
 ) : (
   <Alert className="mb-4" variant="success">
     <p>
-  Pay back 50% of your total credit limit with 100% on-time payments and you may be eligible for a credit increase and rate deduction.
+  Pay back 50% of your total credit limit with 100% on-time payments and you may be eligible for a credit increase and rate Reduction.
     </p>
   </Alert>
 )}

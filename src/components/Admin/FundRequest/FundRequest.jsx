@@ -123,8 +123,8 @@ const handleDecline = async (id) => {
             <Table hover className="mb-0">
               <thead className="table-success">
                 <tr>
-                  <th>Customer ID</th>
-                  <th>Customer Name</th>
+                  <th>Merchant  ID</th>
+                  <th>Merchant  Name</th>
                   <th>Requested Amount </th>
                   <th>Date</th>
                   <th>Status</th>

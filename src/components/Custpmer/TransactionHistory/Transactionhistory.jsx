@@ -109,7 +109,7 @@ const exportToExcel = () => {
       <div className="card shadow-sm border-0 card-green">
         <div className="card-body">
           {loading ? (
-            <p>Loading...</p>
+            <p className="text-center">Loading...</p>
           ) : error ? (
             <p className="text-danger">{error}</p>
           ) : (

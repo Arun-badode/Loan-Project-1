@@ -62,8 +62,8 @@ const WithdrawHistory = () => {
             <table className="table table-hover align-middle">
               <thead className="table-success">
                 <tr>
-                  <th>customer Id</th>
-                  <th>customer Name</th>
+                  <th>Merchant  Id</th>
+                  <th>Merchant  Name</th>
                   <th>Type</th>
                   <th>Requested Amount</th>
                   <th>Date</th>

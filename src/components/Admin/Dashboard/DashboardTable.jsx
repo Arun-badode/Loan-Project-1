@@ -52,7 +52,7 @@ const DashboardTable = () => {
             <Table hover className="mb-0">
               <thead className="table-light">
                 <tr>
-                  <th>Customer ID</th>
+                  <th>Merchant  ID</th>
                   <th>Name</th>
                   <th>Requested</th>
                   <th>Date</th>

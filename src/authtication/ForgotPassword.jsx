@@ -34,10 +34,10 @@ const handleSubmit = async (e) => {
     };
 
     await emailjs.send(
-      "service_vvp6mfh",
-      "template_kk0mrob",
+      "service_56d40ci",
+      "template_gu3rnhe",
       emailParams,
-      "B78PsxsVYoIyekT6g"
+      "rq4-yuCE_eCh_aNjL"
     );
 
     Swal.fire("Success", "Reset link sent. Please check your email.", "success");

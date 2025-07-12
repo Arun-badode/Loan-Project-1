@@ -35,7 +35,7 @@ const Sidebar = ({ collapsed, menuItemClick }) => {
   // Menu items configuration
   const adminMenuItems = [
     { path: "/dashboard", icon: "fa-tachometer-alt", text: "Dashboard" },
-    { path: "/managecustomer", icon: "fa-users", text: "Manage_Customers" },
+    { path: "/managecustomer", icon: "fa-users", text: "Customer Management" },
     { path: "/fundrequest", icon: "fa-hand-holding-usd", text: "Fund Requests" },
     { path: "/discount", icon: "fa-percentage", text: "Discount" },
     { path: "/payoff", icon: "fa-comments-dollar", text: "Payoff Management" },

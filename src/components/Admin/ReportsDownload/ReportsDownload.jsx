@@ -135,15 +135,15 @@ const customerOptions = customersList.map((cust) => ({
             </div>
 
            <div className="col-md-4">
-      <label className="form-label">Customer</label>
+      <label className="form-label">Merchant </label>
       <ReactSelect
-        options={[{ value: "", label: "All Customers" }, ...customerOptions]}
+        options={[{ value: "", label: "All Merchant " }, ...customerOptions]}
         onChange={handleCustomerChange}
         isSearchable
         placeholder="Select or search customer"
         value={
           customerOptions.find((opt) => opt.value === customer) ||
-          { value: "", label: "All Customers" }
+          { value: "", label: "All Merchant " }
         }
       />
     </div>

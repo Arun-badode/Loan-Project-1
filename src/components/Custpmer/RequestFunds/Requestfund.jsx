@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../utils/axiosInstance";
-
 const Requestfund = () => {
   const [customer, setCustomer] = useState(null);
   const [withdrawAmount, setWithdrawAmount] = useState("");
@@ -15,7 +14,6 @@ const Requestfund = () => {
         const response = await axiosInstance.get(`/custumers`, {
           params: { customerId: loginId }
         });
-
         if (response.data && Array.isArray(response.data.customers)) {
           setCustomer(response.data.customers[0]);
         }
@@ -23,10 +21,8 @@ const Requestfund = () => {
         console.error("❌ Error fetching customer data:", error);
       }
     };
-
     fetchCustomerData();
   }, []);
-
   const handleWithdraw = async (e) => {
     e.preventDefault();
 
@@ -43,7 +39,6 @@ const Requestfund = () => {
       setSuccess("");
       return;
     }
-
     try {
       const payload = {
         customerId: customer._id,
@@ -51,7 +46,6 @@ const Requestfund = () => {
         availableAmount: customer.availBalance,
         withdrawAmount: withdrawAmount
       };
-
       const response = await axiosInstance.post("/withdrawpayment", payload);
       setSuccess("✅ Withdrawal request submitted successfully!");
       setError("");
@@ -105,20 +99,35 @@ const Requestfund = () => {
     </div>
 
     {/* Show remaining balance calculation */}
-    {withdrawAmount && (
-      <div className="col-12 mt-3">
-        <div className="bg-light p-3 rounded">
-          {/* <p><strong>Withdraw Amount:</strong> ${parseFloat(withdrawAmount).toFixed(2)}</p> */}
-          <p><strong>Remaining Balance:</strong> $
-            {(
-              (parseFloat(customer?.availBalance || 0) - parseFloat(withdrawAmount || 0)) >= 0
-                ? (parseFloat(customer?.availBalance || 0) - parseFloat(withdrawAmount || 0)).toFixed(2)
-                : 0
-            )}
-          </p>
-        </div>
-      </div>
-    )}
+  {withdrawAmount && (
+  <div className="col-12 mt-3">
+    <div className="bg-light p-3 rounded">
+      {/* ✅ Remaining Balance */}
+      <p><strong>Remaining Balance:</strong> $
+        {(
+          (parseFloat(customer?.availBalance || 0) - parseFloat(withdrawAmount || 0)) >= 0
+            ? (parseFloat(customer?.availBalance || 0) - parseFloat(withdrawAmount || 0)).toFixed(2)
+            : 0
+        )}
+      </p>
+
+     <p><strong>Current Payment:</strong> $ 
+  {(
+    parseFloat(customer?.currentAmount || 0) +
+    parseFloat(withdrawAmount || 0)
+  ).toFixed(2)}
+</p>
+
+ <p><strong>New Payment Amount:</strong> $
+        {(
+          parseFloat(customer?.NewAmount || 0) +
+          (parseFloat(withdrawAmount || 0) * parseFloat(customer?.factorRate || 1))
+        ).toFixed(2)}
+      </p>
+
+    </div>
+  </div>
+)}
 
     <div className="col-12">
       <button type="submit" className="btn btn-success py-2 px-4">
@@ -127,7 +136,6 @@ const Requestfund = () => {
     </div>
   </div>
 </form>
-
           </div>
         </div>
       </div>

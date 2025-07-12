@@ -8,7 +8,7 @@ const CustomerDetailsModal = ({ show, handleClose, customer }) => {
   return (
     <Modal show={show} onHide={handleClose} size="lg" centered backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Customer Details - {customer.customerName}</Modal.Title>
+        <Modal.Title>Merchant Details - {customer.customerName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="row">
@@ -27,7 +27,7 @@ const CustomerDetailsModal = ({ show, handleClose, customer }) => {
               <p className="mb-2"><strong>Approved Limit:</strong> ${customer.approvedAmount}</p>
               <p className="mb-2"><strong>Factor Rate:</strong> {customer.factorRate} </p>
               <p className="mb-2"><strong>Term type:</strong> {customer.term_type} </p>
-              <p className="mb-2"><strong>Installment:</strong> ${customer.installment} </p>
+              <p className="mb-2"><strong>Payment:</strong> ${customer.installment} </p>
               <p className="mb-2"><strong>Current Balance:</strong>$ {customer.availBalance}</p>
               <p className="mb-2"><strong>total Payback :</strong> ${customer.remainingRepayment}</p>
               <p className="mb-0">

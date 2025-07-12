@@ -14,7 +14,7 @@ const DisqualifyModal = ({ show, handleClose, customer ,refreshCustomers }) => {
         { customerStatus: "Suspended" }
       );
 
-      alert(`✅ Customer "${customer.customerName}" has been disqualified.`);
+      alert(`✅ Merchant  "${customer.customerName}" has been disqualified.`);
       handleClose();
        if (refreshCustomers) refreshCustomers();
     } catch (error) {
@@ -26,12 +26,12 @@ const DisqualifyModal = ({ show, handleClose, customer ,refreshCustomers }) => {
   return (
     <Modal show={show} onHide={handleClose} centered backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Suspend Customer  - {customer.customerName}</Modal.Title>
+        <Modal.Title>Suspend Merchant   - {customer.customerName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="alert alert-danger">
           <i className="fas fa-exclamation-triangle me-2"></i>
-          Are you sure you want to Suspend  this customer? 
+          Are you sure you want to Suspend  this Merchant ? 
         </div>
       </Modal.Body>
       <Modal.Footer>
@@ -39,7 +39,7 @@ const DisqualifyModal = ({ show, handleClose, customer ,refreshCustomers }) => {
           Cancel
         </Button>
         <Button variant="danger" onClick={handleDisqualify}>
-        Suspend Customer
+        Suspend Merchant 
         </Button>
       </Modal.Footer>
     </Modal>

@@ -36,10 +36,10 @@ const CustomerSupport = () => {
     // Send Email via EmailJS
     try {
       await emailjs.send(
-        "service_vvp6mfh",
-        "template_k9h6nqi",
+        "service_56d40ci",
+        "template_yxebwpp",
         templateParams,
-        "B78PsxsVYoIyekT6g"
+        "rq4-yuCE_eCh_aNjL"
       );
       alert("✅ Message sent in Email!");
 

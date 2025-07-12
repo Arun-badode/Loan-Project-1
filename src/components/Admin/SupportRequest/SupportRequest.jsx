@@ -33,7 +33,7 @@ const SupportRequest = () => {
 
   return (
     <div className="p-4">
-      <h3 className="mb-4">Customer Support Messages</h3>
+      <h3 className="mb-4">Merchant  Support Messages</h3>
 
       <div className="card shadow-sm border-0">
         <div className="card-body">
@@ -41,8 +41,8 @@ const SupportRequest = () => {
             <table className="table table-hover align-middle">
               <thead className="table-success">
                 <tr>
-                  <th>Customer ID</th>
-                  <th>Customer Name</th>
+                  <th>Merchant  ID</th>
+                  <th>Merchant  Name</th>
                   <th>Subject</th>
                   <th>Message</th>
                   <th>Date</th>

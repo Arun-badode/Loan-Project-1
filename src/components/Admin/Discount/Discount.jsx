@@ -111,7 +111,7 @@ const formatDate = (dateString) => {
 
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">Select Customer</label>
+          <label className="form-label">Select Merchant </label>
           <select
             name="customerId"
             className="form-select"
@@ -119,7 +119,7 @@ const formatDate = (dateString) => {
             onChange={handleChange}
             required
           >
-            <option value="">-- Select Customer --</option>
+            <option value="">-- Select Merchant  --</option>
             {customers.map((cust) => (
               <option key={cust._id} value={cust._id}>
                 {cust.customerName}
@@ -167,8 +167,7 @@ const formatDate = (dateString) => {
         <div className="row">
           <div className="col-md-6 mb-3">
             <label className="form-label">5% Discount</label>
-            <input
-              type="number"
+            <input type="number"
               name="discountFive"
               className="form-control"
               value={formData.discountFive}
@@ -212,7 +211,7 @@ const formatDate = (dateString) => {
       <table className="table table-bordered">
      <thead>
   <tr>
-    <th>Customer</th>
+    <th>Merchant</th>
     <th>10% (Start-End)</th>
     <th>10% Amount</th>
     <th>5% (Start-End)</th>
@@ -226,9 +225,9 @@ const formatDate = (dateString) => {
     <tr key={d._id}>
       <td>{customers.find(c => c._id === d.customerId)?.customerName || d.customerId}</td>
       <td>{d.discountTen}% ({formatDate(d.startDateTen)} to {formatDate(d.endDateTen)})</td>
-      <td>${parseFloat(d.TenDicountAmount || 0).toFixed(2)}</td>
+      <td>${parseFloat(d.TenDiscountAmount || 0).toFixed(2)}</td>
       <td>{d.discountFive}% ({formatDate(d.startDateFive)} to {formatDate(d.endDateFive)})</td>
-      <td>${parseFloat(d.FiveDicountAmount || 0).toFixed(2)}</td>
+      <td>${parseFloat(d.FiveDiscountAmount || 0).toFixed(2)}</td>
       <td>
         <span className={`badge bg-${d.discountStatus === 'Active' ? 'success' : 'secondary'}`}>
           {d.discountStatus}

@@ -60,9 +60,9 @@ const PayoffManagement = () => {
         <table className="table table-hover align-middle">
           <thead className="table-success">
             <tr>
-              <th>Customer ID</th>
+              <th>Merchant ID</th>
               <th>Date</th>
-              <th>Customer Name</th>
+              <th>Merchant Name</th>
               <th>Amount</th>
               <th>Status</th>
               <th>Action</th>

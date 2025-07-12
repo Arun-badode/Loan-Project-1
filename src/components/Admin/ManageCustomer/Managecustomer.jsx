@@ -35,12 +35,12 @@ const ManageCustomer = () => {
   }, []);
 
 const handleDelete = async (customerId) => {
-  const confirmDelete = window.confirm("Are you sure you want to permanently delete this customer? This action cannot be undone.");
+  const confirmDelete = window.confirm("Are you sure you want to permanently delete this Merchant ? This action cannot be undone.");
 
   if (confirmDelete) {
     try {
       const response = await axiosInstance.delete(`/deleteCustomer/${customerId}`);
-      alert("✅ Customer deleted successfully.");
+      alert("✅ Merchant  deleted successfully.");
       
       // 🔁 Refresh customer list
       fetchCustomers();
@@ -50,7 +50,6 @@ const handleDelete = async (customerId) => {
     }
   }
 };
-
 
 // Filter customers based on search term
   const filteredCustomers = customers?.filter(customer =>
@@ -90,8 +89,8 @@ const handleDelete = async (customerId) => {
         {/* Left Side: Heading + Subheading */}
         <Col xs="auto" className="text-start">
           <div className="d-flex flex-column">
-            <h4 className="mb-1 page-heading">Customers Management</h4>
-            <p className="mb-0 small text-muted">List of all customers and manage their details</p>
+            <h4 className="mb-1 page-heading">Customer Management</h4>
+            <p className="mb-0 small text-muted">Manage Merchant Settings</p>
           </div>
         </Col>
 
@@ -100,10 +99,10 @@ const handleDelete = async (customerId) => {
           <div className="d-flex flex-row align-items-center gap-2">
             <div className="input-group flex-grow-1">
               <span className="input-group-text">  <i className="fas fa-search" /></span>
-              <input type="text"  className="form-control" placeholder="Search customers..." defaultValue="" onChange={(e)=> setSearchTerm(e.target.value)}   />
+              <input type="text"  className="form-control" placeholder="Search Merchant..." defaultValue="" onChange={(e)=> setSearchTerm(e.target.value)}   />
             </div>
              <button className="btn btn-success text-nowrap"  title="Add New Customer"  onClick={() => setShowAddModal(true)}>
-              + Add Customer </button>
+              + Add Merchant  </button>
           </div>
         </Col>
       </Row>

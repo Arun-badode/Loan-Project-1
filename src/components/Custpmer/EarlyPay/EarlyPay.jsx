@@ -42,40 +42,47 @@ const EarlyPay = () => {
 const getDiscountedAmount = () => {
   if (!customerData) return '0.00';
 
-  const totalRepay = parseFloat(customerData.remainingRepayment || 0);
   const approvedAmount = parseFloat(customerData.approvedAmount || 0);
+  const factorRate = parseFloat(customerData.factorRate || 0);
 
-  if (totalRepay <= 0) return '0.00';
-
-  // If no discountInfo or dates are invalid, return totalRepay
-  if (!discountInfo) return totalRepay.toFixed(2);
+  if (approvedAmount <= 0 || factorRate <= 0) {
+    return '0.00';
+  }
 
   const today = new Date();
-  const startTen = new Date(discountInfo.startDateTen);
-  const endTen = new Date(discountInfo.endDateTen);
-  const startFive = new Date(discountInfo.startDateFive);
-  const endFive = new Date(discountInfo.endDateFive);
+  const startTen = new Date(discountInfo?.startDateTen);
+  const endTen = new Date(discountInfo?.endDateTen);
+  const startFive = new Date(discountInfo?.startDateFive);
+  const endFive = new Date(discountInfo?.endDateFive);
 
-  const isTenValid = !isNaN(startTen.getTime()) && !isNaN(endTen.getTime());
-  const isFiveValid = !isNaN(startFive.getTime()) && !isNaN(endFive.getTime());
+  let discountPercent = 0;
 
-  const difference = totalRepay - approvedAmount;
-
-  // No discount applied
-  if (!isTenValid && !isFiveValid) return totalRepay.toFixed(2);
-
-  if (isTenValid && today >= startTen && today <= endTen) {
-    const discountAmount = difference * (discountInfo.discountTen / 100);
-    return (totalRepay - discountAmount).toFixed(2);
+  if (
+    discountInfo &&
+    !isNaN(startTen.getTime()) &&
+    !isNaN(endTen.getTime()) &&
+    today >= startTen &&
+    today <= endTen
+  ) {
+    discountPercent = discountInfo.discountTen || 0;
+  } else if (
+    discountInfo &&
+    !isNaN(startFive.getTime()) &&
+    !isNaN(endFive.getTime()) &&
+    today >= startFive &&
+    today <= endFive
+  ) {
+    discountPercent = discountInfo.discountFive || 0;
   }
 
-  if (isFiveValid && today >= startFive && today <= endFive) {
-    const discountAmount = difference * (discountInfo.discountFive / 100);
-    return (totalRepay - discountAmount).toFixed(2);
-  }
+  // Apply discount to factorRate
+  const discountValue = discountPercent / 100;
+  const discountedFactorRate = factorRate - discountValue;
+  const discountedAmount = approvedAmount * discountedFactorRate;
 
-  return totalRepay.toFixed(2);
+  return discountedAmount.toFixed(2);
 };
+
 
 
   const getCurrentDiscountMessage = () => {
@@ -163,7 +170,6 @@ const handleEarlyPayoff = async (e) => {
 
           {customerData && (
             <Alert variant="secondary">
-              {/* <div><strong>Approved Amount:</strong> ${parseFloat(customerData.approvedAmount).toFixed(2)}</div> */}
               <div><strong>Current Payoff Amount:</strong> ${parseFloat(customerData.remainingRepayment).toFixed(2)}</div>
 
               {isDiscountApplied() && (

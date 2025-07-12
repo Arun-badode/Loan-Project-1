@@ -53,7 +53,7 @@ import Loader from "../../../utils/Loader.jsx";
       <div className="container mt-3 p-3">
         <h2 className="page-heading">Credit Upgrade Requests</h2>
         <p className="page-subheading">
-          Review and manage credit upgrade requests submitted by customers.
+          Review and manage credit upgrade requests submitted by Merchant.
         </p>
 
         <div className="card shadow-sm border-0">
@@ -67,8 +67,8 @@ import Loader from "../../../utils/Loader.jsx";
                 <table className="table table-hover align-middle">
                   <thead className="table-success">
                     <tr>
-                      <th>Customer ID</th>
-                      <th>Name</th>
+                      <th>Merchant  ID</th>
+                      <th>Merchant Name</th>
                       <th>Repayment</th>
                       <th>Amount</th>
                       <th>Date</th>

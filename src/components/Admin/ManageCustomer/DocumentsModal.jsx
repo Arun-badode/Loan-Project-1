@@ -39,7 +39,7 @@ const VerifyCustomerModal = ({ show, handleClose, customer,refreshCustomers  }) 
   return (
     <Modal show={show} onHide={handleClose} centered size="lg" backdrop="static" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Verify Customer - {customer.customerName}</Modal.Title>
+        <Modal.Title>Verify Merchant  - {customer.customerName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         {renderDocument("GST Document", customer.gstDoc)}

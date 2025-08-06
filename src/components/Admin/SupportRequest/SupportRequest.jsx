@@ -41,7 +41,7 @@ const SupportRequest = () => {
             <table className="table table-hover align-middle">
               <thead className="table-success">
                 <tr>
-                  <th>Merchant  ID</th>
+                  <th>Account Number</th>
                   <th>Merchant  Name</th>
                   <th>Subject</th>
                   <th>Message</th>
@@ -59,17 +59,20 @@ const SupportRequest = () => {
                 ) : (
                   requests.map((req) => (
                     <tr key={req._id}>
-                      <td>{req.customerId?.toString().slice(-9).toUpperCase() || "000"}</td>
+                      <td>{req.einNumber || "000"}</td>
                       <td>{req.customerName || "UNNAMED"}</td>
                       <td>{req.subject || "-"}</td>
                       <td>{req.message || "-"}</td>
-                      <td>
-                        {new Date(req.createdAt).toLocaleDateString("en-IN", {
-                          day: "2-digit",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </td>
+                     <td>
+  {req?.createdAt
+    ? new Date(req.createdAt).toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      })
+    : "N/A"}
+</td>
+
                       <td>
                         <Button
                           variant="link"

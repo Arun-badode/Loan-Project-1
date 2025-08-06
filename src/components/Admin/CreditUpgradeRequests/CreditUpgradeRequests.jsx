@@ -67,7 +67,7 @@ import Loader from "../../../utils/Loader.jsx";
                 <table className="table table-hover align-middle">
                   <thead className="table-success">
                     <tr>
-                      <th>Merchant  ID</th>
+                      <th>Account Number</th>
                       <th>Merchant Name</th>
                       <th>Repayment</th>
                       <th>Amount</th>
@@ -81,7 +81,7 @@ import Loader from "../../../utils/Loader.jsx";
                     {requests.map((req) => {
                       const {
                         _id,
-                        customerId,
+                        einNumber,
                         customerName,
                         repaymentDonePercent,
                         requestedAmount,
@@ -102,7 +102,7 @@ import Loader from "../../../utils/Loader.jsx";
 
                       return (
                         <tr key={_id}>
-                          <td>{customerId?.slice(-9) || "UNKNOWN"}</td>
+                          <td>{einNumber || "UNKNOWN"}</td>
                           <td>{customerName || "Unnamed"}</td>
                           <td>{repaymentDonePercent || "0%"}</td>
                           <td className="fw-bold text-success">

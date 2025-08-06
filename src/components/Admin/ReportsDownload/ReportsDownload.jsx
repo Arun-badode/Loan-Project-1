@@ -4,6 +4,7 @@ import autoTable from "jspdf-autotable";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
 import ReactSelect from "react-select";
+
 const ReportsDownload = () => {
   const [reportType, setReportType] = useState("draw");
   const [startDate, setStartDate] = useState("");
@@ -17,7 +18,7 @@ const ReportsDownload = () => {
     const fetchCustomers = async () => {
       try {
         const res = await axiosInstance.get("/custumers");
-        setCustomersList(res.data.customers || []);
+        setCustomersList(res?.data?.customers || []);
       } catch (error) {
         console.error("Failed to fetch customers", error);
       }
@@ -25,6 +26,28 @@ const ReportsDownload = () => {
     fetchCustomers();
   }, []);
 
+  // ✅ PDF Export Function
+  const exportPDF = (data) => {
+    const doc = new jsPDF();
+    doc.text("Generated Report", 14, 15);
+
+    const tableData = data.map((item, index) => [
+      index + 1,
+      `$${item.withdrawAmount}`,
+      item.withdrawStatus,
+      new Date(item.createdAt).toLocaleDateString(),
+    ]);
+
+    autoTable(doc, {
+      startY: 20,
+      head: [["#", "Requested Amount", "Status", "Date"]],
+      body: tableData,
+    });
+
+    doc.save("Report.pdf");
+  };
+
+  // ✅ Generate + Auto Download
   const handleDownload = async () => {
     if (!startDate || !endDate) {
       alert("Please select both start and end dates.");
@@ -48,8 +71,14 @@ const ReportsDownload = () => {
         },
       });
 
-      setReportData(response.data.data || []);
-      alert("Report fetched successfully!");
+      const data = response.data.data || [];
+      setReportData(data);
+
+      if (data.length > 0) {
+        exportPDF(data); // 🔥 Generate ke saath hi PDF download
+      } else {
+        alert("No records found for selected filters.");
+      }
     } catch (error) {
       console.error("Error fetching report:", error);
       alert("Failed to fetch report.");
@@ -58,42 +87,15 @@ const ReportsDownload = () => {
     }
   };
 
-const exportPDF = () => {
-  const doc = new jsPDF();
-
-  doc.text(" Report", 14, 15);
-
-  const tableData = reportData.map((item, index) => [
-    index + 1,
-    `$${item.withdrawAmount}`,
-    item.withdrawStatus,
-    new Date(item.createdAt).toLocaleDateString(),
-  ]);
-
-  autoTable(doc, {
-    startY: 20,
-    head: [
-      [
-        "#",
-        "Requested Amount",
-        "Status",
-        "Date",
-      ],
-    ],
-    body: tableData,
-  });
-
-  doc.save("Generate_Report.pdf");
-};
-
-const customerOptions = customersList.map((cust) => ({
+  const customerOptions = customersList.map((cust) => ({
     value: cust._id,
-    label: `${cust.customerName} (${cust._id.slice(-9).toUpperCase()})`,
+    label: `${cust.customerName} (${cust.einNumber})`,
   }));
 
   const handleCustomerChange = (selectedOption) => {
     setCustomer(selectedOption?.value || "");
   };
+
   return (
     <div className="container mt-3 p-3">
       <h2 className="page-heading">Reports & Downloads</h2>
@@ -108,8 +110,11 @@ const customerOptions = customersList.map((cust) => ({
           <div className="row g-4 mb-3">
             <div className="col-md-4">
               <label className="form-label">Report Type</label>
-              <select className="form-select" value={reportType}
-                onChange={(e) => setReportType(e.target.value)}>
+              <select
+                className="form-select"
+                value={reportType}
+                onChange={(e) => setReportType(e.target.value)}
+              >
                 <option value="draw">Draw History</option>
                 <option value="repayment">Repayment Logs</option>
                 <option value="funding">Funding Requests</option>
@@ -118,7 +123,9 @@ const customerOptions = customersList.map((cust) => ({
 
             <div className="col-md-3">
               <label className="form-label">Start Date</label>
-              <input type="date" className="form-control"
+              <input
+                type="date"
+                className="form-control"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
               />
@@ -126,83 +133,77 @@ const customerOptions = customersList.map((cust) => ({
 
             <div className="col-md-3">
               <label className="form-label">End Date</label>
-              <input
-                type="date"
-                className="form-control"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-              />
+              <input  type="date"  className="form-control"  value={endDate}  onChange={(e) => setEndDate(e.target.value)} />
             </div>
 
-           <div className="col-md-4">
-      <label className="form-label">Merchant </label>
-      <ReactSelect
-        options={[{ value: "", label: "All Merchant " }, ...customerOptions]}
-        onChange={handleCustomerChange}
-        isSearchable
-        placeholder="Select or search customer"
-        value={
-          customerOptions.find((opt) => opt.value === customer) ||
-          { value: "", label: "All Merchant " }
-        }
-      />
-    </div>
+            <div className="col-md-4">
+              <label className="form-label">Merchant </label>
+              <ReactSelect
+                options={[{ value: "", label: "All Merchant " }, ...customerOptions]}
+                onChange={handleCustomerChange}
+                isSearchable
+                placeholder="Select or search customer"
+                value={
+                  customerOptions.find((opt) => opt.value === customer) ||
+                  { value: "", label: "All Merchant " }
+                }
+              />
+            </div>
           </div>
 
-          <div className="text-end d-flex justify-content-end gap-2">
-            <button className="btn btn-success"
-              onClick={handleDownload}
-              disabled={loading}>
-              {loading ? "Fetching..." : "Generate Report"}
+          <div className="text-end">
+            <button className="btn btn-success" onClick={handleDownload} disabled={loading}>
+              {loading ? "Fetching..." : "Generate & Download Report"}
               <i className="fas fa-download ms-2"></i>
             </button>
-
-            {reportData?.length > 0 && (
-              <button className="btn btn-outline-primary" onClick={exportPDF}>
-                Export PDF <i className="fas fa-file-pdf ms-2"></i>
-              </button>
-            )}
           </div>
         </div>
       </div>
 
       {/* Report Table */}
-   {reportData && (
-  <div className="mt-5">
-    <h5 className="mb-3">Report Preview</h5>
-    <div className="table-responsive">
-      <table className="table table-bordered table-striped">
-        <thead className="table-light">
-          <tr>
-            <th>#</th>
-            <th>Requested Amount</th>
-            <th>Status</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          {reportData?.length > 0 ? (
-            reportData?.map((item, index) => (
-              <tr key={item._id}>
-                <td>{index + 1}</td>
-                <td>${item.withdrawAmount}</td>
-                <td>{item.withdrawStatus}</td>
-                <td>{new Date(item.createdAt).toLocaleDateString()}</td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="4" className="text-center text-muted">
-                No data available for the selected filters.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
-  </div>
-)}
-
+      {reportData && (
+        <div className="mt-5">
+          <h5 className="mb-3">Report Preview</h5>
+          <div className="table-responsive">
+            <table className="table table-bordered table-striped">
+              <thead className="table-light">
+                <tr>
+                  <th>#</th>
+                  <th>Requested Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reportData?.length > 0 ? (
+                  reportData?.map((item, index) => (
+                    <tr key={item._id}>
+                      <td>{index + 1}</td>
+                      <td>${item.withdrawAmount}</td>
+                      <td>{item.withdrawStatus}</td>
+                    <td>
+  {item?.createdAt
+    ? new Date(item.createdAt).toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      })
+    : "N/A"}
+</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan="4" className="text-center text-muted">
+                      No data available for the selected filters.
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -50,9 +50,9 @@ const DashboardTable = () => {
         <Card.Body className="p-0">
           <div className="table-responsive">
             <Table hover className="mb-0">
-              <thead className="table-light">
+              <thead className=" table-success">
                 <tr>
-                  <th>Merchant  ID</th>
+                  <th>Account Number</th>
                   <th>Name</th>
                   <th>Requested</th>
                   <th>Date</th>
@@ -64,10 +64,19 @@ const DashboardTable = () => {
                 {requests.length > 0 ? (
                   requests.map((req) => (
                     <tr key={req._id}>
-                      <td>{req.customerId?.slice(-9).toUpperCase()}</td>
-                      <td>{req.customerName}</td>
+                      <td>{req?.einNumber}</td>
+                      <td>{req?.customerName}</td>
                       <td>${Number(req.withdrawAmount).toLocaleString()}</td>
-                      <td>{formatDate(req.createdAt)}</td>
+                     <td>
+  {req.createdAt 
+    ? new Date(req.createdAt).toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric"
+      }) 
+    : "N/A"}
+</td>
+
                       <td>{getStatusBadge(req.withdrawStatus)}</td>
                       <td>
                         <Button

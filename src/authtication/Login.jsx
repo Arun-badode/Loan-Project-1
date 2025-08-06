@@ -9,6 +9,11 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+const togglePasswordVisibility = () => {
+  setShowPassword((prev) => !prev);
+};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,7 +63,8 @@ const Login = () => {
   return (
     <div className="container-fluid min-vh-100 d-flex justify-content-center align-items-center rounded-5" style={{ backgroundColor: "#ccf8db" }}>
       <div className="col-12 col-sm-8 col-md-6 col-lg-4 p-4 rounded shadow text-center">
-        <img  src={logo}  alt="Logo"  className="mb-3" style={{ height: "100px", objectFit: "contain" }}  />
+        <img src={logo}  alt="Logo"  className="mb-3" style={{ height: "100px", objectFit: "contain" }}  />
+        {/* <img  src="https://kiaantechnology.com/img/kt.png"  alt="Logo"  className="mb-3" style={{ height: "100px", objectFit: "contain" }}  /> */}
         <h4 className="mb-4 fw-bold" style={{ color: "#4d4d4d" }}>
           Client sign-in
         </h4>
@@ -68,11 +74,17 @@ const Login = () => {
               value={email}  onChange={(e) => setEmail(e.target.value)}
               style={{ borderColor: "#4d4d4d", color: "#4d4d4d", fontWeight: "500" }}/>
           </div>
-          <div className="mb-3">
-            <input  type="password"  className="form-control rounded-pill py-2 px-3"
-              placeholder="Password"  value={password}  onChange={(e) => setPassword(e.target.value)}
-              style={{ borderColor: "#4d4d4d", color: "#4d4d4d", fontWeight: "500" }} />
-          </div>
+       <div className="mb-3 position-relative">
+  <input  type={showPassword ? "text" : "password"}
+    className="form-control rounded-pill py-2 px-3 pe-5" placeholder="Password" value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    style={{ borderColor: "#4d4d4d", color: "#4d4d4d", fontWeight: "500" }}/>
+  <span   onClick={togglePasswordVisibility}
+    className="position-absolute top-50 end-0 translate-middle-y me-3"   style={{ cursor: "pointer", color: "#4d4d4d" }} >
+    {showPassword ? "🙈" : "👁️"}
+  </span>
+</div>
+
           <div className="text-end mb-3">
             <Link to="/forgotpassword" className="text-decoration-none text-secondary">
               Forgot Password?

@@ -108,15 +108,14 @@ const Notifications = () => {
                 <div className="d-flex justify-content-between align-items-start">
                   <div>
                     <p className="mb-1">{note.message}</p>
-                    <small className="text-muted">
-                      🕒 {moment(note.createdAt).format("MMM DD, YYYY - hh:mm A")}
-                      {note.customerName && note.customerName !== "N/A" && (
-                        <> | 👤 <strong>{note.customerName}</strong></>
-                      )}
-                      {note.customerId && note.customerId !== "N/A" && (
-                        <> (ID: <strong>{note.customerId.slice(-9).toUpperCase()}</strong>)</>
-                      )}
-                    </small>
+                  <small className="text-muted">
+  🕒 {moment(note.createdAt).format("MM/DD/YYYY - hh:mm A")}
+  <br />
+  {note.customerId && note.customerId !== "N/A" && (
+    <> Account Number : <strong>{note.einNumber}</strong></>
+  )}
+</small>
+
                   </div>
                   <button
                     className="btn-close btn-close-white"

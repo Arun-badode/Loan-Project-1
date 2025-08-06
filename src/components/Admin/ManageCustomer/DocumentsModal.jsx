@@ -1,56 +1,60 @@
-import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Modal, Button, Form } from 'react-bootstrap';
 import axiosInstance from '../../../utils/axiosInstance';
 import BASE_URL from '../../../utils/baseURL';
 
-const VerifyCustomerModal = ({ show, handleClose, customer,refreshCustomers  }) => {
-  if (!customer) return null;
+const VerifyCustomerModal = ({ show, handleClose, customer, refreshCustomers }) => {
+  const [einNumber, setEinNumber] = useState("");
+
+  useEffect(() => {
+    if (customer?.einNumber) {
+      setEinNumber(customer.einNumber);
+    }
+  }, [customer]);
 
   const handleVerify = async () => {
     try {
-      await axiosInstance.patch(
-        `${BASE_URL}/updatecustomerstatus/${customer._id}`,
-        { customerStatus: "active" }
-      );
-      alert(`✅ Customer "${customer.customerName}" has been verified.`);
+      await axiosInstance.put(`${BASE_URL}/updateCustumer/${customer._id}`, {
+        einNumber: einNumber
+      });
+
+      alert(`✅ EIN Number updated successfully for "${customer.customerName}".`);
       handleClose();
-        if (refreshCustomers) refreshCustomers();
+      if (refreshCustomers) refreshCustomers();
     } catch (error) {
-      console.error("❌ Error verifying customer:", error);
-      alert("❌ Failed to verify customer.");
+      console.error("❌ Error updating EIN:", error);
+      alert("❌ Failed to update EIN number.");
     }
   };
 
-  const renderDocument = (label, url) => (
-    <div className="mb-3">
-      <strong>{label}:</strong><br />
-      {url ? (
-        <img
-          src={url}
-          alt={`${label}`}
-          style={{ maxWidth: "100%", maxHeight: "250px", borderRadius: "8px", border: "1px solid #ccc" }}
-        />
-      ) : (
-        <div className="text-danger">No document available</div>
-      )}
-    </div>
-  );
+  if (!customer) return null;
 
   return (
-    <Modal show={show} onHide={handleClose} centered size="lg" backdrop="static" className="modal-green">
+    <Modal show={show} onHide={handleClose} centered size="md" className="modal-green">
       <Modal.Header closeButton>
-        <Modal.Title>Verify Merchant  - {customer.customerName}</Modal.Title>
+        <Modal.Title>Update Account Number - {customer.customerName}</Modal.Title>
       </Modal.Header>
+
       <Modal.Body>
-        {renderDocument("GST Document", customer.gstDoc)}
-        {renderDocument("PAN Document", customer.panDoc)}
+        <Form.Group className="mb-3">
+          <Form.Label className="fw-semibold">Account Number</Form.Label>
+          <Form.Control
+            type="text"
+            value={einNumber}
+            onChange={(e) => setEinNumber(e.target.value)}
+            placeholder="Enter EIN Number"
+            maxLength={9}
+            required
+          />
+        </Form.Group>
       </Modal.Body>
+
       <Modal.Footer>
         <Button variant="secondary" onClick={handleClose}>
           Cancel
         </Button>
         <Button variant="success" onClick={handleVerify}>
-          Verify
+       Update Account Number
         </Button>
       </Modal.Footer>
     </Modal>

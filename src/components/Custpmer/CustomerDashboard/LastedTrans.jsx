@@ -81,10 +81,15 @@ const LastedTrans = () => {
                       return (
                         <tr key={txn._id}>
                            <td > {index+1} </td>
-                          <td>
-                            <i className="fas fa-calendar-alt text-secondary me-2"></i>
-                            {new Date(txn.createdAt).toLocaleDateString()}
-                          </td>
+                         <td>
+  <i className="fas fa-calendar-alt text-secondary me-2"></i>
+  {new Date(txn.createdAt).toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric"
+  })}
+</td>
+
                           <td className="text-end fw-semibold text-success">
                             ${txn.withdrawAmount?.toLocaleString()}
                           </td>

@@ -4,14 +4,17 @@ import axios from 'axios';
 import BASE_URL from '../../../utils/baseURL';
 
 const AddCustomerModal = ({ show, handleClose }) => {
+  const [randomFive] = useState(() =>
+    Math.floor(10000 + Math.random() * 90000)
+  );
+
   const [form, setForm] = useState({
     customerName: '',
     companyName: '',
     email: '',
     phoneNumber: '',
-    address: '',
-    creditLine: '',
     password: '',
+    einLastFour: '',
   });
 
   const [gstDoc, setGstDoc] = useState(null);
@@ -25,10 +28,20 @@ const AddCustomerModal = ({ show, handleClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (form.einLastFour.length !== 4 || isNaN(form.einLastFour)) {
+      alert("❌ Please enter a valid 4-digit EIN suffix");
+      return;
+    }
+
     const formData = new FormData();
     Object.keys(form).forEach(key => {
-      formData.append(key, form[key]);
+      if (key !== 'einLastFour') {
+        formData.append(key, form[key]);
+      }
     });
+
+    const fullEin = `${randomFive}${form.einLastFour}`;
+    formData.append("einNumber", fullEin);
 
     if (gstDoc) formData.append('gstDoc', gstDoc);
     if (panDoc) formData.append('panDoc', panDoc);
@@ -47,7 +60,7 @@ const AddCustomerModal = ({ show, handleClose }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} size='lg'  centered backdrop="static" className='modal-green'>
+    <Modal show={show} onHide={handleClose} size='lg' centered className='modal-green'>
       <Modal.Header closeButton>
         <Modal.Title>Add New Customer</Modal.Title>
       </Modal.Header>
@@ -67,6 +80,7 @@ const AddCustomerModal = ({ show, handleClose }) => {
                 />
               </Form.Group>
             </Col>
+
             <Col md={6}>
               <Form.Group className="mb-3">
                 <Form.Label>Company</Form.Label>
@@ -94,19 +108,20 @@ const AddCustomerModal = ({ show, handleClose }) => {
                 />
               </Form.Group>
             </Col>
+
             <Col md={6}>
-  <Form.Group className="mb-3">
-    <Form.Label>Password</Form.Label>
-    <Form.Control
-      type="password"
-      name="password"
-      placeholder="Enter password"
-      value={form.password}
-      onChange={handleChange}
-      required
-    />
-  </Form.Group>
-</Col>
+              <Form.Group className="mb-3">
+                <Form.Label>Password</Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder="Enter password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+            </Col>
 
             <Col md={6}>
               <Form.Group className="mb-3">
@@ -124,54 +139,26 @@ const AddCustomerModal = ({ show, handleClose }) => {
 
             <Col md={6}>
               <Form.Group className="mb-3">
-                <Form.Label>Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="address"
-                  placeholder="Enter address"
-                  value={form.address}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Credit Line</Form.Label>
+                <Form.Label>EIN Number</Form.Label>
                 <InputGroup>
-                  <InputGroup.Text>₹</InputGroup.Text>
                   <Form.Control
-                    type="number"
-                    name="creditLine"
-                    placeholder="Enter credit line amount"
-                    value={form.creditLine}
+                    value={randomFive}
+                    readOnly
+                    style={{ backgroundColor: "#e9ecef" }}
+                  />
+                  <Form.Control
+                    type="text"
+                    name="einLastFour"
+                    placeholder="Last 4 digits"
+                    value={form.einLastFour}
                     onChange={handleChange}
+                    maxLength={4}
                     required
                   />
                 </InputGroup>
-              </Form.Group>
-            </Col>
-
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Upload  Document</Form.Label>
-                <Form.Control
-                  type="file"
-                  accept=".jpg,.png,.pdf"
-                  onChange={(e) => setGstDoc(e.target.files[0])}
-                  required
-                />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group className="mb-3">
-                <Form.Label>Upload  Document</Form.Label>
-                <Form.Control
-                  type="file"
-                  accept=".jpg,.png,.pdf"
-                  onChange={(e) => setPanDoc(e.target.files[0])}
-                  required
-                />
+                <Form.Text className="text-muted">
+                  EIN will be: <strong>{randomFive}{form.einLastFour}</strong>
+                </Form.Text>
               </Form.Group>
             </Col>
           </Row>

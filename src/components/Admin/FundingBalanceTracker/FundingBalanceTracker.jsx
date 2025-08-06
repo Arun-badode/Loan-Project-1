@@ -62,7 +62,7 @@ const WithdrawHistory = () => {
             <table className="table table-hover align-middle">
               <thead className="table-success">
                 <tr>
-                  <th>Merchant  Id</th>
+                  <th>Account Number</th>
                   <th>Merchant  Name</th>
                   <th>Type</th>
                   <th>Requested Amount</th>
@@ -81,17 +81,20 @@ const WithdrawHistory = () => {
                   records.map((item) => (
                     <tr key={item._id}>
                     
-                     <td className="text-uppercase">{item.customerId?.slice(-9).toUpperCase() || "UNKNOWN"}</td>
+                     <td className="text-uppercase">{item.einNumber || "UNKNOWN"}</td>
                       <td className="text-capitalize">{item.customerName}</td>
                       <td className="text-capitalize">{item.type}</td>
                       <td>${item.withdrawAmount}</td>
-                        <td>
-                        {new Date(item.createdAt).toLocaleDateString("en-IN", {
-                          day: "2-digit",
-                          month: "short",
-                          year: "numeric",
-                        })}
-                      </td>
+                       <td>
+  {item?.createdAt
+    ? new Date(item.createdAt).toLocaleDateString("en-US", {
+        month: "2-digit",
+        day: "2-digit",
+        year: "numeric",
+      })
+    : "N/A"}
+</td>
+
                       <td>
                         <span className={`badge ${
                             item.withdrawStatus === "Approved"

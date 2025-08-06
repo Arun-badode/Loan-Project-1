@@ -20,25 +20,12 @@ const handleSubmit = async (e) => {
 
   try {
     const response = await axiosInstance.post("/forgot-password", { email });
-    const resetToken = response?.data?.resetToken;
+    console.log(response.data.token)
+    const resetToken = response?.data?.token;
 
     if (!resetToken) {
       throw new Error("Reset token not provided by API.");
     }
-
-    // 👇 Construct the full reset link manually
-
-    const emailParams = {
-      email: email,
-      token: resetToken,
-    };
-
-    await emailjs.send(
-      "service_56d40ci",
-      "template_gu3rnhe",
-      emailParams,
-      "rq4-yuCE_eCh_aNjL"
-    );
 
     Swal.fire("Success", "Reset link sent. Please check your email.", "success");
     setIsSubmitted(true);
@@ -74,23 +61,14 @@ const handleSubmit = async (e) => {
               <p style={{ color: "#4d4d4d" }}>
                 Enter your email address and we'll send you a link to reset your password.
               </p>
-              <input
-                type="email"
-                className="form-control rounded-pill py-2 px-3"
-                placeholder="Email Address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <input  type="email" className="form-control rounded-pill py-2 px-3"
+                placeholder="Email Address" value={email}
+                onChange={(e) => setEmail(e.target.value)}  required/>
             </div>
 
-            <button
-              type="submit"
-              className="btn btn-success rounded-pill w-100 py-2 fw-semibold"
-            >
+            <button type="submit" className="btn btn-success rounded-pill w-100 py-2 fw-semibold">
               Send Reset Link
             </button>
-
             <p className="mt-3" style={{ color: "#4d4d4d" }}>
               Remember your password?{" "}
               <Link to="/" className="text-success fw-semibold text-decoration-none">

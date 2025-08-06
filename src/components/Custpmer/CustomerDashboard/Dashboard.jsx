@@ -80,6 +80,8 @@ const handleCreditSubmit = async (e) => {
       {/* Welcome Section */}
       <div className="mb-2">
         <h2 className="page-heading">Welcome, {userData?.customerName || "Customer"}</h2>
+        <h6 className=""> Business Name : {dashboardData?.companyName || "Business Name"}</h6>
+        <p className=""> Account Number {dashboardData?.einNumber || "000000000"}</p>
         <p className="page-subheading">Here's your line of credit summary</p>
       </div>
 
@@ -90,14 +92,14 @@ const handleCreditSubmit = async (e) => {
     boxShadow: "0 2px 6px rgba(0,0,0,0.08)",  marginBottom: "1rem",  height: "80px",   overflow: "hidden",  paddingLeft: "1rem",  paddingRight: "1rem", }}>
  {/* Left side: Logo + Quote */}
   <div className="d-flex align-items-center gap-3">
-    <img src={logo} alt="Logo" style={{ height: "70px", width: "auto" }} />
+    <img src={Ladyimage} alt="Logo" style={{ height: "70px", width: "auto" }} />
     <p className="mb-0 fw-semibold text-success fs-5">
       “Ladybugs bring good fortune.”
     </p>
   </div>
 
-  <img  src={Ladyimage}  alt="Ladybug"
-    style={{  width: "auto",  height: "70px",  borderRadius: "50%",  border: "2px solid #28a745",    objectFit: "cover", }}/>
+  {/* <img  src={Ladyimage}  alt="Ladybug"
+    style={{  width: "auto",  height: "70px",  borderRadius: "50%",  border: "2px solid #28a745",    objectFit: "cover", }}/> */}
 </div>
     {/* ✅ Credit Increase Alert */}
 {userData?.creditIncrease ? (
@@ -117,7 +119,7 @@ const handleCreditSubmit = async (e) => {
 ) : (
   <Alert className="mb-4" variant="success">
     <p>
-  Pay back 50% of your total credit limit with 100% on-time payments and you may be eligible for a credit increase and rate Reduction.
+  Pay back 50% of your total credit limit with 100% on-time payments and you may be eligible for a credit increase and rate reduction.
     </p>
   </Alert>
 )}
@@ -176,6 +178,14 @@ const handleCreditSubmit = async (e) => {
       <h5 className="fw-bold text-success">
         {dashboardData?.term_type || "N/A"}
       </h5>
+       <h6 className="text-muted">Term End Date</h6>
+      <h5 className="fw-bold text-success">
+{dashboardData?.loanEndDate 
+  ? new Date(dashboardData.loanEndDate).toLocaleDateString("en-US") 
+  : "N/A"}
+
+
+      </h5>
     </div>
   </div>
 </div>
@@ -186,11 +196,14 @@ const handleCreditSubmit = async (e) => {
     <div className="card-body">
       <h6 className="text-muted">Payment</h6>
       <h3 className="text-success fw-bold">
-        ${dashboardData?.installment || "0.00"}
+        {dashboardData?.currentAmount > 0
+          ? `$${dashboardData?.installment || "0.00"}`
+          : `$${dashboardData?.currentAmount || "0.00"}`}
       </h3>
     </div>
   </div>
 </div>
+
 
 {/* Term Month */}
 <div className="col-12 col-md-6 col-lg-4">
@@ -198,7 +211,8 @@ const handleCreditSubmit = async (e) => {
     <div className="card-body">
       <h6 className="text-muted"> Remaining Payback</h6>
       <h5 className="fw-bold text-success">
-        ${dashboardData?.remainingRepayment || "0.00"}
+        {/* ${dashboardData?.remainingRepayment || "0.00"} */}
+        ${dashboardData?.NewAmount || "0.00"}
       </h5>
     </div>
   </div>

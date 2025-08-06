@@ -12,6 +12,7 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
     totalRepayment: 0,
     installment: 0,
     availBalance: 0,
+    originalFee: 0, // ✅ new field
   });
 
   useEffect(() => {
@@ -19,9 +20,11 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
       const approvedAmount = parseFloat(customer.approvedAmount) || 0;
       const factorRate = parseFloat(customer.factorRate) || 0;
       const term_month = parseInt(customer.term_month) || 0;
+      const originalFee = parseFloat(customer.originalFee) || 0;
 
       const totalRepayment = (approvedAmount * factorRate).toFixed(2);
       const installment = term_month > 0 ? (totalRepayment / term_month).toFixed(2) : 0;
+ 
 
       setFormData({
         approvedAmount,
@@ -31,6 +34,7 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
         totalRepayment,
         installment,
         availBalance: approvedAmount,
+        originalFee,
       });
     }
   }, [customer]);
@@ -48,9 +52,10 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
     const approvedAmount = parseFloat(name === 'approvedAmount' ? value : updated.approvedAmount);
     const factorRate = parseFloat(name === 'factorRate' ? value : updated.factorRate);
     const term = parseFloat(name === 'term_month' ? value : updated.term_month);
+    const originalFee = parseFloat(name === 'originalFee' ? value : updated.originalFee);
 
-    if (!isNaN(approvedAmount)) {
-      updated.availBalance = approvedAmount;
+    if (!isNaN(approvedAmount) && !isNaN(originalFee)) {
+      updated.availBalance = (approvedAmount - originalFee).toFixed(2);
     }
 
     if (!isNaN(approvedAmount) && !isNaN(factorRate)) {
@@ -81,14 +86,13 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered backdrop="static" className="modal-green">
+    <Modal show={show} onHide={handleClose} centered className="modal-green">
       <Modal.Header closeButton>
         <Modal.Title>Add Credit Terms - {customer.customerName}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <p><strong>Credit Line:</strong> ${customer.creditLine}</p>
             <Form.Label>Approved Amount</Form.Label>
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
@@ -103,7 +107,20 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Factor Rate </Form.Label>
+            <Form.Label>Origination Fee</Form.Label>
+            <InputGroup>
+              <InputGroup.Text>$</InputGroup.Text>
+              <Form.Control
+                name="originalFee"
+                type="number"
+                value={formData.originalFee}
+                onChange={handleChange}
+              />
+            </InputGroup>
+          </Form.Group>
+
+          <Form.Group className="mb-3">
+            <Form.Label>Factor Rate</Form.Label>
             <Form.Control
               name="factorRate"
               type="number"
@@ -115,56 +132,38 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Total  Payback</Form.Label>
+            <Form.Label>Total Payback</Form.Label>
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
-              <Form.Control
-                type="number"
-                value={formData.totalRepayment}
-                readOnly
-              />
+              <Form.Control type="number" value={formData.totalRepayment} readOnly />
             </InputGroup>
           </Form.Group>
 
-        <Form.Group className="mb-3">
+          <Form.Group className="mb-3">
             <Form.Label>Payment Frequency</Form.Label>
-            <Form.Select
-              name="term_type"
-              value={formData.term_type}
-              onChange={handleChange}
-            >
+            <Form.Select name="term_type" value={formData.term_type} onChange={handleChange}>
               <option value="Monthly">Monthly</option>
               <option value="Weekly">Weekly</option>
               <option value="Bi-Weekly">Bi-Weekly</option>
             </Form.Select>
           </Form.Group>
-       <Form.Group className="mb-3">
-  <Form.Label>
-    {formData.term_type === "Weekly"
-      ? "Term (Weeks)"
-      : formData.term_type === "Bi-Weekly"
-      ? "Term (Bi-Weeks)"
-      : "Term (Months)"}
-  </Form.Label>
-  <Form.Control
-    name="term_month"
-    type="number"
-    value={formData.term_month}
-    onChange={handleChange}
-    required
-  />
-</Form.Group>
 
-      
+          <Form.Group className="mb-3">
+            <Form.Label>
+              {formData.term_type === "Weekly"
+                ? "Term (Weekly)"
+                : formData.term_type === "Bi-Weekly"
+                ? "Term (Weekly)"
+                : "Term (Monthly)"}
+            </Form.Label>
+            <Form.Control name="term_month"  type="number" value={formData.term_month} onChange={handleChange}  required/>
+          </Form.Group>
+
           <Form.Group className="mb-3">
             <Form.Label>Payment</Form.Label>
             <InputGroup>
               <InputGroup.Text>$</InputGroup.Text>
-              <Form.Control
-                type="number"
-                value={formData.installment}
-                readOnly
-              />
+              <Form.Control type="number" value={formData.installment} readOnly />
             </InputGroup>
           </Form.Group>
 

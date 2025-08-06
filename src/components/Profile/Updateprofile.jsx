@@ -7,7 +7,6 @@ const UpdateProfile = () => {
     customerName: '',
     email: '',
     phoneNumber: '',
-    address: '',
     companyName: '' // ✅ NEW FIELD
   });
 
@@ -33,7 +32,6 @@ const UpdateProfile = () => {
           customerName: data.customerName || '',
           email: data.email || '',
           phoneNumber: data.phoneNumber || '',
-          address: data.address || '',
           companyName: data.companyName || '' // ✅ Populate companyName
         });
       }
@@ -94,16 +92,6 @@ const UpdateProfile = () => {
                   type="text"
                   value={customerData.phoneNumber}
                   onChange={(e) => handleChange('phoneNumber', e.target.value)}
-                  className="input-green"
-                />
-              </Form.Group>
-
-              <Form.Group className="mb-3">
-                <Form.Label className="label-green">Address</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={customerData.address}
-                  onChange={(e) => handleChange('address', e.target.value)}
                   className="input-green"
                 />
               </Form.Group>

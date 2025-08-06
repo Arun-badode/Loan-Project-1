@@ -163,7 +163,11 @@ const handleEarlyPayoff = async (e) => {
       <Card className="shadow-sm border-0">
         <Card.Body>
           <h4 className="page-heading mb-2">Early Payoff Discount</h4>
-
+          <Alert className="mb-4" variant="success">
+              <p>
+          You must withdraw 100% of your funds within 30 days of account activation to be eligible for any discounts.
+              </p>
+            </Alert>
           <Alert variant="info" className="mb-3">
             {getCurrentDiscountMessage()}
           </Alert>

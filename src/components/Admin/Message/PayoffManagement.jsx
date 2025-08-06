@@ -60,7 +60,7 @@ const PayoffManagement = () => {
         <table className="table table-hover align-middle">
           <thead className="table-success">
             <tr>
-              <th>Merchant ID</th>
+              <th>Account Number</th>
               <th>Date</th>
               <th>Merchant Name</th>
               <th>Amount</th>
@@ -79,18 +79,16 @@ const PayoffManagement = () => {
               requests.map((req) => (
                 <tr key={req._id}>
                   <td>
-                    {req.customerId?._id
-                      ?.toString()
-                      .slice(-9)
-                      .toUpperCase() || "UNKNOWN"}
+                    {req.einNumber || "UNKNOWN"}
                   </td>
                   <td>
-                    {new Date(req.createdAt).toLocaleDateString("en-IN", {
-                      day: "2-digit",
-                      month: "short",
-                      year: "numeric",
-                    })}
-                  </td>
+  {new Date(req.createdAt).toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  })}
+</td>
+
                   <td>{req.customerId?.customerName || "UNNAMED"}</td>
                   <td>${req.earlyPayAmount}</td>
                   <td>

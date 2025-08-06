@@ -6,7 +6,7 @@ const CustomerDetailsModal = ({ show, handleClose, customer }) => {
  console.log(customer)
 
   return (
-    <Modal show={show} onHide={handleClose} size="lg" centered backdrop="static" className="modal-green">
+    <Modal show={show} onHide={handleClose} size="lg" centered  className="modal-green">
       <Modal.Header closeButton>
         <Modal.Title>Merchant Details - {customer.customerName}</Modal.Title>
       </Modal.Header>
@@ -33,7 +33,7 @@ const CustomerDetailsModal = ({ show, handleClose, customer }) => {
               <p className="mb-0">
                 <strong>Status:</strong>{" "}
                 <span className={`badge text-capitalize fw-semibold px-3 py-1 
-                   ${customer.customerStatus === "active" ? "bg-success" :
+                   ${customer.customerStatus === "Active" ? "bg-success" :
                     customer.customerStatus === "disqualified" ? "bg-danger" :  "bg-warning text-dark"}`}> {customer.customerStatus} </span>
               </p>
             </div>

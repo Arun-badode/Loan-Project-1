@@ -37,12 +37,7 @@ const NotificationsAlerts = () => {
       <h2 className="page-heading">Notifications & Alerts</h2>
       <p className="page-subheading">Stay updated on your account activity</p>
 
-      {customerId && (
-        <p className="text-muted">
-          Customer ID:{" "}
-          <strong>{customerId.slice(-8).toUpperCase()}</strong>
-        </p>
-      )}
+      
 
       {/* ✅ Email opt-out toggle */}
       <div className="mb-3">
@@ -76,15 +71,16 @@ const NotificationsAlerts = () => {
                 <div className="d-flex justify-content-between align-items-start">
                   <div>
                     <p className="mb-1">{note.message}</p>
-                    <small className="text-muted">
-                      🕒 {moment(note.createdAt).format("MMM DD, YYYY - hh:mm A")} | 
-                      👤 ID: <strong>{note.customerId?.slice(-8).toUpperCase()}</strong>
-                    </small>
+                   <small className="text-muted">
+  🕒 {moment(note.createdAt).format("MM/DD/YYYY - hh:mm A")} | 
+  👤 Account Number: <strong>{note?.einNumber}</strong>
+</small>
+
                   </div>
                   <button
                     className="btn-close btn-close-white"
                     onClick={() => handleDismiss(note._id)}
-                    style={{ fontSize: "0.8rem" }}
+                    style={{ fontSize: "0.8rem" }}  
                   ></button>
                 </div>
               </div>

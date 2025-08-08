@@ -120,6 +120,7 @@ const exportToExcel = () => {
                     <th>#</th>
                     <th>Date</th>
                     <th className="text-end">Requested Amount </th>
+                    <th className="text-end">Credit Amount  </th>
                     <th className="text-end">available Amount</th>
                     <th>Status</th>
                   </tr>
@@ -137,6 +138,7 @@ const exportToExcel = () => {
                           <td className="text-end fw-semibold text-success">
                             ${txn.withdrawAmount?.toLocaleString()}
                           </td>
+                          <td className="text-end">${txn.amountCredited}</td>
                           <td className="text-end">${txn.availableAmount}</td>
                  
                           <td>

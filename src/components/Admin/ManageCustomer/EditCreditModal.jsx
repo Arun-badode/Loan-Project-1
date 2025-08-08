@@ -52,11 +52,11 @@ const EditCreditModal = ({ show, handleClose, customer, refreshCustomers }) => {
     const approvedAmount = parseFloat(name === 'approvedAmount' ? value : updated.approvedAmount);
     const factorRate = parseFloat(name === 'factorRate' ? value : updated.factorRate);
     const term = parseFloat(name === 'term_month' ? value : updated.term_month);
-    const originalFee = parseFloat(name === 'originalFee' ? value : updated.originalFee);
+  
 
-    if (!isNaN(approvedAmount) && !isNaN(originalFee)) {
-      updated.availBalance = (approvedAmount - originalFee).toFixed(2);
-    }
+    if (!isNaN(approvedAmount)) {
+    updated.availBalance = approvedAmount.toFixed(2);
+  }
 
     if (!isNaN(approvedAmount) && !isNaN(factorRate)) {
       const total = approvedAmount * factorRate;
